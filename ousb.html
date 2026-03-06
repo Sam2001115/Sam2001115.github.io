@@ -1,10 +1,9 @@
----
-layout: null
-title: OUSB Case Study | Sameer Appasa
----
-
+<!DOCTYPE html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OUSB Case Study | Sameer Appasa</title>
     <style>
         body { font-family: 'Inter', -apple-system, sans-serif; background-color: #0d1117; color: #c9d1d9; margin: 0; line-height: 1.6; }
         .container { max-width: 800px; margin: 0 auto; padding: 60px 20px; }
@@ -19,6 +18,7 @@ title: OUSB Case Study | Sameer Appasa
         code { background: #21262d; padding: 2px 5px; border-radius: 4px; font-family: monospace; color: #ff7b72; }
     </style>
 </head>
+<body>
 
 <div class="container">
     <h1>OUSB Process Control System</h1>
@@ -28,55 +28,33 @@ title: OUSB Case Study | Sameer Appasa
     <p>The goal of this project was to develop a command-line interface (CLI) in C++ that interacts with the <strong>OUSB (Open Universal Serial Board)</strong> hardware simulator. The system reads 8-bit digital inputs and 10-bit analog inputs to update hardware registers.</p>
 
     <h2>🛠 Technical Implementation</h2>
-
     <h3>1. Robust Error Precedence Hierarchy</h3>
     <p>I implemented a strict error-handling hierarchy to ensure system stability. If multiple errors occur, the system reports only the highest-priority error:</p>
 
     <table>
-        <tr>
-            <th>Code</th>
-            <th>Priority</th>
-            <th>Description</th>
-        </tr>
-        <tr>
-            <td><strong>P</strong></td>
-            <td>Highest</td>
-            <td><strong>Parameter Error:</strong> Incorrect number of arguments.</td>
-        </tr>
-        <tr>
-            <td><strong>X</strong></td>
-            <td>High</td>
-            <td><strong>Numerical Error:</strong> Input is not a valid number.</td>
-        </tr>
-        <tr>
-            <td><strong>R</strong></td>
-            <td>Medium</td>
-            <td><strong>Range Error:</strong> Value is outside 0–255 limit.</td>
-        </tr>
-        <tr>
-            <td><strong>V</strong></td>
-            <td>Medium</td>
-            <td><strong>Validation Error:</strong> Logic failure (Switch < Pot).</td>
-        </tr>
-        <tr>
-            <td><strong>H</strong></td>
-            <td>Low</td>
-            <td><strong>Hardware Error:</strong> Device failed to respond.</td>
-        </tr>
+        <tr><th>Code</th><th>Priority</th><th>Description</th></tr>
+        <tr><td><strong>P</strong></td><td>Highest</td><td><strong>Parameter Error:</strong> Incorrect number of arguments.</td></tr>
+        <tr><td><strong>X</strong></td><td>High</td><td><strong>Numerical Error:</strong> Input is not a valid number.</td></tr>
+        <tr><td><strong>R</strong></td><td>Medium</td><td><strong>Range Error:</strong> Value is outside 0–255 limit.</td></tr>
+        <tr><td><strong>V</strong></td><td>Medium</td><td><strong>Validation Error:</strong> Logic failure (Switch < Pot).</td></tr>
+        <tr><td><strong>H</strong></td><td>Low</td><td><strong>Hardware Error:</strong> Device failed to respond.</td></tr>
     </table>
 
     <h3>2. Intelligent Data Validation</h3>
     <p>A key feature is the <code>expocnentialcheck</code> function. It manually parses strings to validate numerical digits, scientific notation (E/e), and polarity signs (+/-) before conversion.</p>
 
     <h3>3. Bitwise Register Manipulation</h3>
-    <p>I wrote logic to convert integers into <strong>Standard</strong> and <strong>Reverse Binary</strong> formats to interact directly with hardware LED registers.</p>
+    <p>The project involved manipulating 8-bit binary strings to represent hardware states. I wrote logic to convert integers into <strong>Standard</strong> and <strong>Reverse Binary</strong> formats to interact directly with hardware LED registers.</p>
 
     <h2>🧠 Key Skills Demonstrated</h2>
     <ul>
-        <li><strong>Systems Programming:</strong> Managing memory for hardware interaction.</li>
+        <li><strong>Systems Programming:</strong> Managing data types and memory for hardware interaction.</li>
         <li><strong>Industrial Logic:</strong> Implementing error precedence for reliability.</li>
         <li><strong>Register Control:</strong> Direct manipulation of <code>PINC</code> and <code>ADC</code> values.</li>
     </ul>
 
     <a href="index.html" class="back-btn">← Back to Portfolio</a>
 </div>
+
+</body>
+</html>
