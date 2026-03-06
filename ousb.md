@@ -78,5 +78,5 @@ title: OUSB Case Study | Sameer Appasa
         <li><strong>Register Control:</strong> Direct manipulation of <code>PINC</code> and <code>ADC</code> values.</li>
     </ul>
 
-    <a href="index.md" class="back-btn">← Back to Portfolio</a>
+    <a href="index.html" class="back-btn">← Back to Portfolio</a>
 </div>
