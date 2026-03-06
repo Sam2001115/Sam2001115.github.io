@@ -30,3 +30,26 @@
 
 ---
 [LinkedIn] | [GitHub] | [Email]
+
+# Project Deep Dive: Autonomous Cleaning Rover
+
+## ⚙️ The Engineering Challenge
+Standard 130 DC motors lack the torque required to move a chassis across carpet or uneven hardwood when weighted with cleaning apparatus. 
+
+### Custom Mechanical Solution
+To overcome this, I designed and fabricated a **custom gear reduction system**. This increased the mechanical advantage, allowing the low-torque motors to drive the platform reliably under load.
+
+## 🧠 Control Logic & Hardware
+* **Controller:** Arduino Uno / ESP32
+* **Sensors:** HC-SR04 Ultrasonic Sensors
+* **Actuators:** Dual 130 DC Motors with L298N Driver
+
+### Real-Time Obstacle Avoidance
+I implemented a "ping-and-pivot" logic. Instead of using basic delays, the firmware continuously polls the ultrasonic sensor. If an object is detected within 20cm, the rover executes a timed reverse-and-turn maneuver.
+
+## 🛠 Lessons Learned
+* **Power Management:** Learned how to handle voltage drops caused by motor inrush current.
+* **Signal Noise:** Implemented basic filtering to prevent "ghost" obstacles from triggering the sensors.
+
+---
+[← Back to Home](index.md)
