@@ -1,42 +1,82 @@
-# OUSB Process Control System
-**Low-Level C++ Hardware Interface**
-
+---
+layout: null
+title: OUSB Case Study | Sameer Appasa
 ---
 
-## 📋 The Engineering Challenge
-The goal of this project was to develop a command-line interface (CLI) in C++ that interacts with the **OUSB (Open Universal Serial Board)** hardware simulator. The system must read 8-bit digital inputs (DIP switches) and 10-bit analog inputs (Potentiometers), perform logic comparisons, and update hardware registers accordingly.
+<head>
+    <meta charset="UTF-8">
+    <style>
+        body { font-family: 'Inter', -apple-system, sans-serif; background-color: #0d1117; color: #c9d1d9; margin: 0; line-height: 1.6; }
+        .container { max-width: 800px; margin: 0 auto; padding: 60px 20px; }
+        h1 { color: #fff; font-size: 2.5rem; border-bottom: 1px solid #30363d; padding-bottom: 10px; }
+        h2 { color: #58a6ff; margin-top: 40px; }
+        h3 { color: #f0f6fc; }
+        table { width: 100%; border-collapse: collapse; margin: 20px 0; background: #161b22; border-radius: 8px; overflow: hidden; }
+        th, td { padding: 12px; border: 1px solid #30363d; text-align: left; }
+        th { background-color: #1f6feb; color: white; }
+        .back-btn { display: inline-block; margin-top: 40px; padding: 10px 20px; border: 1px solid #58a6ff; color: #58a6ff; text-decoration: none; border-radius: 6px; font-weight: bold; }
+        .back-btn:hover { background: #58a6ff; color: #fff; }
+        code { background: #21262d; padding: 2px 5px; border-radius: 4px; font-family: monospace; color: #ff7b72; }
+    </style>
+</head>
 
+<div class="container">
+    <h1>OUSB Process Control System</h1>
+    <p><strong>Low-Level C++ Hardware Interface</strong></p>
 
+    <h2>📋 The Engineering Challenge</h2>
+    <p>The goal of this project was to develop a command-line interface (CLI) in C++ that interacts with the <strong>OUSB (Open Universal Serial Board)</strong> hardware simulator. The system reads 8-bit digital inputs and 10-bit analog inputs to update hardware registers.</p>
 
-## 🛠 Technical Implementation
+    <h2>🛠 Technical Implementation</h2>
 
-### 1. Robust Error Precedence Hierarchy
-To ensure system stability and prevent invalid data from reaching the hardware registers, I implemented a strict error-handling hierarchy. If multiple errors occur, the system reports only the highest-priority error:
+    <h3>1. Robust Error Precedence Hierarchy</h3>
+    <p>I implemented a strict error-handling hierarchy to ensure system stability. If multiple errors occur, the system reports only the highest-priority error:</p>
 
-| Code | Priority | Description |
-|:---:|:---|:---|
-| **P** | Highest | **Parameter Error:** Incorrect number of command-line arguments. |
-| **X** | High | **Numerical Error:** Input is not a valid number (e.g., contains letters). |
-| **R** | Medium | **Range Error:** Numerical value is outside the 0–255 8-bit limit. |
-| **V** | Medium | **Validation Error:** Logic failure where Switch value < Potentiometer value. |
-| **H** | Low | **Hardware Error:** The OUSB device failed to respond or is disconnected. |
-| **Y** | Lowest | **System Error:** Internal logic or memory failure. |
+    <table>
+        <tr>
+            <th>Code</th>
+            <th>Priority</th>
+            <th>Description</th>
+        </tr>
+        <tr>
+            <td><strong>P</strong></td>
+            <td>Highest</td>
+            <td><strong>Parameter Error:</strong> Incorrect number of arguments.</td>
+        </tr>
+        <tr>
+            <td><strong>X</strong></td>
+            <td>High</td>
+            <td><strong>Numerical Error:</strong> Input is not a valid number.</td>
+        </tr>
+        <tr>
+            <td><strong>R</strong></td>
+            <td>Medium</td>
+            <td><strong>Range Error:</strong> Value is outside 0–255 limit.</td>
+        </tr>
+        <tr>
+            <td><strong>V</strong></td>
+            <td>Medium</td>
+            <td><strong>Validation Error:</strong> Logic failure (Switch < Pot).</td>
+        </tr>
+        <tr>
+            <td><strong>H</strong></td>
+            <td>Low</td>
+            <td><strong>Hardware Error:</strong> Device failed to respond.</td>
+        </tr>
+    </table>
 
+    <h3>2. Intelligent Data Validation</h3>
+    <p>A key feature is the <code>expocnentialcheck</code> function. It manually parses strings to validate numerical digits, scientific notation (E/e), and polarity signs (+/-) before conversion.</p>
 
+    <h3>3. Bitwise Register Manipulation</h3>
+    <p>I wrote logic to convert integers into <strong>Standard</strong> and <strong>Reverse Binary</strong> formats to interact directly with hardware LED registers.</p>
 
-### 2. Intelligent Data Validation
-A key feature of my code is the `expocnentialcheck` function. Instead of relying on standard conversion tools that might fail silently, this function manually parses strings to validate:
-* Numerical digits `0-9`.
-* Scientific notation markers `E` or `e`.
-* Decimal points and polarity signs `+/-`.
+    <h2>🧠 Key Skills Demonstrated</h2>
+    <ul>
+        <li><strong>Systems Programming:</strong> Managing memory for hardware interaction.</li>
+        <li><strong>Industrial Logic:</strong> Implementing error precedence for reliability.</li>
+        <li><strong>Register Control:</strong> Direct manipulation of <code>PINC</code> and <code>ADC</code> values.</li>
+    </ul>
 
-### 3. Bitwise Register Manipulation
-The project required manipulating 8-bit binary strings to represent hardware states. I wrote logic to convert integer values into both **Standard Binary** and **Reverse Binary** formats to match the specific requirements of the OUSB LED registers.
-
-## 🧠 Key Skills Demonstrated
-* **C++ Systems Programming:** Managing data types and memory for hardware interaction.
-* **Industrial Logic:** Implementing "Precedence" so the most dangerous errors are caught first.
-* **Register-Level Control:** Direct manipulation of `PINC` and `ADC` values.
-
----
-[← Back to Home](index.md)
+    <a href="index.md" class="back-btn">← Back to Portfolio</a>
+</div>
