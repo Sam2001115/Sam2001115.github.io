@@ -3,17 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sameer Appasa | Developer Terminal</title>
+    <title>Sameer Appasa | Engineering Portfolio</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <style>
         :root {
-            --background: #0a0a0a;
+            --background: #050505;
             --foreground: #fafafa;
-            --primary: #00ff41; /* Neon Matrix Green */
-            --card: #121212;
-            --muted: #262626;
-            --muted-foreground: #a3a3a3;
-            --border: #2e2e2e;
+            --primary: #00008B; /* Dark Blue */
+            --primary-light: #4169E1; /* Royal Blue for better visibility on black */
+            --card: #0d0d0d;
+            --muted: #1a1a1a;
+            --muted-foreground: #888888;
+            --border: #1f1f1f;
             --font-mono: 'JetBrains Mono', monospace;
         }
 
@@ -23,77 +24,69 @@
             font-family: 'Inter', sans-serif; 
             margin: 0; 
             background-image: linear-gradient(var(--border) 1px, transparent 1px), linear-gradient(90deg, var(--border) 1px, transparent 1px);
-            background-size: 50px 50px; /* Technical Grid Pattern */
+            background-size: 50px 50px;
         }
 
         .container { max-width: 1000px; margin: 0 auto; padding: 4rem 2rem; }
 
-        /* Hero Section */
-        .terminal-header { font-family: var(--font-mono); color: var(--primary); margin-bottom: 1rem; }
-        h1 { font-size: clamp(2.5rem, 8vw, 5rem); font-weight: 700; margin: 0; letter-spacing: -0.05em; }
-        .cursor { display: inline-block; width: 12px; height: 1.2em; background: var(--primary); margin-left: 5px; animation: blink 1s step-end infinite; vertical-align: middle; }
+        .terminal-header { font-family: var(--font-mono); color: var(--primary-light); margin-bottom: 1rem; }
+        h1 { font-size: clamp(2.5rem, 8vw, 4.5rem); font-weight: 700; margin: 0; letter-spacing: -0.05em; }
+        .cursor { display: inline-block; width: 12px; height: 1.2em; background: var(--primary-light); margin-left: 5px; animation: blink 1s step-end infinite; vertical-align: middle; }
         
         @keyframes blink { 0%, 50% { opacity: 1; } 51%, 100% { opacity: 0; } }
 
-        p.description { font-size: 1.25rem; color: var(--muted-foreground); max-width: 600px; margin: 2rem 0; }
-
-        /* Project Cards */
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; margin-top: 4rem; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.5rem; margin-top: 4rem; }
         .card { 
             background: var(--card); 
             border: 1px solid var(--border); 
-            padding: 2rem; 
-            border-radius: 8px; 
+            padding: 2.5rem; 
+            border-radius: 4px; 
             transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
         }
         .card:hover { 
-            border-color: var(--primary); 
+            border-color: var(--primary-light); 
             transform: translateY(-5px); 
-            box-shadow: 0 0 20px rgba(0, 255, 65, 0.1); 
+            box-shadow: 0 0 30px rgba(0, 0, 139, 0.2); 
         }
-        .card h3 { margin: 0; font-size: 1.5rem; color: var(--primary); font-family: var(--font-mono); }
-        .card p { color: var(--muted-foreground); line-height: 1.5; margin: 1rem 0; }
+        .card h3 { margin: 0; font-family: var(--font-mono); color: var(--primary-light); font-size: 1.4rem; }
+        .card p { color: var(--muted-foreground); margin: 1.5rem 0; font-size: 0.95rem; }
+        
         .btn { 
             display: inline-block; 
             font-family: var(--font-mono); 
-            color: var(--primary); 
+            color: var(--primary-light); 
             text-decoration: none; 
-            font-size: 0.9rem; 
-            border: 1px solid var(--primary); 
-            padding: 0.5rem 1rem;
+            font-size: 0.85rem; 
+            border: 1px solid var(--primary-light); 
+            padding: 0.6rem 1.2rem;
             transition: 0.3s;
         }
-        .btn:hover { background: var(--primary); color: var(--background); }
+        .btn:hover { background: var(--primary-light); color: white; }
 
-        footer { margin-top: 6rem; border-top: 1px solid var(--border); padding-top: 2rem; color: var(--muted-foreground); font-family: var(--font-mono); font-size: 0.8rem; }
+        footer { margin-top: 6rem; border-top: 1px solid var(--border); padding: 2rem 0; color: var(--muted-foreground); font-family: var(--font-mono); font-size: 0.8rem; }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="terminal-header">> SAMEER_APPASA_INIT_...</div>
-        <h1>Electrical Systems Engineer<span class="cursor"></span></h1>
-        <p class="description">Building robust hardware logic and autonomous systems at RMIT University. Focused on efficiency, torque, and real-time reliability.</p>
-
+        <div class="terminal-header">> SYSTEM_BOOT: SAMEER_APPASA_INIT_SUCCESS</div>
+        <h1>Electrical Engineer<span class="cursor"></span></h1>
+        
         <div class="grid">
             <div class="card">
-                <div style="font-size: 0.7rem; color: var(--primary); font-family: var(--font-mono); margin-bottom: 0.5rem;">[CASE_01]</div>
-                <h3>Cleaning Rover</h3>
-                <p>Mechanical power transmission study utilizing a 5:1 gear reduction and ESP32 WiFi navigation.</p>
-                <a href="rover.html" class="btn">ACCESS_DETAILS</a>
+                <h3>[01] Cleaning Rover</h3>
+                <p>Autonomous floor maintenance using ESP32 control and custom gear reduction for low-torque DC motors.</p>
+                <a href="rover.html" class="btn">VIEW_TECHNICAL_LOGS</a>
             </div>
 
             <div class="card">
-                <div style="font-size: 0.7rem; color: var(--primary); font-family: var(--font-mono); margin-bottom: 0.5rem;">[CASE_02]</div>
-                <h3>OUSB Simulator</h3>
-                <p>Low-level C++ register interaction with a priority-based Z-code error hierarchy.</p>
-                <a href="ousb.html" class="btn">ACCESS_DETAILS</a>
+                <h3>[02] OUSB Simulator</h3>
+                <p>A C++ register-level hardware simulation focusing on strict error-precedence logic and data integrity.</p>
+                <a href="ousb.html" class="btn">VIEW_TECHNICAL_LOGS</a>
             </div>
         </div>
 
         <footer>
-            LOGGED_IN: SAMEER_APPASA // 2026 // MELBOURNE_AU
+            LOCAL_TIME: 2026 // RMIT_ENGINEERING // MELBOURNE_VIC
         </footer>
     </div>
 </body>
