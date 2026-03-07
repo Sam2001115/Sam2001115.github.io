@@ -3,72 +3,97 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sameer Appasa | EE Portfolio</title>
+    <title>Sameer Appasa | Electrical Engineer</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Inter', -apple-system, sans-serif; background-color: #0d1117; color: #c9d1d9; margin: 0; line-height: 1.6; }
-        .hero { padding: 100px 20px 60px; text-align: center; background: radial-gradient(circle at center, #1f6feb22 0%, #0d1117 100%); }
-        .hero h1 { font-size: 3.5rem; color: #fff; margin: 0; letter-spacing: -2px; }
-        .hero p { font-size: 1.2rem; color: #8b949e; margin-top: 10px; }
-        .container { max-width: 850px; margin: 0 auto; padding: 40px 20px; }
-        h2 { border-bottom: 1px solid #30363d; padding-bottom: 10px; color: #58a6ff; margin-top: 40px; }
-        .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-bottom: 40px; }
-        .skill-card { background: #161b22; padding: 15px; border-radius: 8px; border: 1px solid #30363d; }
-        .skill-card h3 { margin: 0 0 10px 0; font-size: 1rem; color: #58a6ff; }
-        .project-card { background: #161b22; margin-bottom: 25px; border-radius: 12px; border: 1px solid #30363d; transition: 0.3s; }
-        .project-card:hover { border-color: #58a6ff; background: #1c2128; transform: translateY(-3px); }
-        .project-content { padding: 25px; }
-        .tag { background: #1f6feb; color: white; padding: 3px 10px; border-radius: 12px; font-size: 0.75rem; font-weight: bold; margin-bottom: 10px; display: inline-block; }
-        .btn { display: inline-block; padding: 10px 20px; border: 1px solid #58a6ff; color: #58a6ff; border-radius: 6px; text-decoration: none; font-weight: 600; margin-top: 15px; }
-        .btn:hover { background: #58a6ff; color: #fff; }
-        .contact-btn { background: #58a6ff; color: #0d1117; border: none; margin-right: 10px; }
-        footer { text-align: center; padding: 60px 20px; color: #8b949e; border-top: 1px solid #30363d; margin-top: 40px; }
-        footer a { color: #58a6ff; text-decoration: none; margin: 0 10px; }
+        :root { --bg: #0a0a0a; --primary: #3b82f6; --text: #ffffff; --muted: #a1a1aa; --border: #27272a; }
+        body { font-family: 'Inter', sans-serif; background-color: var(--bg); color: var(--text); margin: 0; line-height: 1.4; overflow-x: hidden; }
+        .container { max-width: 1100px; margin: 0 auto; padding: 0 2rem; }
+
+        /* Hero Section */
+        .hero { min-height: 90vh; display: flex; flex-direction: column; justify-content: center; border-bottom: 1px solid var(--border); }
+        .hero h1 { font-size: clamp(2.5rem, 8vw, 6.5rem); font-weight: 800; margin: 0; letter-spacing: -0.04em; line-height: 0.9; }
+        .hero h1 span { color: var(--primary); }
+        .hero p { font-size: 1.5rem; color: var(--muted); max-width: 650px; margin: 2.5rem 0; }
+
+        .btn-link { font-size: 1.25rem; font-weight: 600; text-transform: uppercase; color: var(--primary); text-decoration: none; display: inline-flex; align-items: center; gap: 0.5rem; transition: gap 0.3s ease; }
+        .btn-link:hover { gap: 1rem; }
+
+        /* Comparison Section */
+        .section-padding { padding: 8rem 0; border-bottom: 1px solid var(--border); }
+        .label { text-transform: uppercase; font-size: 0.75rem; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 1rem; display: block; }
+        .section-title { font-size: 3.5rem; font-weight: 800; margin-bottom: 4rem; letter-spacing: -0.02em; }
+
+        .compare-row { border-left: 2px solid var(--border); padding: 2rem 0 2rem 2rem; margin-bottom: 2rem; transition: border-color 0.3s; }
+        .compare-row:hover { border-color: var(--primary); }
+        .compare-row .before { color: var(--muted); text-decoration: line-through; display: block; margin-bottom: 0.5rem; font-size: 1.1rem; }
+        .compare-row .after { font-size: 1.8rem; font-weight: 600; color: var(--text); display: block; }
+
+        /* Project List */
+        .project-item { padding: 3rem 0; display: grid; grid-template-columns: 80px 1fr auto; border-bottom: 1px solid var(--border); align-items: center; }
+        .project-number { font-size: 0.875rem; color: var(--muted); }
+        .project-title { font-size: 2.2rem; font-weight: 600; margin: 0; }
+        .project-meta { color: var(--muted); margin-top: 0.5rem; }
+
+        .cta { text-align: center; padding: 10rem 0; }
+        .cta h2 { font-size: clamp(3rem, 7vw, 5rem); font-weight: 800; margin-bottom: 3rem; }
+        .cta-btn { background: var(--primary); color: white; padding: 1.5rem 3.5rem; font-size: 1.25rem; font-weight: 600; text-decoration: none; text-transform: uppercase; transition: opacity 0.3s; }
+        .cta-btn:hover { opacity: 0.9; }
+
+        footer { padding: 4rem 0; color: var(--muted); display: flex; justify-content: space-between; font-size: 0.875rem; }
+        footer a { color: var(--text); text-decoration: none; margin-left: 1.5rem; }
     </style>
 </head>
 <body>
+    <div class="container">
+        <section class="hero">
+            <h1>Code doesn't sell. <span>Logic does.</span></h1>
+            <p>I’m Sameer Appasa — Electrical Engineer at RMIT. I design hardware interfaces and embedded logic where reliability is the only metric that matters.</p>
+            <a href="#work" class="btn-link">Explore the work →</a>
+        </section>
 
-<div class="hero">
-    <h1>Sameer Appasa</h1>
-    <p>Electrical Engineering Student | RMIT University</p>
-    <div style="margin-top: 20px;">
-        <a href="https://www.linkedin.com/in/sameer-appasa-ba033931a/" class="btn contact-btn">LinkedIn</a>
-        <a href="mailto:sameer.appasa20@gmail.com" class="btn">Email Me</a>
+        <section class="section-padding">
+            <span class="label">The Engineering Difference</span>
+            <h2 class="section-title">Generic vs. Strategic</h2>
+            
+            <div class="compare-row">
+                <span class="before">Standard switch-to-LED output mapping</span>
+                <span class="after">Custom 8-bit parsing engine with hardware-safe validation.</span>
+            </div>
+
+            <div class="compare-row">
+                <span class="before">Basic if/else error handling</span>
+                <span class="after">Priority-based "Z-Code" hierarchy for multi-layered fault detection.</span>
+            </div>
+        </section>
+
+        <section id="work" class="section-padding">
+            <span class="label">Selected Case Study</span>
+            <h2 class="section-title">Projects built to <span style="color:var(--primary)">last</span></h2>
+
+            <div class="project-item">
+                <span class="project-number">01</span>
+                <div>
+                    <h3 class="project-title">OUSB Process Control</h3>
+                    <div class="project-meta">C++ | Register Manipulation | 24-Hour Rapid Dev</div>
+                </div>
+                <a href="ousb.html" class="btn-link">Read Case Study →</a>
+            </div>
+        </section>
+
+        <section class="cta">
+            <h2>Ready to build?</h2>
+            <a href="mailto:sameer.appasa20@gmail.com" class="cta-btn">Start a Conversation</a>
+        </section>
+
+        <footer>
+            <span>© 2026 Sameer Appasa</span>
+            <div>
+                <span>📞 0422759942</span>
+                <a href="https://www.linkedin.com/in/sameer-appasa-ba033931a/">LinkedIn</a>
+                <a href="https://github.com/Sam2001115">GitHub</a>
+            </div>
+        </footer>
     </div>
-</div>
-
-<div class="container">
-    <h2>🛠 Technical Toolkit</h2>
-    <div class="skills-grid">
-        <div class="skill-card"><h3>Embedded Systems</h3>ESP32, Arduino, OUSB HW</div>
-        <div class="skill-card"><h3>Software</h3>C++, Python, Java, HTML</div>
-        <div class="skill-card"><h3>Design Tools</h3>Multisim Live, VS Code, Git</div>
-    </div>
-
-    <h2>🚀 Featured Projects</h2>
-
-    <div class="project-card">
-        <div class="project-content">
-            <span class="tag">Robotics</span>
-            <h3>Autonomous Surface Rover</h3>
-            <p>Designed a custom gear-reduction system for 130 DC motors. Implemented real-time obstacle avoidance via ultrasonic sensors.</p>
-        </div>
-    </div>
-
-    <div class="project-card">
-        <div class="project-content">
-            <span class="tag">C++ / Low-Level</span>
-            <h3>OUSB Process Control System</h3>
-            <p>Advanced register-level hardware interaction using a strict priority error-precedence hierarchy (P, X, R, V, H, Y).</p>
-            <a href="ousb.html" class="btn">Technical Brief</a>
-        </div>
-    </div>
-</div>
-
-<footer>
-    <p><strong>Sameer Appasa</strong></p>
-    <p>📞 0422759942 | ✉️ <a href="mailto:sameer.appasa20@gmail.com">sameer.appasa20@gmail.com</a></p>
-    <p><a href="https://www.linkedin.com/in/sameer-appasa-ba033931a/">LinkedIn</a> | <a href="https://github.com/Sam2001115">GitHub</a></p>
-</footer>
-
 </body>
 </html>
