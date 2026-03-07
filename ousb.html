@@ -4,57 +4,60 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>OUSB Case Study | Sameer Appasa</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Inter', -apple-system, sans-serif; background-color: #0d1117; color: #c9d1d9; margin: 0; line-height: 1.6; }
-        .container { max-width: 800px; margin: 0 auto; padding: 60px 20px; }
-        h1 { color: #fff; font-size: 2.5rem; border-bottom: 1px solid #30363d; padding-bottom: 10px; }
-        h2 { color: #58a6ff; margin-top: 40px; }
-        h3 { color: #f0f6fc; }
-        table { width: 100%; border-collapse: collapse; margin: 20px 0; background: #161b22; border-radius: 8px; overflow: hidden; }
-        th, td { padding: 12px; border: 1px solid #30363d; text-align: left; }
-        th { background-color: #1f6feb; color: white; }
-        .back-btn { display: inline-block; margin-top: 40px; padding: 10px 20px; border: 1px solid #58a6ff; color: #58a6ff; text-decoration: none; border-radius: 6px; font-weight: bold; }
-        .back-btn:hover { background: #58a6ff; color: #fff; }
-        code { background: #21262d; padding: 2px 5px; border-radius: 4px; font-family: monospace; color: #ff7b72; }
+        :root { --bg: #0a0a0a; --primary: #3b82f6; --text: #ffffff; --muted: #a1a1aa; --border: #27272a; }
+        body { font-family: 'Inter', sans-serif; background-color: var(--bg); color: var(--text); margin: 0; line-height: 1.6; }
+        .container { max-width: 900px; margin: 0 auto; padding: 4rem 2rem; }
+        .back-nav { margin-bottom: 4rem; }
+        .back-nav a { color: var(--muted); text-decoration: none; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 0.1em; }
+        h1 { font-size: 4rem; font-weight: 800; letter-spacing: -0.04em; margin-bottom: 1rem; }
+        .subtitle { font-size: 1.5rem; color: var(--muted); margin-bottom: 4rem; }
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; margin-bottom: 6rem; }
+        .grid h3 { font-size: 0.75rem; text-transform: uppercase; color: var(--primary); letter-spacing: 0.1em; margin-bottom: 1rem; }
+        .content-section { margin-bottom: 6rem; }
+        .content-section h2 { font-size: 2.5rem; font-weight: 800; margin-bottom: 2rem; }
+        .code-block { background: #161b22; padding: 2rem; border-radius: 8px; border: 1px solid var(--border); font-family: monospace; color: #7ee787; overflow-x: auto; margin: 2rem 0; }
+        .user-content { font-size: 1.2rem; color: var(--muted); line-height: 1.8; }
+        .user-content b { color: var(--text); }
     </style>
 </head>
 <body>
+    <div class="container">
+        <nav class="back-nav"><a href="index.html">← Back to Portfolio</a></nav>
+        <header>
+            <h1>OUSB Process Control</h1>
+            <p class="subtitle">Ensuring hardware-software integrity in a high-pressure 24-hour development cycle.</p>
+        </header>
 
-<div class="container">
-    <h1>OUSB Process Control System</h1>
-    <p><strong>Low-Level C++ Hardware Interface</strong></p>
+        <div class="grid">
+            <div>
+                <h3>The Challenge</h3>
+                <p>Developing a C++ interface to interact with OUSB registers (8-bit and 10-bit) while maintaining perfect data sync between binary and decimal inputs under a strict deadline.</p>
+            </div>
+            <div>
+                <h3>The Strategy</h3>
+                <p>Instead of simple I/O, I built a multi-layered validation system that checks register bit-length and value-range before any hardware interaction occurs.</p>
+            </div>
+        </div>
 
-    <h2>📋 The Engineering Challenge</h2>
-    <p>The goal of this project was to develop a command-line interface (CLI) in C++ that interacts with the <strong>OUSB (Open Universal Serial Board)</strong> hardware simulator. The system reads 8-bit digital inputs and 10-bit analog inputs to update hardware registers.</p>
+        <section class="content-section">
+            <h2>The Logic Layers</h2>
+            <div class="user-content">
+                <p><b>Layer 1: Input Sanitization</b> - Describe how you cleaned the data here.</p>
+                <p><b>Layer 2: Error Precedence</b> - Explain your P, X, R, V, H, Y hierarchy here.</p>
+                </div>
+        </section>
 
-    <h2>🛠 Technical Implementation</h2>
-    <h3>1. Robust Error Precedence Hierarchy</h3>
-    <p>I implemented a strict error-handling hierarchy to ensure system stability. If multiple errors occur, the system reports only the highest-priority error:</p>
-
-    <table>
-        <tr><th>Code</th><th>Priority</th><th>Description</th></tr>
-        <tr><td><strong>P</strong></td><td>Highest</td><td><strong>Parameter Error:</strong> Incorrect number of arguments.</td></tr>
-        <tr><td><strong>X</strong></td><td>High</td><td><strong>Numerical Error:</strong> Input is not a valid number.</td></tr>
-        <tr><td><strong>R</strong></td><td>Medium</td><td><strong>Range Error:</strong> Value is outside 0–255 limit.</td></tr>
-        <tr><td><strong>V</strong></td><td>Medium</td><td><strong>Validation Error:</strong> Logic failure (Switch < Pot).</td></tr>
-        <tr><td><strong>H</strong></td><td>Low</td><td><strong>Hardware Error:</strong> Device failed to respond.</td></tr>
-    </table>
-
-    <h3>2. Intelligent Data Validation</h3>
-    <p>A key feature is the <code>expocnentialcheck</code> function. It manually parses strings to validate numerical digits, scientific notation (E/e), and polarity signs (+/-) before conversion.</p>
-
-    <h3>3. Bitwise Register Manipulation</h3>
-    <p>The project involved manipulating 8-bit binary strings to represent hardware states. I wrote logic to convert integers into <strong>Standard</strong> and <strong>Reverse Binary</strong> formats to interact directly with hardware LED registers.</p>
-
-    <h2>🧠 Key Skills Demonstrated</h2>
-    <ul>
-        <li><strong>Systems Programming:</strong> Managing data types and memory for hardware interaction.</li>
-        <li><strong>Industrial Logic:</strong> Implementing error precedence for reliability.</li>
-        <li><strong>Register Control:</strong> Direct manipulation of <code>PINC</code> and <code>ADC</code> values.</li>
-    </ul>
-
-    <a href="index.html" class="back-btn">← Back to Portfolio</a>
-</div>
-
+        <section class="content-section">
+            <h2>Critical Validation Code</h2>
+            <div class="code-block">
+if (bitLength == _8bit && (decimalValue < 0 || decimalValue > 255)) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;cout << "Z" << endl; // Safeguard for 8-bit register overflow<br>
+&nbsp;&nbsp;&nbsp;&nbsp;return 0;<br>
+}
+            </div>
+        </section>
+    </div>
 </body>
 </html>
