@@ -6,40 +6,70 @@
     <title>Rover Details | Sameer Appasa</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <style>
-        :root { --background: #0a0a0a; --foreground: #fafafa; --primary: #00ff41; --card: #121212; --muted: #262626; --muted-foreground: #a3a3a3; --border: #2e2e2e; --font-mono: 'JetBrains Mono', monospace; }
-        body { background-color: var(--background); color: var(--foreground); font-family: 'Inter', sans-serif; margin: 0; background-image: linear-gradient(var(--border) 1px, transparent 1px), linear-gradient(90deg, var(--border) 1px, transparent 1px); background-size: 50px 50px; }
-        .container { max-width: 800px; margin: 0 auto; padding: 4rem 2rem; }
+        :root { --background: #050505; --foreground: #fafafa; --primary: #4169E1; --card: #0d0d0d; --border: #1f1f1f; --font-mono: 'JetBrains Mono', monospace; }
+        body { background-color: var(--background); color: var(--foreground); font-family: 'Inter', sans-serif; margin: 0; line-height: 1.6; }
+        .container { max-width: 850px; margin: 0 auto; padding: 4rem 2rem; }
         .nav-back { font-family: var(--font-mono); color: var(--primary); text-decoration: none; margin-bottom: 2rem; display: block; }
         
-        h1 { font-family: var(--font-mono); font-size: 3rem; color: var(--primary); border-bottom: 1px solid var(--border); padding-bottom: 1rem; }
-        .tech-specs { background: var(--card); border: 1px solid var(--border); padding: 1.5rem; font-family: var(--font-mono); font-size: 0.9rem; color: var(--primary); margin: 2rem 0; }
+        h1 { font-family: var(--font-mono); font-size: 2.5rem; color: var(--primary); border-bottom: 1px solid var(--border); padding-bottom: 1rem; }
         
-        h2 { font-family: var(--font-mono); border-left: 4px solid var(--primary); padding-left: 1rem; margin-top: 3rem; }
-        p { color: var(--muted-foreground); line-height: 1.8; }
-        b { color: var(--foreground); }
+        .section { margin-bottom: 3.5rem; }
+        .section h2 { font-family: var(--font-mono); font-size: 1.1rem; color: var(--primary); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 1rem; border-left: 3px solid var(--primary); padding-left: 1rem; }
+        .section p { color: #d1d1d1; font-size: 1.1rem; }
+        
+        .tech-tags { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 1rem; }
+        .tag { font-family: var(--font-mono); font-size: 0.8rem; background: #111; border: 1px solid var(--border); padding: 0.3rem 0.8rem; color: var(--primary); }
+
+        .math-block { background: #0a0a0a; border: 1px solid var(--border); padding: 1.5rem; margin: 1.5rem 0; font-family: var(--font-mono); color: #88ccff; }
+        b { color: var(--primary); }
     </style>
 </head>
 <body>
     <div class="container">
         <a href="index.html" class="nav-back">< RETURN_TO_DASHBOARD</a>
-        <h1>CLEANING_ROVER.log</h1>
+        <h1>PROJECT: CLEANING_ROVER</h1>
 
-        <div class="tech-specs">
-            >> MOTORS: 4x 130 DC (11500 RPM)<br>
-            >> TRANSMISSION: 5:1 REDUCTION (12T/60T)<br>
-            >> LOGIC: ESP32 DEVKIT V1<br>
-            >> POWER: 11.1V LITHIUM // 1800mAh
+        <div class="section">
+            <h2>01. Objective</h2>
+            <p>To engineer an autonomous room-cleaning vehicle that utilizes a brush-based system for debris collection, focusing on high-efficiency mechanical movement and wireless user control.</p>
         </div>
 
-        <section>
-            <h2>HARDWARE_LAYER</h2>
-            <p>To overcome the low stall torque (15 g·cm) of the DC motors, I engineered a <b>5:1 gear reduction system</b>. This multiplied the effective torque to 75 g·cm, providing the necessary force to move the 3D-printed chassis and dust chamber.</p>
-        </section>
+        <div class="section">
+            <h2>02. Technology Used</h2>
+            <div class="tech-tags">
+                <span class="tag">ESP32 DevKit V1</span>
+                <span class="tag">L298N Motor Driver</span>
+                <span class="tag">HC-SR04 Ultrasonic Sensors</span>
+                <span class="tag">130 DC Motors</span>
+                <span class="tag">3D Printed Gearsets</span>
+                <span class="tag">11.1V Li-ion Battery</span>
+            </div>
+        </div>
 
-        <section>
-            <h2>INTELLIGENCE_LAYER</h2>
-            <p>The system operates on an <b>ESP32 DevKit V1</b>. To protect the microcontroller from the 5V Echo signals of the HC-SR04 sensors, I implemented a voltage divider circuit to step the signal down to a safe 3.3V.</p>
-        </section>
+        <div class="section">
+            <h2>03. The Challenge</h2>
+            <p>The primary hurdle was the <b>130 DC motors</b>. While they run at a high 11,500 RPM, they provide a very low native torque of only 15 g·cm. This was insufficient to move the 3D printed chassis and dust chamber. Additionally, the <b>HC-SR04 sensors</b> require 5V for peak performance, which exceeds the ESP32's 3.3V input tolerance, risking hardware failure.</p>
+        </div>
+
+        <div class="section">
+            <h2>04. Resolution</h2>
+            <p>I engineered a custom <b>5:1 gear reduction mechanism</b> (12-tooth pinion to 60-tooth gear) to multiply the output torque while reducing speed to a manageable 2,300 RPM.</p>
+            
+            
+
+            <div class="math-block">
+                // Torque Calculation<br>
+                Native: 15 g·cm<br>
+                Ratio: 5:1<br>
+                Result: 75 g·cm Stall Torque
+            </div>
+
+            <p>For the logic safety, I implemented a <b>voltage divider circuit</b> (1kΩ and 2kΩ resistors) on the sensor Echo pins to safely step down the 5V signal to 3.33V, protecting the ESP32 internal registers.</p>
+            
+            
+
+            <p>The control system was resolved by hosting a <b>WiFi Web Server</b> directly on the ESP32, allowing real-time manual override via a web page alongside the sensor-driven autonomous mode.</p>
+        </div>
     </div>
 </body>
 </html>
