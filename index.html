@@ -9,8 +9,8 @@
         :root {
             --background: #050505;
             --foreground: #fafafa;
-            --primary: #00008B; /* Dark Blue */
-            --primary-light: #4169E1; /* Royal Blue for better visibility on black */
+            --primary: #00008B; 
+            --primary-light: #4169E1; 
             --card: #0d0d0d;
             --muted: #1a1a1a;
             --muted-foreground: #888888;
@@ -29,38 +29,26 @@
 
         .container { max-width: 1000px; margin: 0 auto; padding: 4rem 2rem; }
 
+        /* Header & Info */
         .terminal-header { font-family: var(--font-mono); color: var(--primary-light); margin-bottom: 1rem; }
         h1 { font-size: clamp(2.5rem, 8vw, 4.5rem); font-weight: 700; margin: 0; letter-spacing: -0.05em; }
-        .cursor { display: inline-block; width: 12px; height: 1.2em; background: var(--primary-light); margin-left: 5px; animation: blink 1s step-end infinite; vertical-align: middle; }
-        
-        @keyframes blink { 0%, 50% { opacity: 1; } 51%, 100% { opacity: 0; } }
+        .contact-info { margin-top: 1.5rem; font-family: var(--font-mono); font-size: 0.9rem; color: var(--muted-foreground); }
+        .contact-info a { color: var(--primary-light); text-decoration: none; margin-right: 15px; }
 
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.5rem; margin-top: 4rem; }
-        .card { 
-            background: var(--card); 
-            border: 1px solid var(--border); 
-            padding: 2.5rem; 
-            border-radius: 4px; 
-            transition: all 0.3s ease;
-        }
-        .card:hover { 
-            border-color: var(--primary-light); 
-            transform: translateY(-5px); 
-            box-shadow: 0 0 30px rgba(0, 0, 139, 0.2); 
-        }
+        /* Skills Section */
+        h2 { font-family: var(--font-mono); color: var(--primary-light); font-size: 1.2rem; margin-top: 4rem; text-transform: uppercase; }
+        .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-top: 1rem; }
+        .skill-item { background: var(--card); border: 1px solid var(--border); padding: 1rem; border-radius: 4px; }
+        .skill-item b { color: var(--primary-light); display: block; margin-bottom: 0.5rem; font-size: 0.8rem; font-family: var(--font-mono); }
+
+        /* Projects */
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.5rem; margin-top: 2rem; }
+        .card { background: var(--card); border: 1px solid var(--border); padding: 2.5rem; border-radius: 4px; transition: all 0.3s ease; }
+        .card:hover { border-color: var(--primary-light); transform: translateY(-5px); box-shadow: 0 0 30px rgba(0, 0, 139, 0.2); }
         .card h3 { margin: 0; font-family: var(--font-mono); color: var(--primary-light); font-size: 1.4rem; }
         .card p { color: var(--muted-foreground); margin: 1.5rem 0; font-size: 0.95rem; }
         
-        .btn { 
-            display: inline-block; 
-            font-family: var(--font-mono); 
-            color: var(--primary-light); 
-            text-decoration: none; 
-            font-size: 0.85rem; 
-            border: 1px solid var(--primary-light); 
-            padding: 0.6rem 1.2rem;
-            transition: 0.3s;
-        }
+        .btn { display: inline-block; font-family: var(--font-mono); color: var(--primary-light); text-decoration: none; font-size: 0.85rem; border: 1px solid var(--primary-light); padding: 0.6rem 1.2rem; transition: 0.3s; }
         .btn:hover { background: var(--primary-light); color: white; }
 
         footer { margin-top: 6rem; border-top: 1px solid var(--border); padding: 2rem 0; color: var(--muted-foreground); font-family: var(--font-mono); font-size: 0.8rem; }
@@ -69,8 +57,23 @@
 <body>
     <div class="container">
         <div class="terminal-header">> SYSTEM_BOOT: SAMEER_APPASA_INIT_SUCCESS</div>
-        <h1>Electrical Engineer<span class="cursor"></span></h1>
-        
+        <h1>Sameer Appasa</h1>
+        <div class="contact-info">
+            <span>LOCATION: Melbourne, AU</span> | 
+            <span>PHONE: 0422759942</span><br>
+            <a href="mailto:sameer.appasa20@gmail.com">EMAIL: sameer.appasa20@gmail.com</a>
+            <a href="https://www.linkedin.com/in/sameer-appasa-ba033931a/">LINKEDIN</a>
+            <a href="https://github.com/Sam2001115">GITHUB</a>
+        </div>
+
+        <h2>🛠 Technical Toolkit</h2>
+        <div class="skills-grid">
+            <div class="skill-item"><b>EMBEDDED SYSTEMS</b>ESP32, Arduino, OUSB HW</div>
+            <div class="skill-item"><b>SOFTWARE</b>C++, Python, Java, HTML</div>
+            <div class="skill-item"><b>DESIGN TOOLS</b>Multisim, VS Code, Git</div>
+        </div>
+
+        <h2>🚀 Featured Projects</h2>
         <div class="grid">
             <div class="card">
                 <h3>[01] Cleaning Rover</h3>
@@ -86,7 +89,7 @@
         </div>
 
         <footer>
-            LOCAL_TIME: 2026 // RMIT_ENGINEERING // MELBOURNE_VIC
+            RMIT_ENGINEERING // 2026 // ALL_SYSTEMS_OPERATIONAL
         </footer>
     </div>
 </body>
