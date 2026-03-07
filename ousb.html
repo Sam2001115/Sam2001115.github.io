@@ -10,18 +10,12 @@
         body { background-color: var(--background); color: var(--foreground); font-family: 'Inter', sans-serif; margin: 0; line-height: 1.6; }
         .container { max-width: 850px; margin: 0 auto; padding: 4rem 2rem; }
         .nav-back { font-family: var(--font-mono); color: var(--primary); text-decoration: none; margin-bottom: 2rem; display: block; }
-        
         h1 { font-family: var(--font-mono); font-size: 2.5rem; color: var(--primary); border-bottom: 1px solid var(--border); padding-bottom: 1rem; }
-        
         .section { margin-bottom: 3.5rem; }
-        .section h2 { font-family: var(--font-mono); font-size: 1.1rem; color: var(--primary); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 1rem; border-left: 3px solid var(--primary); padding-left: 1rem; }
-        .section p { color: #d1d1d1; font-size: 1.1rem; }
-        
+        .section h2 { font-family: var(--font-mono); font-size: 1.1rem; color: var(--primary); text-transform: uppercase; border-left: 3px solid var(--primary); padding-left: 1rem; margin-bottom: 1rem; }
         .tech-tags { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 1rem; }
         .tag { font-family: var(--font-mono); font-size: 0.8rem; background: #111; border: 1px solid var(--border); padding: 0.3rem 0.8rem; color: var(--primary); }
-
         .code-snippet { background: #0a0a0a; border: 1px solid var(--border); padding: 1.5rem; margin: 1.5rem 0; font-family: var(--font-mono); color: #88ccff; overflow-x: auto; white-space: pre; }
-        b { color: var(--primary); }
     </style>
 </head>
 <body>
@@ -31,47 +25,29 @@
 
         <div class="section">
             <h2>01. Objective</h2>
-            <p>To develop a robust C++ command-line simulator for the Open USB (OUSB) board, ensuring perfect synchronization between decimal inputs and binary register outputs within a strict 24-hour development window.</p>
+            <p>To develop a robust C++ command-line simulator for the OUSB board, ensuring perfect synchronization between decimal inputs and binary register outputs within a 24-hour window.</p>
         </div>
 
         <div class="section">
             <h2>02. Technology Used</h2>
             <div class="tech-tags">
-                <span class="tag">C++ Standard Library</span>
-                <span class="tag">Register-Level Logic</span>
-                <span class="tag">File I/O Handling</span>
-                <span class="tag">Data Validation Algorithms</span>
-                <span class="tag">Command Line Interface (CLI)</span>
+                <span class="tag">C++</span> <span class="tag">Register-Level Logic</span> <span class="tag">CLI Development</span>
             </div>
         </div>
 
         <div class="section">
             <h2>03. The Challenge</h2>
-            <p>The main difficulty lay in maintaining **Data Integrity** across different numeric bases. The system had to validate that a decimal string provided by a file matched a binary string exactly, while also ensuring those values didn't exceed the physical bit-limits of the 8-bit (0-255) and 10-bit (0-1023) hardware registers. Any single failure in the logic chain—from file reading to character parsing—required a specific, immediate <b>"Z" error code</b> output.</p>
+            <p>Maintaining data integrity across numeric bases while ensuring inputs stayed within 8-bit (0-255) and 10-bit (0-1023) limits. Any mismatch required an immediate "Z" error code.</p>
         </div>
 
         <div class="section">
             <h2>04. Resolution</h2>
-            <p>I architected a <b>Priority-Based Validation Pipeline</b>. Instead of nested if-statements, the code runs through sequential checks (File Existence → Numeric Validation → Bit Length → Binary-to-Decimal Sync). If any layer fails, the program terminates safely with the "Z" code to protect potential hardware connections.</p>
-            
-            
-
+            <p>I implemented a priority-based validation pipeline to check for file integrity, numeric validity, and bit-length before conversion.</p>
             <div class="code-snippet">
-// Critical Synchronization Check
 if (decimalValue != binaryDecimalValue) {
     cout << "Z" << endl;
     return 0;
-}
-
-// Register Overflow Protection
-if (bitLength == _8bit && (decimalValue < 0 || decimalValue > 255)) {
-    cout << "Z" << endl;
-    return 0;
 }</div>
-
-            <p>By implementing custom <b>string-to-integer</b> and <b>binary-to-decimal</b> conversion functions rather than relying on high-level libraries, I ensured the simulator remained lightweight and compatible with low-level embedded environments.</p>
-            
-            
         </div>
     </div>
 </body>
