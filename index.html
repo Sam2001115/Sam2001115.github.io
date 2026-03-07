@@ -32,14 +32,16 @@
         /* Header & Info */
         .terminal-header { font-family: var(--font-mono); color: var(--primary-light); margin-bottom: 1rem; }
         h1 { font-size: clamp(2.5rem, 8vw, 4.5rem); font-weight: 700; margin: 0; letter-spacing: -0.05em; }
-        .contact-info { margin-top: 1.5rem; font-family: var(--font-mono); font-size: 0.9rem; color: var(--muted-foreground); }
-        .contact-info a { color: var(--primary-light); text-decoration: none; margin-right: 15px; }
+        .contact-info { margin-top: 1.5rem; font-family: var(--font-mono); font-size: 0.9rem; color: var(--muted-foreground); line-height: 1.8; }
+        .contact-info a { color: var(--primary-light); text-decoration: none; margin-right: 15px; border-bottom: 1px solid transparent; transition: 0.3s; }
+        .contact-info a:hover { border-bottom: 1px solid var(--primary-light); }
 
         /* Skills Section */
-        h2 { font-family: var(--font-mono); color: var(--primary-light); font-size: 1.2rem; margin-top: 4rem; text-transform: uppercase; }
-        .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-top: 1rem; }
-        .skill-item { background: var(--card); border: 1px solid var(--border); padding: 1rem; border-radius: 4px; }
+        h2 { font-family: var(--font-mono); color: var(--primary-light); font-size: 1.2rem; margin-top: 4rem; text-transform: uppercase; letter-spacing: 0.1em; }
+        .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; margin-top: 1rem; }
+        .skill-item { background: var(--card); border: 1px solid var(--border); padding: 1.2rem; border-radius: 4px; }
         .skill-item b { color: var(--primary-light); display: block; margin-bottom: 0.5rem; font-size: 0.8rem; font-family: var(--font-mono); }
+        .skill-item span { font-size: 0.95rem; color: #d1d1d1; }
 
         /* Projects */
         .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.5rem; margin-top: 2rem; }
@@ -68,9 +70,18 @@
 
         <h2>🛠 Technical Toolkit</h2>
         <div class="skills-grid">
-            <div class="skill-item"><b>EMBEDDED SYSTEMS</b>ESP32, Arduino, OUSB HW</div>
-            <div class="skill-item"><b>SOFTWARE</b>C++, Python, Java, HTML</div>
-            <div class="skill-item"><b>DESIGN TOOLS</b>Multisim, VS Code, Git</div>
+            <div class="skill-item">
+                <b>HARDWARE & DESIGN</b>
+                <span>Altium, SolidWorks, Circuit Design, Soldering</span>
+            </div>
+            <div class="skill-item">
+                <b>EMBEDDED SYSTEMS</b>
+                <span>ESP32, Raspberry Pi, Arduino, OUSB Hardware</span>
+            </div>
+            <div class="skill-item">
+                <b>SOFTWARE & TOOLS</b>
+                <span>C++, Python, Java, Multisim, Git, HTML</span>
+            </div>
         </div>
 
         <h2>🚀 Featured Projects</h2>
