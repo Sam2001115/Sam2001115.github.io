@@ -3,43 +3,98 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rover Details | Sameer Appasa</title>
+    <title>Sameer Appasa | Developer Terminal</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <style>
-        :root { --background: #0a0a0a; --foreground: #fafafa; --primary: #00ff41; --card: #121212; --muted: #262626; --muted-foreground: #a3a3a3; --border: #2e2e2e; --font-mono: 'JetBrains Mono', monospace; }
-        body { background-color: var(--background); color: var(--foreground); font-family: 'Inter', sans-serif; margin: 0; background-image: linear-gradient(var(--border) 1px, transparent 1px), linear-gradient(90deg, var(--border) 1px, transparent 1px); background-size: 50px 50px; }
-        .container { max-width: 800px; margin: 0 auto; padding: 4rem 2rem; }
-        .nav-back { font-family: var(--font-mono); color: var(--primary); text-decoration: none; margin-bottom: 2rem; display: block; }
+        :root {
+            --background: #0a0a0a;
+            --foreground: #fafafa;
+            --primary: #00ff41; /* Neon Matrix Green */
+            --card: #121212;
+            --muted: #262626;
+            --muted-foreground: #a3a3a3;
+            --border: #2e2e2e;
+            --font-mono: 'JetBrains Mono', monospace;
+        }
+
+        body { 
+            background-color: var(--background); 
+            color: var(--foreground); 
+            font-family: 'Inter', sans-serif; 
+            margin: 0; 
+            background-image: linear-gradient(var(--border) 1px, transparent 1px), linear-gradient(90deg, var(--border) 1px, transparent 1px);
+            background-size: 50px 50px; /* Technical Grid Pattern */
+        }
+
+        .container { max-width: 1000px; margin: 0 auto; padding: 4rem 2rem; }
+
+        /* Hero Section */
+        .terminal-header { font-family: var(--font-mono); color: var(--primary); margin-bottom: 1rem; }
+        h1 { font-size: clamp(2.5rem, 8vw, 5rem); font-weight: 700; margin: 0; letter-spacing: -0.05em; }
+        .cursor { display: inline-block; width: 12px; height: 1.2em; background: var(--primary); margin-left: 5px; animation: blink 1s step-end infinite; vertical-align: middle; }
         
-        h1 { font-family: var(--font-mono); font-size: 3rem; color: var(--primary); border-bottom: 1px solid var(--border); padding-bottom: 1rem; }
-        .tech-specs { background: var(--card); border: 1px solid var(--border); padding: 1.5rem; font-family: var(--font-mono); font-size: 0.9rem; color: var(--primary); margin: 2rem 0; }
-        
-        h2 { font-family: var(--font-mono); border-left: 4px solid var(--primary); padding-left: 1rem; margin-top: 3rem; }
-        p { color: var(--muted-foreground); line-height: 1.8; }
-        b { color: var(--foreground); }
+        @keyframes blink { 0%, 50% { opacity: 1; } 51%, 100% { opacity: 0; } }
+
+        p.description { font-size: 1.25rem; color: var(--muted-foreground); max-width: 600px; margin: 2rem 0; }
+
+        /* Project Cards */
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; margin-top: 4rem; }
+        .card { 
+            background: var(--card); 
+            border: 1px solid var(--border); 
+            padding: 2rem; 
+            border-radius: 8px; 
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .card:hover { 
+            border-color: var(--primary); 
+            transform: translateY(-5px); 
+            box-shadow: 0 0 20px rgba(0, 255, 65, 0.1); 
+        }
+        .card h3 { margin: 0; font-size: 1.5rem; color: var(--primary); font-family: var(--font-mono); }
+        .card p { color: var(--muted-foreground); line-height: 1.5; margin: 1rem 0; }
+        .btn { 
+            display: inline-block; 
+            font-family: var(--font-mono); 
+            color: var(--primary); 
+            text-decoration: none; 
+            font-size: 0.9rem; 
+            border: 1px solid var(--primary); 
+            padding: 0.5rem 1rem;
+            transition: 0.3s;
+        }
+        .btn:hover { background: var(--primary); color: var(--background); }
+
+        footer { margin-top: 6rem; border-top: 1px solid var(--border); padding-top: 2rem; color: var(--muted-foreground); font-family: var(--font-mono); font-size: 0.8rem; }
     </style>
 </head>
 <body>
     <div class="container">
-        <a href="index.html" class="nav-back">< RETURN_TO_DASHBOARD</a>
-        <h1>CLEANING_ROVER.log</h1>
+        <div class="terminal-header">> SAMEER_APPASA_INIT_...</div>
+        <h1>Electrical Systems Engineer<span class="cursor"></span></h1>
+        <p class="description">Building robust hardware logic and autonomous systems at RMIT University. Focused on efficiency, torque, and real-time reliability.</p>
 
-        <div class="tech-specs">
-            >> MOTORS: 4x 130 DC (11500 RPM)<br>
-            >> TRANSMISSION: 5:1 REDUCTION (12T/60T)<br>
-            >> LOGIC: ESP32 DEVKIT V1<br>
-            >> POWER: 11.1V LITHIUM // 1800mAh
+        <div class="grid">
+            <div class="card">
+                <div style="font-size: 0.7rem; color: var(--primary); font-family: var(--font-mono); margin-bottom: 0.5rem;">[CASE_01]</div>
+                <h3>Cleaning Rover</h3>
+                <p>Mechanical power transmission study utilizing a 5:1 gear reduction and ESP32 WiFi navigation.</p>
+                <a href="rover.html" class="btn">ACCESS_DETAILS</a>
+            </div>
+
+            <div class="card">
+                <div style="font-size: 0.7rem; color: var(--primary); font-family: var(--font-mono); margin-bottom: 0.5rem;">[CASE_02]</div>
+                <h3>OUSB Simulator</h3>
+                <p>Low-level C++ register interaction with a priority-based Z-code error hierarchy.</p>
+                <a href="ousb.html" class="btn">ACCESS_DETAILS</a>
+            </div>
         </div>
 
-        <section>
-            <h2>HARDWARE_LAYER</h2>
-            <p>To overcome the low stall torque (15 g·cm) of the DC motors, I engineered a <b>5:1 gear reduction system</b>. This multiplied the effective torque to 75 g·cm, providing the necessary force to move the 3D-printed chassis and dust chamber.</p>
-        </section>
-
-        <section>
-            <h2>INTELLIGENCE_LAYER</h2>
-            <p>The system operates on an <b>ESP32 DevKit V1</b>. To protect the microcontroller from the 5V Echo signals of the HC-SR04 sensors, I implemented a voltage divider circuit to step the signal down to a safe 3.3V.</p>
-        </section>
+        <footer>
+            LOGGED_IN: SAMEER_APPASA // 2026 // MELBOURNE_AU
+        </footer>
     </div>
 </body>
 </html>
