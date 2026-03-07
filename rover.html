@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cleaning Rover | Sameer Appasa</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root { --bg: #0a0a0a; --primary: #3b82f6; --text: #ffffff; --muted: #a1a1aa; --border: #27272a; }
+        body { font-family: 'Inter', sans-serif; background-color: var(--bg); color: var(--text); margin: 0; line-height: 1.6; }
+        .container { max-width: 900px; margin: 0 auto; padding: 4rem 2rem; }
+        .back-nav { margin-bottom: 4rem; }
+        .back-nav a { color: var(--muted); text-decoration: none; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 0.1em; }
+        h1 { font-size: 4rem; font-weight: 800; letter-spacing: -0.04em; margin-bottom: 1rem; }
+        .subtitle { font-size: 1.5rem; color: var(--muted); margin-bottom: 4rem; }
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; margin-bottom: 6rem; }
+        .grid h3 { font-size: 0.75rem; text-transform: uppercase; color: var(--primary); letter-spacing: 0.1em; margin-bottom: 1rem; }
+        .content-section { margin-bottom: 6rem; }
+        .content-section h2 { font-size: 2.5rem; font-weight: 800; margin-bottom: 2rem; }
+        .user-content { font-size: 1.2rem; color: var(--muted); line-height: 1.8; }
+        .user-content b { color: var(--text); }
+        .highlight-box { background: #161b22; padding: 2rem; border-radius: 8px; border: 1px solid var(--border); margin: 2rem 0; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <nav class="back-nav"><a href="index.html">← Back to Portfolio</a></nav>
+        <header>
+            <h1>Autonomous Cleaning Rover</h1>
+            <p class="subtitle">A mechanical and electronic study in torque multiplication and WiFi-enabled autonomous navigation.</p>
+        </header>
+
+        <div class="grid">
+            <div>
+                <h3>Objective</h3>
+                <p>Engineering an efficient floor-cleaning method utilizing a custom-designed brush system and a high-torque 3D-printed chassis.</p>
+            </div>
+            <div>
+                <h3>Strategy</h3>
+                <p>Solving low-torque motor limitations through a 5:1 gear reduction and implementing a dual-mode ESP32 control architecture.</p>
+            </div>
+        </div>
+
+        <section class="content-section">
+            <h2>Hardware Layer</h2>
+            <div class="user-content">
+                <p>The rover utilizes <b>130 DC motors</b> running at 11,500 RPM. Given their low native torque (15 g·cm), I designed a <b>5:1 gear reduction system</b> (12-tooth to 60-tooth) to increase output torque to 11,500 g·cm (at reduced RPM), enabling the rover to move its own weight and the dust chamber effectively.</p>
+                <div class="highlight-box">
+                    <b>Mechanical Math:</b><br>
+                    11500 RPM / 5 = 2300 RPM Final Speed<br>
+                    15 g·cm x 5 = 75 g·cm Stall Torque per motor
+                </div>
+                <p>Power management is handled by an <b>L298N driver</b>, converting an 11.1V 1800mAh Lithium battery source to power both the motors and the 3.3V logic of the ESP32.</p>
+            </div>
+        </section>
+
+        <section class="content-section">
+            <h2>Intelligence Layer</h2>
+            <div class="user-content">
+                <p>I utilized the <b>ESP32 DevKit V1</b> for its dual-core processing and integrated WiFi. The rover features a custom manual control mode via a hosted web server and an autonomous mode driven by four <b>HC-SR04 Ultrasonic sensors</b>.</p>
+                <p>To ensure pin safety while maximizing sensor range, I implemented a <b>voltage divider</b> (1kΩ/2kΩ) on the 5V Echo signals to match the ESP32’s 3.3V input tolerance.</p>
+            </div>
+        </section>
+    </div>
+</body>
+</html>
