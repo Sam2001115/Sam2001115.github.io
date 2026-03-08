@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sameer Appasa | Engineering Portfolio</title>
+    <link rel="icon" type="image/png" href="logo.png">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -29,21 +30,21 @@
 
         .container { max-width: 1000px; margin: 0 auto; padding: 4rem 2rem; }
 
-        /* Header & Info */
-        .terminal-header { font-family: var(--font-mono); color: var(--primary-light); margin-bottom: 1rem; }
         h1 { font-size: clamp(2.5rem, 8vw, 4.5rem); font-weight: 700; margin: 0; letter-spacing: -0.05em; }
+        .cursor { display: inline-block; width: 12px; height: 1.2em; background: var(--primary-light); margin-left: 5px; animation: blink 1s step-end infinite; vertical-align: middle; }
+        
+        @keyframes blink { 0%, 50% { opacity: 1; } 51%, 100% { opacity: 0; } }
+
         .contact-info { margin-top: 1.5rem; font-family: var(--font-mono); font-size: 0.9rem; color: var(--muted-foreground); line-height: 1.8; }
         .contact-info a { color: var(--primary-light); text-decoration: none; margin-right: 15px; border-bottom: 1px solid transparent; transition: 0.3s; }
         .contact-info a:hover { border-bottom: 1px solid var(--primary-light); }
 
-        /* Skills Section */
         h2 { font-family: var(--font-mono); color: var(--primary-light); font-size: 1.2rem; margin-top: 4rem; text-transform: uppercase; letter-spacing: 0.1em; }
         .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; margin-top: 1rem; }
         .skill-item { background: var(--card); border: 1px solid var(--border); padding: 1.2rem; border-radius: 4px; }
         .skill-item b { color: var(--primary-light); display: block; margin-bottom: 0.5rem; font-size: 0.8rem; font-family: var(--font-mono); }
         .skill-item span { font-size: 0.95rem; color: #d1d1d1; }
 
-        /* Projects */
         .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.5rem; margin-top: 2rem; }
         .card { background: var(--card); border: 1px solid var(--border); padding: 2.5rem; border-radius: 4px; transition: all 0.3s ease; }
         .card:hover { border-color: var(--primary-light); transform: translateY(-5px); box-shadow: 0 0 30px rgba(0, 0, 139, 0.2); }
@@ -58,8 +59,8 @@
 </head>
 <body>
     <div class="container">
-        <div class="terminal-header">> SYSTEM_BOOT: SAMEER_APPASA_INIT_SUCCESS</div>
-        <h1>Sameer Appasa</h1>
+        <h1>Sameer Appasa<span class="cursor"></span></h1>
+        
         <div class="contact-info">
             <span>LOCATION: Melbourne, AU</span> | 
             <span>PHONE: 0422759942</span><br>
@@ -97,11 +98,12 @@
                 <p>A C++ register-level hardware simulation focusing on strict error-precedence logic and data integrity.</p>
                 <a href="ousb.html" class="btn">VIEW_TECHNICAL_LOGS</a>
             </div>
+
             <div class="card">
-    <h3>[03] Room Monitor</h3>
-    <p>Security system using ESP32 and Telegram API to detect intrusions with dynamic range adjustment.</p>
-    <a href="monitoring.html" class="btn">VIEW_TECHNICAL_LOGS</a>
-</div>
+                <h3>[03] Room Monitor</h3>
+                <p>Security system using ESP32 and Telegram API to detect intrusions with dynamic range adjustment.</p>
+                <a href="monitoring.html" class="btn">VIEW_TECHNICAL_LOGS</a>
+            </div>
         </div>
 
         <footer>
