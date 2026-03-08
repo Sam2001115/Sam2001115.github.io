@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Room Monitor | Sameer Appasa</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root { --background: #050505; --foreground: #fafafa; --primary: #4169E1; --card: #0d0d0d; --border: #1f1f1f; --font-mono: 'JetBrains Mono', monospace; }
+        body { background-color: var(--background); color: var(--foreground); font-family: 'Inter', sans-serif; margin: 0; line-height: 1.6; }
+        .container { max-width: 850px; margin: 0 auto; padding: 4rem 2rem; }
+        .nav-back { font-family: var(--font-mono); color: var(--primary); text-decoration: none; margin-bottom: 2rem; display: block; }
+        h1 { font-family: var(--font-mono); font-size: 2.5rem; color: var(--primary); border-bottom: 1px solid var(--border); padding-bottom: 1rem; }
+        .section { margin-bottom: 3.5rem; }
+        .section h2 { font-family: var(--font-mono); font-size: 1.1rem; color: var(--primary); text-transform: uppercase; border-left: 3px solid var(--primary); padding-left: 1rem; margin-bottom: 1rem; }
+        .tech-tags { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 1rem; }
+        .tag { font-family: var(--font-mono); font-size: 0.8rem; background: #111; border: 1px solid var(--border); padding: 0.3rem 0.8rem; color: var(--primary); }
+        b { color: var(--primary); }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="index.html" class="nav-back">< RETURN_TO_DASHBOARD</a>
+        <h1>PROJECT: ROOM_MONITOR_DEVICE</h1>
+
+        <div class="section">
+            <h2>01. Objective</h2>
+            <p>Monitoring my room for any intrusion while I'm out. The device detects movement and sends real-time alerts to my phone via Telegram, including the duration of the intrusion.</p>
+        </div>
+
+        <div class="section">
+            <h2>02. Technology Used</h2>
+            <div class="tech-tags">
+                <span class="tag">ESP32 DevKit V1</span>
+                <span class="tag">HC-SR04 Ultrasonic Sensor</span>
+                <span class="tag">1.3" I2C OLED Display</span>
+                <span class="tag">Telegram Bot API</span>
+                <span class="tag">Healthchecks.io (Pinging)</span>
+                <span class="tag">Push Buttons (Input)</span>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>03. Challenges</h2>
+            <p><b>1. Connectivity Awareness:</b> If the device is turned off or loses power, there was no way to know, leaving the room unprotected without notice.</p>
+            <p><b>2. Dynamic Placement:</b> The detection range needed to be adjusted constantly in the code because the device doesn't have a fixed place, making it inefficient to re-flash the firmware every time I moved it.</p>
+        </div>
+
+        <div class="section">
+            <h2>04. Resolution</h2>
+            <p>I utilized <b>Healthchecks</b> to send an automated email if the device goes offline by tracking the last ping sent by the ESP32.</p>
+            
+            
+
+            <p>To solve the range issue, I added <b>two push buttons</b> that allow for manual adjustment of the ultrasonic threshold directly on the device. The <b>OLED display</b> provides real-time feedback on the current range settings and connection status.</p>
+            
+            
+
+            <p>When movement is detected within the set range, the ESP32 communicates with a <b>Telegram Bot</b> on my phone to provide instant security updates and timestamps.</p>
+
+            
+        </div>
+    </div>
+</body>
+</html>
