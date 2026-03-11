@@ -16,10 +16,11 @@
             --primary: #00008B; 
             --primary-light: #4169E1; 
             --card: #0d0d0d;
-            --muted: #1a1a1a;
             --muted-foreground: #888888;
             --border: #1f1f1f;
             --font-mono: 'JetBrains Mono', monospace;
+            --status-done: #00ffcc;
+            --status-progress: #ffd700;
         }
 
         body { 
@@ -107,11 +108,10 @@
             list-style: none;
             margin: 0;
             z-index: 1000;
-            /* Animation */
             opacity: 0;
             transform: translateY(-5px);
             transition: opacity 0.2s ease, transform 0.2s ease;
-            pointer-events: none; /* Prevents flickering */
+            pointer-events: none; 
         }
 
         .skill-item[open] .skill-content {
@@ -126,12 +126,26 @@
             padding: 8px 0;
             font-family: var(--font-mono);
             border-bottom: 1px solid #1a1a1a;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
         .skill-content li:last-child { border-bottom: none; }
 
-        .skill-content li span {
-            display: block;
+        /* STATUS TAG STYLING */
+        .status-tag {
+            font-size: 0.65rem;
+            font-weight: bold;
+            padding: 2px 6px;
+            border-radius: 3px;
+            text-transform: uppercase;
+        }
+        .done { color: var(--status-done); border: 1px solid var(--status-done); }
+        .progress { color: var(--status-progress); border: 1px solid var(--status-progress); }
+
+        .course-name-box { display: flex; flex-direction: column; }
+        .skill-content li span.course-code {
             font-size: 0.7rem;
             color: var(--primary-light);
             opacity: 0.8;
@@ -174,7 +188,6 @@
                     <li>Soldering</li>
                 </ul>
             </details>
-            
             <details class="skill-item">
                 <summary>EMBEDDED SYSTEMS</summary>
                 <ul class="skill-content">
@@ -184,7 +197,6 @@
                     <li>OUSB Hardware</li>
                 </ul>
             </details>
-            
             <details class="skill-item">
                 <summary>SOFTWARE & TOOLS</summary>
                 <ul class="skill-content">
@@ -203,24 +215,24 @@
             <details class="skill-item">
                 <summary>YEAR 1 (2025)</summary>
                 <ul class="skill-content">
-                    <li><span>CIVE1186</span>Intro to Env & Sustain Sys Eng</li>
-                    <li><span>OENG1250</span>Intro to Engineering Design</li>
-                    <li><span>EEET2246</span>Engineering Computing 1</li>
-                    <li><span>EEET2249</span>Intro to Elec & Electronic Eng</li>
-                    <li><span>OENG1166</span>Introduction to Prof Eng Prac</li>
-                    <li><span>OENG1206</span>Digital Fundamentals</li>
-                    <li><span>OENG1208</span>Engineering Science</li>
-                    <li><span>MATH2393</span>Engineering Mathematics</li>
+                    <li><div class="course-name-box"><span class="course-code">CIVE1186</span>Intro to Env & Sustain Sys Eng</div> <span class="status-tag done">DONE</span></li>
+                    <li><div class="course-name-box"><span class="course-code">OENG1250</span>Intro to Engineering Design</div> <span class="status-tag done">DONE</span></li>
+                    <li><div class="course-name-box"><span class="course-code">EEET2246</span>Engineering Computing 1</div> <span class="status-tag done">DONE</span></li>
+                    <li><div class="course-name-box"><span class="course-code">EEET2249</span>Intro to Elec & Electronic Eng</div> <span class="status-tag done">DONE</span></li>
+                    <li><div class="course-name-box"><span class="course-code">OENG1166</span>Introduction to Prof Eng Prac</div> <span class="status-tag done">DONE</span></li>
+                    <li><div class="course-name-box"><span class="course-code">OENG1206</span>Digital Fundamentals</div> <span class="status-tag done">DONE</span></li>
+                    <li><div class="course-name-box"><span class="course-code">OENG1208</span>Engineering Science</div> <span class="status-tag done">DONE</span></li>
+                    <li><div class="course-name-box"><span class="course-code">MATH2393</span>Engineering Mathematics</div> <span class="status-tag done">DONE</span></li>
                 </ul>
             </details>
             
             <details class="skill-item">
                 <summary>YEAR 2 (2026)</summary>
                 <ul class="skill-content">
-                    <li><span>MATH2161</span>Mathematics for ECE</li>
-                    <li><span>EEET2255</span>Electronics</li>
-                    <li><span>EEET2369</span>Signals and Systems 1</li>
-                    <li><span>EEET2613</span>Smart Grids</li>
+                    <li><div class="course-name-box"><span class="course-code">MATH2161</span>Mathematics for ECE</div> <span class="status-tag progress">IN PROGRESS</span></li>
+                    <li><div class="course-name-box"><span class="course-code">EEET2255</span>Electronics</div> <span class="status-tag progress">IN PROGRESS</span></li>
+                    <li><div class="course-name-box"><span class="course-code">EEET2369</span>Signals and Systems 1</div> <span class="status-tag progress">IN PROGRESS</span></li>
+                    <li><div class="course-name-box"><span class="course-code">EEET2613</span>Smart Grids</div> <span class="status-tag progress">IN PROGRESS</span></li>
                 </ul>
             </details>
         </div>
@@ -232,13 +244,11 @@
                 <p>Autonomous floor maintenance using ESP32 control and custom gear reduction for low-torque DC motors.</p>
                 <a href="rover.html" class="btn">VIEW_TECHNICAL_LOGS</a>
             </div>
-
             <div class="card">
                 <h3>[02] OUSB Simulator</h3>
                 <p>A C++ register-level hardware simulation focusing on strict error-precedence logic and data integrity.</p>
                 <a href="ousb.html" class="btn">VIEW_TECHNICAL_LOGS</a>
             </div>
-
             <div class="card">
                 <h3>[03] Room Monitor</h3>
                 <p>Security system using ESP32 and Telegram API to detect intrusions with dynamic range adjustment.</p>
@@ -253,26 +263,14 @@
 
     <script>
         const detailsElements = document.querySelectorAll('.skill-item');
-
         detailsElements.forEach((targetDetail) => {
-            // OPEN ON HOVER
             targetDetail.addEventListener('mouseenter', () => {
                 targetDetail.setAttribute('open', true);
             });
-
-            // CLOSE ON LEAVE
             targetDetail.addEventListener('mouseleave', () => {
                 targetDetail.removeAttribute('open');
             });
-
-            // PREVENT CLICK-TO-CLOSE GLITCHES
-            targetDetail.addEventListener('click', (e) => {
-                // If you want the menu to stay open on click even when mouse leaves,
-                // you can toggle a custom class here, but standard hover-only is smoother.
-            });
         });
-
-        // Close all if clicking empty background
         document.addEventListener('click', function(e) {
             if (!e.target.closest('.skill-item')) {
                 detailsElements.forEach(d => d.removeAttribute('open'));
