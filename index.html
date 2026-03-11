@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sameer Appasa | Engineering Portfolio</title>
-    <link rel="icon" type="image/png" href="logo.png">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2220%22 fill=%22%2300008B%22/><text y=%22.7em%22 x=%2250%22 font-family=%22monospace%22 font-weight=%22bold%22 font-size=%2260%22 text-anchor=%22middle%22 fill=%22white%22>SA</text></svg>">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -40,11 +40,48 @@
         .contact-info a:hover { border-bottom: 1px solid var(--primary-light); }
 
         h2 { font-family: var(--font-mono); color: var(--primary-light); font-size: 1.2rem; margin-top: 4rem; text-transform: uppercase; letter-spacing: 0.1em; }
+        
+        /* Interactive Toolkit Styling */
         .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; margin-top: 1rem; }
-        .skill-item { background: var(--card); border: 1px solid var(--border); padding: 1.2rem; border-radius: 4px; }
-        .skill-item b { color: var(--primary-light); display: block; margin-bottom: 0.5rem; font-size: 0.8rem; font-family: var(--font-mono); }
-        .skill-item span { font-size: 0.95rem; color: #d1d1d1; }
+        
+        .skill-item { 
+            background: var(--card); 
+            border: 1px solid var(--border); 
+            padding: 1.2rem; 
+            border-radius: 4px; 
+            cursor: pointer;
+            transition: all 0.3s ease;
+            min-height: 90px;
+        }
 
+        .skill-item b { 
+            color: var(--primary-light); 
+            display: block; 
+            margin-bottom: 0.5rem; 
+            font-size: 0.8rem; 
+            font-family: var(--font-mono); 
+        }
+
+        .skill-item span { 
+            font-size: 0.95rem; 
+            color: #d1d1d1; 
+            opacity: 0; /* Hidden by default */
+            display: block;
+            transition: opacity 0.3s ease;
+        }
+
+        /* Show details on Hover or Click (Active) */
+        .skill-item:hover span,
+        .skill-item.active span { 
+            opacity: 1; 
+        }
+
+        .skill-item:hover {
+            border-color: var(--primary-light);
+            background: #111;
+        }
+
+        /* Projects Section */
         .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.5rem; margin-top: 2rem; }
         .card { background: var(--card); border: 1px solid var(--border); padding: 2.5rem; border-radius: 4px; transition: all 0.3s ease; }
         .card:hover { border-color: var(--primary-light); transform: translateY(-5px); box-shadow: 0 0 30px rgba(0, 0, 139, 0.2); }
@@ -71,15 +108,15 @@
 
         <h2>🛠 Technical Toolkit</h2>
         <div class="skills-grid">
-            <div class="skill-item">
+            <div class="skill-item" onclick="toggleSkill(event, this)">
                 <b>HARDWARE & DESIGN</b>
                 <span>Altium, SolidWorks, Circuit Design, Soldering</span>
             </div>
-            <div class="skill-item">
+            <div class="skill-item" onclick="toggleSkill(event, this)">
                 <b>EMBEDDED SYSTEMS</b>
                 <span>ESP32, Raspberry Pi, Arduino, OUSB Hardware</span>
             </div>
-            <div class="skill-item">
+            <div class="skill-item" onclick="toggleSkill(event, this)">
                 <b>SOFTWARE & TOOLS</b>
                 <span>C++, Python, Java, Multisim, Git, HTML</span>
             </div>
@@ -110,5 +147,21 @@
             RMIT_ENGINEERING // 2026 // ALL_SYSTEMS_OPERATIONAL
         </footer>
     </div>
+
+    <script>
+        // Logic to keep the skill visible on click
+        function toggleSkill(event, element) {
+            event.stopPropagation();
+            element.classList.toggle('active');
+        }
+
+        // Logic to hide details when clicking anywhere else
+        document.addEventListener('click', function() {
+            const items = document.querySelectorAll('.skill-item');
+            items.forEach(item => {
+                item.classList.remove('active');
+            });
+        });
+    </script>
 </body>
 </html>
