@@ -58,10 +58,10 @@
             padding: 1.2rem; 
             border-radius: 4px; 
             cursor: pointer;
-            transition: all 0.3s ease;
             position: relative; 
-            height: 55px; /* Fixed height container */
+            height: 55px; 
             box-sizing: border-box;
+            transition: border-color 0.3s ease;
         }
 
         .skill-item summary {
@@ -84,25 +84,16 @@
             transition: transform 0.3s ease;
         }
 
-        /* Hover & Open States */
+        .skill-item[open] summary::after {
+            transform: rotate(45deg);
+        }
+
         .skill-item:hover, .skill-item[open] {
             border-color: var(--primary-light);
             z-index: 100;
         }
 
-        /* CSS MAGIC: Reveal content on hover even if not clicked */
-        .skill-item:hover .skill-content {
-            display: block;
-            opacity: 1;
-        }
-
-        .skill-item[open] summary::after {
-            transform: rotate(45deg);
-        }
-
-        /* ABSOLUTE POSITIONING: Menu floats OVER content */
         .skill-content {
-            display: none; /* Hidden by default */
             position: absolute;
             top: 100%;
             left: -1px;
@@ -116,15 +107,17 @@
             list-style: none;
             margin: 0;
             z-index: 1000;
+            /* Animation */
             opacity: 0;
-            transition: opacity 0.2s ease;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+            transform: translateY(-5px);
+            transition: opacity 0.2s ease, transform 0.2s ease;
+            pointer-events: none; /* Prevents flickering */
         }
 
-        /* Show content when details is open (clicked) */
         .skill-item[open] .skill-content {
-            display: block;
             opacity: 1;
+            transform: translateY(0);
+            pointer-events: auto;
         }
 
         .skill-content li {
@@ -172,7 +165,7 @@
 
         <h2>🛠 Technical Toolkit</h2>
         <div class="skills-grid">
-            <details class="skill-item" onclick="handleToggle(event)">
+            <details class="skill-item">
                 <summary>HARDWARE & DESIGN</summary>
                 <ul class="skill-content">
                     <li>Altium</li>
@@ -182,7 +175,7 @@
                 </ul>
             </details>
             
-            <details class="skill-item" onclick="handleToggle(event)">
+            <details class="skill-item">
                 <summary>EMBEDDED SYSTEMS</summary>
                 <ul class="skill-content">
                     <li>ESP32</li>
@@ -192,7 +185,7 @@
                 </ul>
             </details>
             
-            <details class="skill-item" onclick="handleToggle(event)">
+            <details class="skill-item">
                 <summary>SOFTWARE & TOOLS</summary>
                 <ul class="skill-content">
                     <li>C++</li>
@@ -207,7 +200,7 @@
 
         <h2>📚 Core Coursework</h2>
         <div class="skills-grid">
-            <details class="skill-item" onclick="handleToggle(event)">
+            <details class="skill-item">
                 <summary>YEAR 1 (2025)</summary>
                 <ul class="skill-content">
                     <li><span>CIVE1186</span>Intro to Env & Sustain Sys Eng</li>
@@ -221,7 +214,7 @@
                 </ul>
             </details>
             
-            <details class="skill-item" onclick="handleToggle(event)">
+            <details class="skill-item">
                 <summary>YEAR 2 (2026)</summary>
                 <ul class="skill-content">
                     <li><span>MATH2161</span>Mathematics for ECE</li>
@@ -259,21 +252,31 @@
     </div>
 
     <script>
-        function handleToggle(event) {
-            const allDetails = document.querySelectorAll('.skill-item');
-            allDetails.forEach(detail => {
-                if (detail !== event.currentTarget) {
-                    detail.removeAttribute('open');
-                }
-            });
-            event.stopPropagation();
-        }
+        const detailsElements = document.querySelectorAll('.skill-item');
 
-        document.addEventListener('click', function() {
-            const allDetails = document.querySelectorAll('.skill-item');
-            allDetails.forEach(detail => {
-                detail.removeAttribute('open');
+        detailsElements.forEach((targetDetail) => {
+            // OPEN ON HOVER
+            targetDetail.addEventListener('mouseenter', () => {
+                targetDetail.setAttribute('open', true);
             });
+
+            // CLOSE ON LEAVE
+            targetDetail.addEventListener('mouseleave', () => {
+                targetDetail.removeAttribute('open');
+            });
+
+            // PREVENT CLICK-TO-CLOSE GLITCHES
+            targetDetail.addEventListener('click', (e) => {
+                // If you want the menu to stay open on click even when mouse leaves,
+                // you can toggle a custom class here, but standard hover-only is smoother.
+            });
+        });
+
+        // Close all if clicking empty background
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('.skill-item')) {
+                detailsElements.forEach(d => d.removeAttribute('open'));
+            }
         });
     </script>
 </body>
