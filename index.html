@@ -49,7 +49,7 @@
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
             gap: 1.5rem; 
             margin-top: 1rem;
-            margin-bottom: 3rem; /* Safety buffer for floating menus */
+            margin-bottom: 3rem;
         }
         
         .skill-item { 
@@ -60,7 +60,8 @@
             cursor: pointer;
             transition: all 0.3s ease;
             position: relative; 
-            height: 50px; /* Fixed height so other items don't move */
+            height: 55px; /* Fixed height container */
+            box-sizing: border-box;
         }
 
         .skill-item summary {
@@ -83,26 +84,29 @@
             transition: transform 0.3s ease;
         }
 
-        .skill-item[open] {
-            z-index: 100; 
+        /* Hover & Open States */
+        .skill-item:hover, .skill-item[open] {
             border-color: var(--primary-light);
+            z-index: 100;
+        }
+
+        /* CSS MAGIC: Reveal content on hover even if not clicked */
+        .skill-item:hover .skill-content {
+            display: block;
+            opacity: 1;
         }
 
         .skill-item[open] summary::after {
             transform: rotate(45deg);
         }
 
-        .skill-item:hover {
-            border-color: var(--primary-light);
-            background: #111;
-        }
-
-        /* ABSOLUTE POSITIONING: This makes the menu float OVER content */
+        /* ABSOLUTE POSITIONING: Menu floats OVER content */
         .skill-content {
+            display: none; /* Hidden by default */
             position: absolute;
             top: 100%;
             left: -1px;
-            width: calc(100% + 2px); /* Matches border width */
+            width: calc(100% + 2px);
             background: #0d0d0d;
             border: 1px solid var(--primary-light);
             border-top: none;
@@ -113,8 +117,14 @@
             margin: 0;
             z-index: 1000;
             opacity: 0;
-            animation: fadeIn 0.2s forwards;
+            transition: opacity 0.2s ease;
             box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+        }
+
+        /* Show content when details is open (clicked) */
+        .skill-item[open] .skill-content {
+            display: block;
+            opacity: 1;
         }
 
         .skill-content li {
@@ -134,8 +144,6 @@
             opacity: 0.8;
             margin-bottom: 2px;
         }
-
-        @keyframes fadeIn { to { opacity: 1; } }
 
         /* PROJECT CARDS */
         .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.5rem; margin-top: 2rem; }
@@ -252,7 +260,6 @@
 
     <script>
         function handleToggle(event) {
-            // Closes any other open menu before opening the new one
             const allDetails = document.querySelectorAll('.skill-item');
             allDetails.forEach(detail => {
                 if (detail !== event.currentTarget) {
@@ -262,7 +269,6 @@
             event.stopPropagation();
         }
 
-        // Closes menu when clicking on any empty space on the website
         document.addEventListener('click', function() {
             const allDetails = document.querySelectorAll('.skill-item');
             allDetails.forEach(detail => {
