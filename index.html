@@ -53,7 +53,7 @@
             border-radius: 4px; 
             cursor: pointer;
             transition: all 0.3s ease;
-            list-style: none; /* Removes default arrow */
+            list-style: none;
         }
 
         .skill-item summary {
@@ -68,7 +68,8 @@
             align-items: center;
         }
 
-        /* Custom plus sign for dropdown */
+        .skill-item summary::-webkit-details-marker { display: none; }
+
         .skill-item summary::after {
             content: '+';
             font-size: 1.2rem;
@@ -84,14 +85,26 @@
             background: #111;
         }
 
+        /* Skills Content List Styling */
         .skill-content {
-            margin-top: 12px;
-            font-size: 0.95rem;
-            color: #d1d1d1;
-            padding-top: 12px;
+            margin: 12px 0 0 0;
+            padding: 12px 0 0 0;
+            list-style: none;
             border-top: 1px solid var(--border);
             opacity: 0;
             animation: fadeIn 0.4s forwards;
+        }
+
+        .skill-content li {
+            font-size: 0.95rem;
+            color: #d1d1d1;
+            padding: 4px 0;
+            font-family: var(--font-mono);
+        }
+
+        .skill-content li::before {
+            content: "> ";
+            color: var(--primary-light);
         }
 
         @keyframes fadeIn { to { opacity: 1; } }
@@ -125,17 +138,34 @@
         <div class="skills-grid">
             <details class="skill-item" onclick="handleToggle(event)">
                 <summary>HARDWARE & DESIGN</summary>
-                <div class="skill-content">Altium, SolidWorks, Circuit Design, Soldering</div>
+                <ul class="skill-content">
+                    <li>Altium</li>
+                    <li>SolidWorks</li>
+                    <li>Circuit Design</li>
+                    <li>Soldering</li>
+                </ul>
             </details>
             
             <details class="skill-item" onclick="handleToggle(event)">
                 <summary>EMBEDDED SYSTEMS</summary>
-                <div class="skill-content">ESP32, Raspberry Pi, Arduino, OUSB Hardware</div>
+                <ul class="skill-content">
+                    <li>ESP32</li>
+                    <li>Raspberry Pi</li>
+                    <li>Arduino</li>
+                    <li>OUSB Hardware</li>
+                </ul>
             </details>
             
             <details class="skill-item" onclick="handleToggle(event)">
                 <summary>SOFTWARE & TOOLS</summary>
-                <div class="skill-content">C++, Python, Java, Multisim, Git, HTML</div>
+                <ul class="skill-content">
+                    <li>C++</li>
+                    <li>Python</li>
+                    <li>Java</li>
+                    <li>Multisim</li>
+                    <li>Git</li>
+                    <li>HTML</li>
+                </ul>
             </details>
         </div>
 
@@ -166,12 +196,10 @@
     </div>
 
     <script>
-        // Stop the click from closing the menu immediately when clicking inside the item
         function handleToggle(event) {
             event.stopPropagation();
         }
 
-        // Global listener: Close all dropdowns when clicking anywhere else on the website
         document.addEventListener('click', function() {
             const allDetails = document.querySelectorAll('.skill-item');
             allDetails.forEach(detail => {
