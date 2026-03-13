@@ -44,13 +44,14 @@
 
         h2 { font-family: var(--font-mono); color: var(--primary-light); font-size: 1.2rem; margin-top: 4rem; text-transform: uppercase; letter-spacing: 0.1em; }
 
-        /* FLOATING DROPDOWN SYSTEM */
+        /* FLOATING DROPDOWN SYSTEM - with improved z-index */
         .skills-grid { 
             display: grid; 
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
             gap: 1.5rem; 
             margin-top: 1rem;
             margin-bottom: 3rem;
+            overflow: visible; /* ensure dropdowns aren't clipped */
         }
         
         .skill-item { 
@@ -63,6 +64,7 @@
             height: 55px; 
             box-sizing: border-box;
             transition: border-color 0.3s ease;
+            overflow: visible; /* allow content to overflow */
         }
 
         .skill-item summary {
@@ -107,7 +109,7 @@
             box-sizing: border-box;
             list-style: none;
             margin: 0;
-            z-index: 1000;
+            z-index: 10000; /* increased to ensure it's above everything */
             opacity: 0;
             transform: translateY(-5px);
             transition: opacity 0.2s ease, transform 0.2s ease;
@@ -163,6 +165,8 @@
         .btn:hover { background: var(--primary-light); color: white; }
 
         footer { margin-top: 6rem; border-top: 1px solid var(--border); padding: 2rem 0; color: var(--muted-foreground); font-family: var(--font-mono); font-size: 0.8rem; }
+        footer a { color: var(--primary-light); text-decoration: none; border-bottom: 1px solid transparent; }
+        footer a:hover { border-bottom: 1px solid var(--primary-light); }
     </style>
 </head>
 <body>
@@ -241,23 +245,23 @@
         <div class="grid">
             <div class="card">
                 <h3>[01] Cleaning Rover</h3>
-                <p>Autonomous floor maintenance using ESP32 control and custom gear reduction for low-torque DC motors.</p>
+                <p>Autonomous rover with a custom 3D‑printed gearbox to overcome low‑torque motor limitations – now climbs carpet with ease.</p>
                 <a href="rover.html" class="btn">VIEW_TECHNICAL_LOGS</a>
             </div>
             <div class="card">
                 <h3>[02] OUSB Simulator</h3>
-                <p>A C++ register-level hardware simulation focusing on strict error-precedence logic and data integrity.</p>
+                <p>C++ program that enforces strict hardware‑level error checking for 8‑bit and 10‑bit register validation – 100% error detection in tests.</p>
                 <a href="ousb.html" class="btn">VIEW_TECHNICAL_LOGS</a>
             </div>
             <div class="card">
                 <h3>[03] Room Monitor</h3>
-                <p>Security system using ESP32 and Telegram API to detect intrusions with dynamic range adjustment.</p>
+                <p>ESP32 security system with on‑device range adjustment and Telegram alerts, monitored via Healthchecks.io for 24/7 uptime.</p>
                 <a href="monitoring.html" class="btn">VIEW_TECHNICAL_LOGS</a>
             </div>
         </div>
 
         <footer>
-            RMIT_ENGINEERING // 2026 // ALL_SYSTEMS_OPERATIONAL
+            <a href="https://www.rmit.edu.au/" target="_blank" rel="noopener noreferrer">RMIT_ENGINEERING</a> // 2026 // ALL_SYSTEMS_OPERATIONAL
         </footer>
     </div>
 
