@@ -9,7 +9,8 @@
         :root { --background: #050505; --foreground: #fafafa; --primary: #4169E1; --card: #0d0d0d; --border: #1f1f1f; --font-mono: 'JetBrains Mono', monospace; }
         body { background-color: var(--background); color: var(--foreground); font-family: 'Inter', sans-serif; margin: 0; line-height: 1.6; }
         .container { max-width: 850px; margin: 0 auto; padding: 4rem 2rem; }
-        .nav-back { font-family: var(--font-mono); color: var(--primary); text-decoration: none; margin-bottom: 2rem; display: block; }
+        .nav-back { font-family: var(--font-mono); color: var(--primary); text-decoration: none; margin-bottom: 2rem; display: inline-block; border-bottom: 1px solid transparent; }
+        .nav-back:hover { border-bottom: 1px solid var(--primary); }
         
         h1 { font-family: var(--font-mono); font-size: 2.5rem; color: var(--primary); border-bottom: 1px solid var(--border); padding-bottom: 1rem; }
         
@@ -20,7 +21,9 @@
         .tech-tags { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 1rem; }
         .tag { font-family: var(--font-mono); font-size: 0.8rem; background: #111; border: 1px solid var(--border); padding: 0.3rem 0.8rem; color: var(--primary); }
 
-        .math-block { background: #0a0a0a; border: 1px solid var(--border); padding: 1.5rem; margin: 1.5rem 0; font-family: var(--font-mono); color: #88ccff; }
+        .math-block { background: #0a0a0a; border: 1px solid var(--border); padding: 1.5rem; margin: 1.5rem 0; font-family: var(--font-mono); color: #88ccff; overflow-x: auto; }
+        .result-box { background: #0a1a1a; border: 1px solid var(--status-done); padding: 1.5rem; margin: 1.5rem 0; border-radius: 4px; }
+        .result-box p { margin: 0; color: var(--status-done); }
         b { color: var(--primary); }
     </style>
 </head>
@@ -55,8 +58,6 @@
             <h2>04. Resolution</h2>
             <p>I engineered a custom <b>5:1 gear reduction mechanism</b> (12-tooth pinion to 60-tooth gear) to multiply the output torque while reducing speed to a manageable 2,300 RPM.</p>
             
-            
-
             <div class="math-block">
                 // Torque Calculation<br>
                 Native: 15 g·cm<br>
@@ -64,11 +65,14 @@
                 Result: 75 g·cm Stall Torque
             </div>
 
-            <p>For the logic safety, I implemented a <b>voltage divider circuit</b> (1kΩ and 2kΩ resistors) on the sensor Echo pins to safely step down the 5V signal to 3.33V, protecting the ESP32 internal registers.</p>
+            <p>For logic safety, I implemented a <b>voltage divider circuit</b> (1kΩ and 2kΩ resistors) on the sensor Echo pins to safely step down the 5V signal to 3.33V, protecting the ESP32 internal registers.</p>
             
-            
-
             <p>The control system was resolved by hosting a <b>WiFi Web Server</b> directly on the ESP32, allowing real-time manual override via a web page alongside the sensor-driven autonomous mode.</p>
+
+            <h2>05. Results</h2>
+            <div class="result-box">
+                <p>✅ The rover now climbs carpeted areas with ease and can be controlled remotely via WiFi. Stall torque increased by 5×, enabling the robot to carry a full dustbin without stalling. The voltage divider has protected the ESP32 from over-voltage for over 50 hours of runtime.</p>
+            </div>
         </div>
     </div>
 </body>
