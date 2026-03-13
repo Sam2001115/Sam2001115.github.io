@@ -14,6 +14,7 @@
             --border: #1f1f1f;
             --font-mono: 'JetBrains Mono', monospace;
             --status-done: #00ffcc;
+            --muted-foreground: #888;
         }
         body {
             background-color: var(--background);
@@ -162,45 +163,54 @@
             </div>
         </div>
 
-        <!-- Gallery Section -->
+        <!-- ========== GALLERY SECTION – EDIT BELOW ========== -->
         <div class="section">
             <h2>06. Gallery</h2>
             <div class="gallery-grid">
                 
+                <!-- 1. BOOT SCREEN / STARTING SCREEN -->
                 <figure>
-                    <img src="phonescreanshot of boot.jpeg" alt="Device boot screen">
-                    <figcaption>Boot screen showing initialisation</figcaption>
+                    <img src="phonescreanshot of boot.jpeg" alt="Boot screen">
+                    <figcaption>Starting screen – device initialising</figcaption>
                 </figure>
                 
+                <!-- 2. TOP VIEW (adjust caption if needed) -->
                 <figure>
-                    <img src="room monitor 2 (1).jpeg" alt="Room monitor top view">
+                    <img src="room monitor 2 (1).jpeg" alt="Top view">
                     <figcaption>Top view – ESP32, OLED, and buttons</figcaption>
                 </figure>
                 
+                <!-- 3. SIDE VIEW WITH SENSOR -->
                 <figure>
-                    <img src="room monitor3.jpeg" alt="Side view with sensor">
-                    <figcaption>Side view showing HC-SR04 sensor</figcaption>
+                    <img src="room monitor3.jpeg" alt="Side view">
+                    <figcaption>Side view – HC-SR04 sensor</figcaption>
                 </figure>
                 
+                <!-- 4. WIRING (replace this with detection screen if needed) -->
                 <figure>
-                    <img src="room monitor4.jpeg" alt="Wiring close-up">
+                    <img src="room monitor4.jpeg" alt="Wiring">
                     <figcaption>Wiring and voltage divider circuit</figcaption>
                 </figure>
                 
+                <!-- 5. DEVICE ON BOOKSHELF (if this is actually starting screen, swap with #1) -->
                 <figure>
-                    <img src="roommonitor 1 (1).jpeg" alt="Device in room">
+                    <img src="roommonitor 1 (1).jpeg" alt="Device on bookshelf">
                     <figcaption>Mounted on bookshelf monitoring the door</figcaption>
                 </figure>
                 
+                <!-- 6. IN‑SITU VIEW (if this shows detection screen, rename caption) -->
                 <figure>
-                    <img src="secite of the monitor (1).jpeg" alt="Monitor in situ">
+                    <img src="secite of the monitor (1).jpeg" alt="In‑situ view">
                     <figcaption>In‑situ view – device on shelf</figcaption>
                 </figure>
                 
             </div>
+            <!-- 💡 TIP: To swap images, just change the src="filename.jpg" to the correct file.
+                 To fix captions, edit the text inside <figcaption>.
+                 You can also reorder the <figure> blocks. -->
         </div>
+        <!-- ========== END GALLERY SECTION ========== -->
 
     </div> <!-- end container -->
 </body>
 </html>
-            
