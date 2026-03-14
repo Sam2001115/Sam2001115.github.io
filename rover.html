@@ -6,25 +6,128 @@
     <title>Rover Details | Sameer Appasa</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <style>
-        :root { --background: #050505; --foreground: #fafafa; --primary: #4169E1; --card: #0d0d0d; --border: #1f1f1f; --font-mono: 'JetBrains Mono', monospace; }
-        body { background-color: var(--background); color: var(--foreground); font-family: 'Inter', sans-serif; margin: 0; line-height: 1.6; }
-        .container { max-width: 850px; margin: 0 auto; padding: 4rem 2rem; }
-        .nav-back { font-family: var(--font-mono); color: var(--primary); text-decoration: none; margin-bottom: 2rem; display: inline-block; border-bottom: 1px solid transparent; }
-        .nav-back:hover { border-bottom: 1px solid var(--primary); }
-        
-        h1 { font-family: var(--font-mono); font-size: 2.5rem; color: var(--primary); border-bottom: 1px solid var(--border); padding-bottom: 1rem; }
-        
-        .section { margin-bottom: 3.5rem; }
-        .section h2 { font-family: var(--font-mono); font-size: 1.1rem; color: var(--primary); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 1rem; border-left: 3px solid var(--primary); padding-left: 1rem; }
-        .section p { color: #d1d1d1; font-size: 1.1rem; }
-        
-        .tech-tags { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 1rem; }
-        .tag { font-family: var(--font-mono); font-size: 0.8rem; background: #111; border: 1px solid var(--border); padding: 0.3rem 0.8rem; color: var(--primary); }
-
-        .math-block { background: #0a0a0a; border: 1px solid var(--border); padding: 1.5rem; margin: 1.5rem 0; font-family: var(--font-mono); color: #88ccff; overflow-x: auto; }
-        .result-box { background: #0a1a1a; border: 1px solid var(--status-done); padding: 1.5rem; margin: 1.5rem 0; border-radius: 4px; }
-        .result-box p { margin: 0; color: var(--status-done); }
-        b { color: var(--primary); }
+        :root {
+            --background: #050505;
+            --foreground: #fafafa;
+            --primary: #4169E1;
+            --card: #0d0d0d;
+            --border: #1f1f1f;
+            --font-mono: 'JetBrains Mono', monospace;
+            --status-done: #00ffcc;
+            --muted-foreground: #888;
+        }
+        body {
+            background-color: var(--background);
+            color: var(--foreground);
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 850px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+        .nav-back {
+            font-family: var(--font-mono);
+            color: var(--primary);
+            text-decoration: none;
+            margin-bottom: 2rem;
+            display: inline-block;
+            border-bottom: 1px solid transparent;
+        }
+        .nav-back:hover {
+            border-bottom: 1px solid var(--primary);
+        }
+        h1 {
+            font-family: var(--font-mono);
+            font-size: 2.5rem;
+            color: var(--primary);
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 1rem;
+        }
+        .section {
+            margin-bottom: 3.5rem;
+        }
+        .section h2 {
+            font-family: var(--font-mono);
+            font-size: 1.1rem;
+            color: var(--primary);
+            text-transform: uppercase;
+            border-left: 3px solid var(--primary);
+            padding-left: 1rem;
+            margin-bottom: 1rem;
+        }
+        .tech-tags {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin-top: 1rem;
+        }
+        .tag {
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            background: #111;
+            border: 1px solid var(--border);
+            padding: 0.3rem 0.8rem;
+            color: var(--primary);
+        }
+        .math-block {
+            background: #0a0a0a;
+            border: 1px solid var(--border);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            font-family: var(--font-mono);
+            color: #88ccff;
+            overflow-x: auto;
+        }
+        .result-box {
+            background: #0a1a1a;
+            border: 1px solid var(--status-done);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 4px;
+        }
+        .result-box p {
+            margin: 0;
+            color: var(--status-done);
+        }
+        b {
+            color: var(--primary);
+        }
+        /* Gallery styles */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+        figure {
+            margin: 0;
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            padding: 0.5rem;
+            transition: border-color 0.3s ease;
+        }
+        figure:hover {
+            border-color: var(--primary);
+        }
+        figure img {
+            width: 100%;
+            height: auto;
+            display: block;
+            border-radius: 4px;
+            background: var(--card);
+        }
+        figcaption {
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            color: var(--muted-foreground);
+            margin-top: 0.5rem;
+            text-align: center;
+            line-height: 1.4;
+        }
     </style>
 </head>
 <body>
@@ -74,6 +177,41 @@
                 <p>✅ The rover now climbs carpeted areas with ease and can be controlled remotely via WiFi. Stall torque increased by 5×, enabling the robot to carry a full dustbin without stalling. The voltage divider has protected the ESP32 from over-voltage for over 50 hours of runtime.</p>
             </div>
         </div>
-    </div>
+
+        <!-- ========== GALLERY SECTION ========== -->
+        <div class="section">
+            <h2>06. Gallery</h2>
+            <div class="gallery-grid">
+                
+                <figure>
+                    <img src="Fainal Rbot view1.jpeg" alt="Final robot view 1">
+                    <figcaption>Final assembly – side view</figcaption>
+                </figure>
+                
+                <figure>
+                    <img src="Fainal view cleaning robot2.jpeg" alt="Final cleaning robot view 2">
+                    <figcaption>Final assembly – top view</figcaption>
+                </figure>
+                
+                <figure>
+                    <img src="Robot final assemblytechnicaldrawing.jpeg" alt="Technical drawing">
+                    <figcaption>Technical drawing of gear assembly</figcaption>
+                </figure>
+                
+                <figure>
+                    <img src="Cleaning robotFront view.jpeg" alt="Cleaning robot front view">
+                    <figcaption>Front view – sensor placement</figcaption>
+                </figure>
+                
+                <figure>
+                    <img src="Cleaning robot isomitric view.jpeg" alt="Cleaning robot isometric view">
+                    <figcaption>Isometric view – complete rover</figcaption>
+                </figure>
+                
+            </div>
+        </div>
+        <!-- ========== END GALLERY ========== -->
+
+    </div> <!-- end container -->
 </body>
 </html>
