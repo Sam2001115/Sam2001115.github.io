@@ -34,11 +34,23 @@
 
         .container { max-width: 1000px; margin: 0 auto; padding: 4rem 2rem; }
 
+        /* UNIFIED HEADER LAYOUT */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1.5rem;
+        }
+
+        .header-text-group {
+            display: flex;
+            flex-direction: column;
+        }
+
         h1 { font-size: clamp(2.5rem, 8vw, 4.5rem); font-weight: 700; margin: 0; letter-spacing: -0.05em; }
         .cursor { display: inline-block; width: 12px; height: 1.2em; background: var(--primary-light); margin-left: 5px; animation: blink 1s step-end infinite; vertical-align: middle; }
         @keyframes blink { 0%, 50% { opacity: 1; } 51%, 100% { opacity: 0; } }
 
-        /* Degree Title Styling */
         .degree {
             font-family: var(--font-mono);
             color: var(--primary-light);
@@ -47,6 +59,18 @@
             margin-top: 0.5rem;
             letter-spacing: 0.05em;
         }
+
+        /* RMIT LOGO STYLING: Pushed near the name and colored to match */
+        .rmit-logo {
+            width: 150px; /* Adjusted size for top bar */
+            height: auto;
+            margin-top: 10px;
+            /* Blue filter to match --primary-light */
+            filter: invert(44%) sepia(87%) saturate(1637%) hue-rotate(203deg) brightness(98%) contrast(92%);
+            opacity: 0.8;
+            transition: opacity 0.3s ease;
+        }
+        .rmit-logo:hover { opacity: 1; }
 
         .contact-info { margin-top: 1.5rem; font-family: var(--font-mono); font-size: 0.9rem; color: var(--muted-foreground); line-height: 1.8; }
         .contact-info a { color: var(--primary-light); text-decoration: none; margin-right: 15px; border-bottom: 1px solid transparent; transition: 0.3s; }
@@ -176,9 +200,14 @@
 </head>
 <body>
     <div class="container">
-        <h1>Sameer Appasa<span class="cursor"></span></h1>
-        <div class="degree">Bachelor of Electrical Engineering Honours</div>
         
+        <div class="header">
+            <div class="header-text-group">
+                <h1>Sameer Appasa<span class="cursor"></span></h1>
+                <div class="degree">Bachelor of Electrical Engineering Honours</div>
+            </div>
+            <img src="image_0.png" alt="RMIT University Logo" class="rmit-logo">
+        </div>
         <div class="contact-info">
             <span>LOCATION: Melbourne, AU</span> | 
             <span>PHONE: 0422759942</span><br>
