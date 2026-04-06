@@ -6,20 +6,95 @@
     <title>OUSB Details | Sameer Appasa</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <style>
-        :root { --background: #050505; --foreground: #fafafa; --primary: #4169E1; --card: #0d0d0d; --border: #1f1f1f; --font-mono: 'JetBrains Mono', monospace; }
-        body { background-color: var(--background); color: var(--foreground); font-family: 'Inter', sans-serif; margin: 0; line-height: 1.6; }
-        .container { max-width: 850px; margin: 0 auto; padding: 4rem 2rem; }
-        .nav-back { font-family: var(--font-mono); color: var(--primary); text-decoration: none; margin-bottom: 2rem; display: inline-block; border-bottom: 1px solid transparent; }
-        .nav-back:hover { border-bottom: 1px solid var(--primary); }
-        h1 { font-family: var(--font-mono); font-size: 2.5rem; color: var(--primary); border-bottom: 1px solid var(--border); padding-bottom: 1rem; }
-        .section { margin-bottom: 3.5rem; }
-        .section h2 { font-family: var(--font-mono); font-size: 1.1rem; color: var(--primary); text-transform: uppercase; border-left: 3px solid var(--primary); padding-left: 1rem; margin-bottom: 1rem; }
-        .tech-tags { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 1rem; }
-        .tag { font-family: var(--font-mono); font-size: 0.8rem; background: #111; border: 1px solid var(--border); padding: 0.3rem 0.8rem; color: var(--primary); }
-        .code-snippet { background: #0a0a0a; border: 1px solid var(--border); padding: 1.5rem; margin: 1.5rem 0; font-family: var(--font-mono); color: #88ccff; overflow-x: auto; white-space: pre; }
-        .result-box { background: #0a1a1a; border: 1px solid var(--status-done); padding: 1.5rem; margin: 1.5rem 0; border-radius: 4px; }
-        .result-box p { margin: 0; color: var(--status-done); }
-        b { color: var(--primary); }
+        :root { 
+            --background: #050505; 
+            --foreground: #fafafa; 
+            --primary: #4169E1; 
+            --card: #0d0d0d; 
+            --border: #1f1f1f; 
+            --font-mono: 'JetBrains Mono', monospace; 
+            --status-done: #00ffcc;
+        }
+        body { 
+            background-color: var(--background); 
+            color: var(--foreground); 
+            font-family: 'Inter', sans-serif; 
+            margin: 0; 
+            line-height: 1.6; 
+        }
+        .container { 
+            max-width: 850px; 
+            margin: 0 auto; 
+            padding: 4rem 2rem; 
+        }
+        .nav-back { 
+            font-family: var(--font-mono); 
+            color: var(--primary); 
+            text-decoration: none; 
+            margin-bottom: 2rem; 
+            display: inline-block; 
+            border-bottom: 1px solid transparent; 
+        }
+        .nav-back:hover { 
+            border-bottom: 1px solid var(--primary); 
+        }
+        h1 { 
+            font-family: var(--font-mono); 
+            font-size: 2.5rem; 
+            color: var(--primary); 
+            border-bottom: 1px solid var(--border); 
+            padding-bottom: 1rem; 
+        }
+        .section { 
+            margin-bottom: 3.5rem; 
+        }
+        .section h2 { 
+            font-family: var(--font-mono); 
+            font-size: 1.1rem; 
+            color: var(--primary); 
+            text-transform: uppercase; 
+            border-left: 3px solid var(--primary); 
+            padding-left: 1rem; 
+            margin-bottom: 1rem; 
+        }
+        .tech-tags { 
+            display: flex; 
+            gap: 0.5rem; 
+            flex-wrap: wrap; 
+            margin-top: 1rem; 
+        }
+        .tag { 
+            font-family: var(--font-mono); 
+            font-size: 0.8rem; 
+            background: #111; 
+            border: 1px solid var(--border); 
+            padding: 0.3rem 0.8rem; 
+            color: var(--primary); 
+        }
+        .code-snippet { 
+            background: #0a0a0a; 
+            border: 1px solid var(--border); 
+            padding: 1.5rem; 
+            margin: 1.5rem 0; 
+            font-family: var(--font-mono); 
+            color: #88ccff; 
+            overflow-x: auto; 
+            white-space: pre; 
+        }
+        .result-box { 
+            background: #0a1a1a; 
+            border: 1px solid var(--status-done); 
+            padding: 1.5rem; 
+            margin: 1.5rem 0; 
+            border-radius: 4px; 
+        }
+        .result-box p { 
+            margin: 0; 
+            color: var(--status-done); 
+        }
+        b { 
+            color: var(--primary); 
+        }
     </style>
 </head>
 <body>
@@ -29,33 +104,43 @@
 
         <div class="section">
             <h2>01. Objective</h2>
-            <p>To develop a robust C++ command-line simulator for the OUSB board, ensuring perfect synchronization between decimal inputs and binary register outputs within a 24-hour window.</p>
+            <p>The objective of this project was to develop a high-fidelity hardware simulator in C++ that monitors the behaviour of an OUSB (Open USB) board. The goal was to create a functional software environment where digital logic and register manipulations could be tested without physical hardware.</p>
         </div>
 
         <div class="section">
             <h2>02. Technology Used</h2>
             <div class="tech-tags">
-                <span class="tag">C++</span> <span class="tag">Register-Level Logic</span> <span class="tag">CLI Development</span>
+                <span class="tag">C++</span> 
+                <span class="tag">AVR Architecture</span> 
+                <span class="tag">Register-Level Logic</span> 
+                <span class="tag">Bitwise Operations</span>
+                <span class="tag">File I/O Parser</span>
             </div>
         </div>
 
         <div class="section">
-            <h2>03. The Challenge</h2>
-            <p>Maintaining data integrity across numeric bases while ensuring inputs stayed within 8-bit (0-255) and 10-bit (0-1023) limits. Any mismatch required an immediate "Z" error code.</p>
+            <h2>03. The Challenges</h2>
+            <p>The main challenge was emulating the <b>Register-Level Logic</b> of the AVR architecture used in OUSB boards. I had to ensure that software instructions correctly manipulated virtual pins and ports in the exact sequence the hardware would. Another significant hurdle was managing <b>Error Precedence</b>. In a hardware environment, certain errors (like invalid port access) must be caught and reported in a specific order of priority to prevent the simulator from crashing or providing false data. Finally, I had to implement a way to handle <b>File I/O</b> so that the simulator could read a list of hardware commands from a text file and execute them in real-time.</p>
         </div>
 
         <div class="section">
-            <h2>04. Resolution</h2>
-            <p>I implemented a priority-based validation pipeline to check for file integrity, numeric validity, and bit-length before conversion.</p>
-            <div class="code-snippet">
-if (decimalValue != binaryDecimalValue) {
-    cout << "Z" << endl;
-    return 0;
-}</div>
+            <h2>04. The Solutions</h2>
+            <p>To solve the register challenge, I used <b>C++ classes</b> to represent the hardware ports (Port B, Port D, etc.) and implemented <b>Bitwise Operations</b> to handle the masking and setting of individual pins. This allowed the software to mimic the "High" and "Low" states of a physical circuit. For error management, I developed a robust validation engine that checks for instruction syntax and hardware constraints before execution, ensuring the simulator follows strict "Fail-Safe" protocols.</p>
+            
+            <p>To handle the command execution, I built a custom <b>Parser</b> that reads external files, translates the strings into hardware instructions, and updates the virtual registers accordingly. I also integrated a feedback loop that outputs the state of the "LEDs" and "Switches" to the console, providing a visual representation of the virtual hardware state.</p>
 
+            <div class="code-snippet">
+// Example of Bitwise Register Manipulation
+void updatePort(uint8_t &port, uint8_t mask, bool state) {
+    if (state) port |= mask;  // Set bit
+    else port &= ~mask;       // Clear bit
+}</div>
+        </div>
+
+        <div class="section">
             <h2>05. Results</h2>
             <div class="result-box">
-                <p>✅ The simulator correctly flags invalid inputs and has been tested with 100+ test cases, achieving 100% error detection. It processes files in under 10ms and has been used as a teaching aid in university labs.</p>
+                <p>✅ The simulator is fully functional and accurately mirrors the behaviour of a physical OUSB board. It successfully handles complex instruction sets and reports errors with 100% accuracy according to the hardware specification. This project demonstrated my ability to bridge the gap between high-level C++ programming and low-level hardware logic, providing a reliable tool for debugging embedded software.</p>
             </div>
         </div>
     </div>
