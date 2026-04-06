@@ -95,7 +95,6 @@
         b {
             color: var(--primary);
         }
-        /* Gallery styles */
         .gallery-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -137,91 +136,83 @@
 
         <div class="section">
             <h2>01. Objective</h2>
-            <p>To engineer an autonomous room-cleaning vehicle that utilizes a brush-based system for debris collection, focusing on high-efficiency mechanical movement and wireless user control.</p>
+            <p>The goal of this project is to build a cleaning rover that would regularly clean the room it's placed in unattended.</p>
         </div>
 
         <div class="section">
             <h2>02. Technology Used</h2>
             <div class="tech-tags">
                 <span class="tag">ESP32 DevKit V1</span>
-                <span class="tag">L298N Motor Driver</span>
+                <span class="tag">DRV8833 Motor Driver</span>
+                <span class="tag">TT Gear Motors</span>
                 <span class="tag">HC-SR04 Ultrasonic Sensors</span>
-                <span class="tag">130 DC Motors</span>
-                <span class="tag">3D Printed Gearsets</span>
-                <span class="tag">11.1V Li-ion Battery</span>
+                <span class="tag">130 DC Motors (Brushes)</span>
+                <span class="tag">18650 Li-ion (11.1V)</span>
+                <span class="tag">Buck Converters</span>
             </div>
         </div>
 
         <div class="section">
-            <h2>03. The Challenge</h2>
-            <p>The primary hurdle was the <b>130 DC motors</b>. While they run at a high 11,500 RPM, they provide a very low native torque of only 15 g·cm. This was insufficient to move the 3D printed chassis and dust chamber. Additionally, the <b>HC-SR04 sensors</b> require 5V for peak performance, which exceeds the ESP32's 3.3V input tolerance, risking hardware failure.</p>
+            <h2>03. The Challenges</h2>
+            <p>The challenges faced in the process of building this project were finding the right motors and the motor driver chip to use to run them. After researching, the choice was the <b>130 DC motor</b> for its small size with high RPM; however, there was a problem of torque, thus the 130 DC motor's torque is very low. Another challenge faced was the battery unit to use in this project. The final challenge was the use of ultrasonic sensors with the <b>ESP32</b>. The ESP32 receives a signal in 3.3V, but the ultrasonic sensors' echo pin sends a 5V signal; thus, connecting the Echo pin to the ESP32 directly would damage it.</p>
         </div>
 
         <div class="section">
-            <h2>04. Resolution</h2>
-            <p>I engineered a custom <b>5:1 gear reduction mechanism</b> (12-tooth pinion to 60-tooth gear) to multiply the output torque while reducing speed to a manageable 2,300 RPM.</p>
+            <h2>04. The Solutions</h2>
+            <p>The solution for the torque challenge was to 3D print a gear reduction mechanism containing a 12-tooth gear and a 60-tooth gear with a ratio of 5:1, and the motor drive chip chosen was the <b>L298n</b>. However, that caused a voltage drop as soon as the wheels touched the ground, as the motors draw current, and that would cause significant damage to the circuit.</p>
             
+            <p>The solution for this problem was achieved through using the <b>TT motor</b> with a built-in gear unit and replacing the L298n with a <b>DRV8833</b>, as it’s efficient and doesn't release as much heat as the L298n; thus, the torque and motor driver problem was solved. As well as a great addition was adding a <b>wifi interface</b> that let me control the rover manually as well as putting it on auto mode while also a window that shows how far obstacles are.</p>
+
             <div class="math-block">
-                // Torque Calculation<br>
-                Native: 15 g·cm<br>
-                Ratio: 5:1<br>
-                Result: 75 g·cm Stall Torque
+                // Power Configuration<br>
+                Source: 3x 18650E 3.7V (11.1V Total)<br>
+                Logic Rail: Buck Converter to 5V (ESP32)<br>
+                Motor Rail: Buck Converter to 6V (DRV8833)
             </div>
 
-            <p>For logic safety, I implemented a <b>voltage divider circuit</b> (1kΩ and 2kΩ resistors) on the sensor Echo pins to safely step down the 5V signal to 3.33V, protecting the ESP32 internal registers.</p>
-            
-            <p>The control system was resolved by hosting a <b>WiFi Web Server</b> directly on the ESP32, allowing real-time manual override via a web page alongside the sensor-driven autonomous mode.</p>
+            <p>As for the Ultrasonic Echo pin challenge, it was overcome by using a <b>voltage divider</b> of two resistors to lower the signal voltage to 3.3V so that the ESP32 can receive it safely by placing four of them to scan the robot's surroundings. For the brushes, the 130DC motors were placed there, as well as adding the DRV8833 to the schematics to run them with ordinary cleaning rover brushes attached to it.</p>
+        </div>
 
+        <div class="section">
             <h2>05. Results</h2>
             <div class="result-box">
-                <p>✅ The rover now climbs carpeted areas with ease and can be controlled remotely via WiFi. Stall torque increased by 5×, enabling the robot to carry a full dustbin without stalling. The voltage divider has protected the ESP32 from over-voltage for over 50 hours of runtime.</p>
+                <p>✅ Finally, the robot is operating perfectly, and the goal was achieved. The rover scans its surroundings perfectly, navigates around the room, and cleans the room effectively, running for around 50 Hours.</p>
             </div>
         </div>
 
-        <!-- ========== GALLERY SECTION (CORRECTED FILENAMES) ========== -->
         <div class="section">
             <h2>06. Gallery</h2>
             <div class="gallery-grid">
-                
                 <figure>
                     <img src="Fainal Rbot view1.jpeg" alt="Final robot view 1">
                     <figcaption>Final assembly – side view</figcaption>
                 </figure>
-                
                 <figure>
                     <img src="Fainal view deaning robot2.jpeg" alt="Final cleaning robot view 2">
                     <figcaption>Final assembly – top view</figcaption>
                 </figure>
-                
                 <figure>
                     <img src="deaning robot webpage.jpeg" alt="Cleaning robot webpage">
                     <figcaption>Web interface screenshot</figcaption>
                 </figure>
-                
                 <figure>
                     <img src="Cleaning robot Top view.png" alt="Cleaning robot top view">
                     <figcaption>Top view – chassis layout</figcaption>
                 </figure>
-                
                 <figure>
                     <img src="Cleaning robot isomtric view.png" alt="Cleaning robot isometric view">
                     <figcaption>Isometric view – complete rover</figcaption>
                 </figure>
-                
                 <figure>
                     <img src="Cleaning robotFront view.png" alt="Cleaning robot front view">
                     <figcaption>Front view – sensor placement</figcaption>
                 </figure>
-                
                 <figure>
                     <img src="Cleaning rover technical drawing .png" alt="Technical drawing">
                     <figcaption>Technical drawing of gear assembly</figcaption>
                 </figure>
-                
             </div>
         </div>
-        <!-- ========== END GALLERY ========== -->
-
-    </div> <!-- end container -->
+    </div>
 </body>
 </html>
