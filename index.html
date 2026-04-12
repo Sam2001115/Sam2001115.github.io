@@ -56,9 +56,12 @@
             width: 160px;
             height: auto;
             margin-top: 10px;
+            /* Filters the logo to match the Royal Blue theme */
             filter: invert(44%) sepia(87%) saturate(1637%) hue-rotate(203deg) brightness(98%) contrast(92%);
             opacity: 0.8;
+            transition: opacity 0.3s ease;
         }
+        .rmit-logo:hover { opacity: 1; }
 
         .statement-box {
             margin-top: 2rem;
@@ -130,7 +133,7 @@
                 <h1>Sameer Appasa<span class="cursor"></span></h1>
                 <div class="degree">Bachelor of Electrical Engineering Honours</div>
             </div>
-            <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAPoAAABkCAMAAAC8v8m0AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAGBQTFRFAAAA/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////f6m7AAAAAh0Uk5TAAECAwQFBgcICQoLDA0ODxAREhMUFRYXGBkaGxwdHh8gISIjJCUmJygpMDEyMzQ1Njc4OTo7PD0+P0BBQkNERUZHSElKS0xNTk9QUVJTVFVWV1hZWltcXV5fYGFiY2RlZmdoaWprbG1ub3BxcXNzdXV2d3h5ent8fX5/gIGCg4SFhoeIiYqLjI2Oj5CRkpOUlZaXmJmam5ydnp+goaKjpKWmp6ipqqusrbe3uLm6u7y9vr+AwMLDxMXGx8jJysvMzc7P0NHS09TV1tfY2drb3N3e3+Dh4uPk5ebn6Onq6+zt7u/w8fLz9PX29/j5+vv8/f7/P297yAAAA71JREFUeNrs24dy4zAMBVCKInV67733Xv//P60S7YidmYmZ8Uon7TswEAnifvYF0YjYvV9S8A99uO77qV7XpY7j3R/6W969967D8Ie+S961TzWurvuhX2XvGsc63f1Dn6Xv2pcax66795fX0Xft9zj6vnuP99H33Uffdx993330fffR991H33cffX97P73vXv7W6G307fXvjN5G307/Tuh99N31r4beR99Z/3X0PvqO+lfRWYTeQf8K+pYI9Xf99fSWRWv09fTWRUv01fTWRVP01fSWRSP0tfTWRGP0tfSWRXP0tfSWxdv0tfSWxfP0dfSWxaf0dfSWxVf0dfSWxTf0dfSWRUv0dfSWxUv0tfSWRUv09fSWRUv0tfSWRUv09fSWRUv0tfSWRUv0tfSWRUv0tfSWRUv0tfSWRUv01fSWRUv0tfSWRUv0tfSWRUv0tfSWRUv01fSWRUv0tfSWRUv0tfSWRUv09fSWRUv0tfSWRUv0tfSWRUv0tfSWRUv01fSWRUv0tfSWRUv0tfSWRUv01fSWRUv0tfSWRUv0tfSWRUv01fSWRUv0tfSWRUv0tfSWRUv01fSWRUv0tfSWRUv0tfSWRUv01fSWRUv0tfSWRUv0tfSWRUv0tfSWRUv01fSWRUv0tfSWRUv0tfSWRUv01fSWRUv0tfSWRUv0tfSWRUv01fSWRUv0tfSWRUv0tfSWRUv01fSWRUv0tfSWRUv0tfSWRUv01fSWRUv0tfSWRUv0tfSWRUv01fSWRUv0tfSWRUv0tfSWRUv01fSWRUv0tfSWRUv0tfSWRUv01fSWRUv0tfSWRUv0tfSWRUv01fSWRUv0tfSWRUv0tfSWRUv01fSWRUv0tfSWRUv0tfSWRUv01fSWRUv0tfSWRUv0tfSWRUv01fSWRUv0tfSWRUv0tfSWRUv01fSWRUv0tfSWRUv01fSWRUv0tfSWRUv01fSWRUv0tfSWRUv01fSWRUv0tfSWRUv01fSWRUv0tfSWRUv01fSWRUv0tfSWRUv01fSWRUv0tfSWRUv01fSWRUv01fSWRUv0tfSWRUv01fSWRUv0tfSWRUv01fSWRUv0tfSWRUv01fSWRUv0tfSWRUv01fSWRUv0tfSWRUv01fSWRUv0tfSWRUv01fSWRUv01fSWRUv0tfSWRUv01fSWRUv0tfSWRUv01fSWRUv0tfSWRUv01fSWRUv0tfSWRUv01fSWRUv0tfSWRUv09fSWRUv0tfSWRUv09fSWRUv0tfSWRUv01fTWRUv0tfSWxVf0dfSWRVf0dfSWRVv0tfSWRZf0dfSWRZP0dfSWxVv09fSWRVf09fTWRVP0tfSWRX/T6O30FvozfR99v+7n3Xtf6jjefT/0XfOuY/9/Y/8VYABp/C5N7T7hjwAAAABJRU5ErkJggg==" alt="RMIT Logo" class="rmit-logo">
+            <img src="image_0.png" alt="RMIT Logo" class="rmit-logo">
         </div>
 
         <div class="statement-box">
@@ -215,6 +218,7 @@
     </div>
 
     <script>
+        // Smooth hover opening for the toolkit/coursework items
         const detailsElements = document.querySelectorAll('.skill-item');
         detailsElements.forEach((targetDetail) => {
             targetDetail.addEventListener('mouseenter', () => { targetDetail.setAttribute('open', true); });
