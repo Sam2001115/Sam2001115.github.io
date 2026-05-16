@@ -320,6 +320,84 @@
             .contact-row { flex-direction: column; gap: 0.3rem; }
             .contact-divider { display: none; }
         }
+
+        /* ── NESTED COURSEWORK ── */
+        .course-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 1rem;
+            margin-bottom: 4rem;
+        }
+        .year-item {
+            background: var(--card);
+            border: 1px solid var(--border);
+            transition: border-color 0.2s;
+        }
+        .year-item[open] { border-color: var(--primary); }
+        .year-item > summary {
+            list-style: none;
+            outline: none;
+            font-family: var(--font-mono);
+            font-size: 0.78rem;
+            font-weight: 700;
+            color: var(--primary);
+            letter-spacing: 0.08em;
+            padding: 1rem 1.25rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+        }
+        .year-item > summary::after { content: '+'; font-size: 1.1rem; transition: transform 0.25s; }
+        .year-item[open] > summary::after { transform: rotate(45deg); }
+
+        .sem-list {
+            padding: 0 0.75rem 0.75rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        .sem-item {
+            background: #0a0a0a;
+            border: 1px solid var(--border);
+            transition: border-color 0.2s;
+        }
+        .sem-item[open] { border-color: rgba(65,105,225,0.5); }
+        .sem-item > summary {
+            list-style: none;
+            outline: none;
+            font-family: var(--font-mono);
+            font-size: 0.72rem;
+            font-weight: 700;
+            color: #aaa;
+            letter-spacing: 0.06em;
+            padding: 0.65rem 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+        }
+        .sem-item[open] > summary { color: var(--primary); }
+        .sem-item > summary::after { content: '+'; font-size: 1rem; transition: transform 0.25s; }
+        .sem-item[open] > summary::after { transform: rotate(45deg); }
+
+        .sem-subjects {
+            list-style: none;
+            padding: 0 1rem 0.75rem;
+            margin: 0;
+        }
+        .sem-subjects li {
+            font-family: var(--font-mono);
+            font-size: 0.74rem;
+            color: #ccc;
+            padding: 6px 0;
+            border-bottom: 1px solid #1a1a1a;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .sem-subjects li:last-child { border-bottom: none; }
     </style>
 </head>
 <body>
@@ -395,34 +473,49 @@
 
     <!-- CORE COURSEWORK -->
     <div class="section-heading">📚 Core Coursework</div>
-    <div class="skills-grid">
-        <details class="skill-item">
-            <summary>YEAR 1 — SEM 1</summary>
-            <ul class="skill-content">
-                <li>OENG1206 Digital Fundamentals <span class="status-tag done">DONE</span></li>
-                <li>OENG1166 Prof Eng Prac <span class="status-tag done">DONE</span></li>
-                <li>OENG1208 Engineering Science <span class="status-tag done">DONE</span></li>
-                <li>MATH2393 Engineering Mathematics <span class="status-tag done">DONE</span></li>
-            </ul>
+    <div class="course-grid">
+
+        <!-- YEAR 1 -->
+        <details class="year-item">
+            <summary>YEAR 1</summary>
+            <div class="sem-list">
+                <details class="sem-item">
+                    <summary>SEMESTER 1</summary>
+                    <ul class="sem-subjects">
+                        <li>OENG1206 Digital Fundamentals <span class="status-tag done">DONE</span></li>
+                        <li>OENG1166 Prof Eng Prac <span class="status-tag done">DONE</span></li>
+                        <li>OENG1208 Engineering Science <span class="status-tag done">DONE</span></li>
+                        <li>MATH2393 Engineering Mathematics <span class="status-tag done">DONE</span></li>
+                    </ul>
+                </details>
+                <details class="sem-item">
+                    <summary>SEMESTER 2</summary>
+                    <ul class="sem-subjects">
+                        <li>OENG1250 Intro to Engineering Design <span class="status-tag done">DONE</span></li>
+                        <li>CIVE1186 Intro to Env &amp; Sustain <span class="status-tag done">DONE</span></li>
+                        <li>EEET2246 Engineering Computing 1 <span class="status-tag done">DONE</span></li>
+                        <li>EEET2249 Intro to Elec &amp; Electronic <span class="status-tag done">DONE</span></li>
+                    </ul>
+                </details>
+            </div>
         </details>
-        <details class="skill-item">
-            <summary>YEAR 1 — SEM 2</summary>
-            <ul class="skill-content">
-                <li>OENG1250 Intro to Engineering Design <span class="status-tag done">DONE</span></li>
-                <li>CIVE1186 Intro to Env &amp; Sustain <span class="status-tag done">DONE</span></li>
-                <li>EEET2246 Engineering Computing 1 <span class="status-tag done">DONE</span></li>
-                <li>EEET2249 Intro to Elec &amp; Electronic <span class="status-tag done">DONE</span></li>
-            </ul>
+
+        <!-- YEAR 2 -->
+        <details class="year-item">
+            <summary>YEAR 2</summary>
+            <div class="sem-list">
+                <details class="sem-item">
+                    <summary>SEMESTER 1</summary>
+                    <ul class="sem-subjects">
+                        <li>MATH2161 Mathematics for ECE <span class="status-tag progress">IN PROGRESS</span></li>
+                        <li>EEET2255 Electronics (2610) <span class="status-tag progress">IN PROGRESS</span></li>
+                        <li>EEET2369 Signals and Systems 1 <span class="status-tag progress">IN PROGRESS</span></li>
+                        <li>EEET2613 Smart Grids <span class="status-tag progress">IN PROGRESS</span></li>
+                    </ul>
+                </details>
+            </div>
         </details>
-        <details class="skill-item">
-            <summary>YEAR 2 — SEM 1</summary>
-            <ul class="skill-content">
-                <li>MATH2161 Mathematics for ECE <span class="status-tag progress">IN PROGRESS</span></li>
-                <li>EEET2255 Electronics (2610) <span class="status-tag progress">IN PROGRESS</span></li>
-                <li>EEET2369 Signals and Systems 1 <span class="status-tag progress">IN PROGRESS</span></li>
-                <li>EEET2613 Smart Grids <span class="status-tag progress">IN PROGRESS</span></li>
-            </ul>
-        </details>
+
     </div>
 
     <!-- PROJECTS -->
@@ -490,8 +583,20 @@
 </div>
 
 <script>
-    const detailsElements = document.querySelectorAll('.skill-item');
-    detailsElements.forEach((el) => {
+    // Hover for toolkit skills
+    document.querySelectorAll('.skill-item').forEach((el) => {
+        el.addEventListener('mouseenter', () => el.setAttribute('open', true));
+        el.addEventListener('mouseleave', () => el.removeAttribute('open'));
+    });
+
+    // Hover for year dropdowns
+    document.querySelectorAll('.year-item').forEach((el) => {
+        el.addEventListener('mouseenter', () => el.setAttribute('open', true));
+        el.addEventListener('mouseleave', () => el.removeAttribute('open'));
+    });
+
+    // Hover for semester dropdowns
+    document.querySelectorAll('.sem-item').forEach((el) => {
         el.addEventListener('mouseenter', () => el.setAttribute('open', true));
         el.addEventListener('mouseleave', () => el.removeAttribute('open'));
     });
