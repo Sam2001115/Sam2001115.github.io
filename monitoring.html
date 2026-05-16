@@ -18,6 +18,7 @@
             --status-done: #00ffcc;
             --muted: #888;
             --warn: #f59e0b;
+            --fail: #ef4444;
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -144,35 +145,6 @@
         }
         .tag:hover { border-color: var(--primary); background: var(--primary-dim); }
 
-        /* Feature grid */
-        .feature-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 0.75rem;
-            margin: 1.25rem 0;
-        }
-        .feature-card {
-            background: #080808;
-            border: 1px solid var(--border);
-            border-radius: 3px;
-            padding: 1rem 1.1rem;
-            transition: border-color 0.2s;
-        }
-        .feature-card:hover { border-color: var(--primary); }
-        .feature-card .fc-label {
-            font-family: var(--font-mono);
-            font-size: 0.68rem;
-            color: var(--primary);
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            margin-bottom: 0.35rem;
-        }
-        .feature-card p {
-            color: #aaa !important;
-            font-size: 0.87rem !important;
-            margin-bottom: 0 !important;
-        }
-
         .code-block {
             background: #080808;
             border: 1px solid var(--border);
@@ -281,7 +253,6 @@
 
         @media (max-width: 600px) {
             .nav-siblings { display: none; }
-            .feature-grid { grid-template-columns: 1fr; }
             .gallery-grid { grid-template-columns: 1fr; }
             .footer-nav { flex-direction: column; gap: 1rem; }
         }
@@ -311,7 +282,7 @@
     <!-- 01 -->
     <div class="section">
         <h2>01. Objective</h2>
-        <p>Build a low-cost, always-on room security monitor that detects intrusions and delivers instant alerts to my phone via Telegram — regardless of where I am. The system needed to be wireless, self-monitoring, and deployable without a fixed position in the room.</p>
+        <p>Build a low-cost, always-on room security monitor that detects intrusions and delivers instant alerts to my phone via Telegram — regardless of where I am. The system needed to be wireless, self-monitoring for silent failures, and deployable without a fixed position in the room.</p>
     </div>
 
     <!-- 02 -->
@@ -325,7 +296,7 @@
                 <span class="tag">C++ / Arduino Framework</span>
                 <span class="tag">PlatformIO</span>
                 <span class="tag">NTP Time Sync</span>
-                <span class="tag">Non-Volatile Storage (Preferences)</span>
+                <span class="tag">Preferences (Non-Volatile Storage)</span>
             </div>
         </div>
 
@@ -336,7 +307,6 @@
                 <span class="tag">SSD1306 OLED Display (I2C)</span>
                 <span class="tag">2× Push Buttons</span>
                 <span class="tag">Voltage Divider (5V→3.3V Echo)</span>
-                <span class="tag">5V Power Supply</span>
             </div>
         </div>
 
@@ -354,151 +324,104 @@
 
     <!-- 03 -->
     <div class="section">
-        <h2>03. Features</h2>
-        <div class="feature-grid">
-            <div class="feature-card">
-                <div class="fc-label">Intrusion Detection</div>
-                <p>HC-SR04 scans the room continuously. A multi-ping filter confirms real movement before triggering an alert.</p>
-            </div>
-            <div class="feature-card">
-                <div class="fc-label">Telegram Alerts</div>
-                <p>Instant message sent to 2 Telegram chat IDs with intrusion timestamp and duration. Alert within 2 seconds of detection.</p>
-            </div>
-            <div class="feature-card">
-                <div class="fc-label">Remote Arm / Disarm</div>
-                <p>Send /start or /status commands back to the Telegram bot to arm, disarm, or check room status remotely.</p>
-            </div>
-            <div class="feature-card">
-                <div class="fc-label">NTP Real-Time Clock</div>
-                <p>OLED shows live time in 12-hour AM/PM format when no alert is active. Auto-adjusts for AEST/AEDT daylight saving.</p>
-            </div>
-            <div class="feature-card">
-                <div class="fc-label">Web Dashboard</div>
-                <p>HTTP Basic Auth dashboard — arm/disarm, adjust detection threshold, and view alert history from any browser on the network.</p>
-            </div>
-            <div class="feature-card">
-                <div class="fc-label">Healthchecks.io Heartbeat</div>
-                <p>ESP32 pings Healthchecks.io every minute. If 3 consecutive pings are missed, an email downtime alert is sent automatically.</p>
-            </div>
-            <div class="feature-card">
-                <div class="fc-label">Threshold Adjustment</div>
-                <p>Two physical buttons adjust the detection range directly on the device. OLED gives live feedback. Threshold persists across reboots via Preferences.</p>
-            </div>
-            <div class="feature-card">
-                <div class="fc-label">Multi-Network WiFi</div>
-                <p>Auto-connects to up to 3 saved networks with reconnect logic — works at home, office, or wherever it's deployed.</p>
-            </div>
-        </div>
+        <h2>03. The Challenges</h2>
+
+        <p><b>Challenge 1 — Silent Failure:</b> If the device lost power or WiFi, there was no way to know the room was unprotected. A security device that fails silently is worse than no device at all.</p>
+
+        <p><b>Challenge 2 — False Triggers:</b> Ultrasonic sensors are sensitive to minor environmental changes — air currents, reflections, and sensor noise. A naive implementation triggered Telegram alerts constantly on non-events.</p>
+
+        <p><b>Challenge 3 — Dynamic Placement:</b> The device doesn't have a fixed position in the room. Re-flashing firmware every time the detection range needed adjusting was completely impractical.</p>
+
+        <p><b>Challenge 4 — No Real-Time Clock:</b> Alert timestamps and the web dashboard history were meaningless without accurate wall-clock time. The ESP32 has no onboard RTC, so time had to come from the network — and needed to handle Australian daylight saving automatically without manual intervention.</p>
     </div>
 
     <!-- 04 -->
     <div class="section">
-        <h2>04. Challenges</h2>
+        <h2>04. The Solutions</h2>
 
-        <p><b>Challenge 1 — Silent Failure:</b> If the device lost power or WiFi, there was no way to know the room was unprotected. A standard security device that fails silently is worse than no device at all.</p>
+        <p><b>Silent Failure — Healthchecks.io Heartbeat:</b> The ESP32 sends a ping to <b>Healthchecks.io</b> every 60 seconds. If three consecutive pings are missed — due to power loss, WiFi drop, or firmware crash — the service automatically sends a downtime email alert. The device can never go silently offline.</p>
 
-        <p><b>Challenge 2 — False Triggers:</b> Ultrasonic sensors are sensitive to minor environmental changes — air currents, reflections, sensor noise. A naive implementation triggered alerts constantly on non-events.</p>
+        <p><b>False Triggers — Multi-Ping Filter Algorithm:</b> Rather than acting on any single sensor reading, the firmware requires a <b>consistent change in distance across multiple consecutive pings</b> before confirming an intrusion. One-off reflections and noise spikes are ignored entirely. Only a sustained, real presence triggers the alert.</p>
 
-        <p><b>Challenge 3 — Dynamic Placement:</b> The device doesn't have a fixed position in the room. Re-flashing the firmware every time the detection range needed adjusting was completely impractical.</p>
+        <p><b>Dynamic Range — Physical Buttons + Persistent Storage:</b> Two push buttons increment and decrement the detection threshold directly on the device. The <b>SSD1306 OLED</b> provides live feedback showing the current range value. The threshold is saved to <b>non-volatile flash</b> via the ESP32 Preferences library — it survives reboots and power cuts with no reflashing needed.</p>
 
-        <p><b>Challenge 4 — No Clock Without Internet:</b> Timestamps in Telegram alerts and the web dashboard were meaningless without real wall-clock time. The ESP32 has no RTC, so time had to come from the network — and needed to handle Australian daylight saving automatically.</p>
-    </div>
-
-    <!-- 05 -->
-    <div class="section">
-        <h2>05. Solutions</h2>
-
-        <p><b>Silent Failure — Healthchecks.io:</b> The ESP32 sends a heartbeat ping to <b>Healthchecks.io</b> every minute. If the service misses three consecutive pings — due to power loss, WiFi drop, or crash — it automatically sends a downtime email alert. The device can't go silently offline.</p>
-
-        <p><b>False Triggers — Ping Filter Algorithm:</b> Rather than acting on any single sensor reading, the firmware requires a <b>consistent change in distance across multiple consecutive pings</b> before confirming an intrusion. Noise and one-off reflections are ignored. Only a sustained, real presence triggers the alert.</p>
-
-        <p><b>Dynamic Range — Physical Buttons + Persistent Storage:</b> Two push buttons increment and decrement the detection threshold directly on the device. The SSD1306 OLED provides real-time feedback showing the current range setting. The threshold is saved to <b>non-volatile flash storage</b> via the ESP32's Preferences library — it survives reboots and power cuts.</p>
-
-        <p><b>Real-Time Clock — NTP + Auto Timezone:</b> The ESP32 syncs time over WiFi using NTP on boot. The timezone is set using the POSIX string for automatic AEST/AEDT switching — no manual daylight saving adjustment ever needed.</p>
+        <p><b>Real-Time Clock — NTP + Auto Daylight Saving:</b> The ESP32 syncs time over WiFi using NTP on boot. The timezone is configured with a POSIX string that handles AEST/AEDT switching automatically — no manual offset changes ever needed. The OLED shows the live clock in 12-hour AM/PM format when the room is clear.</p>
 
         <div class="code-block">
-<span class="comment">// Automatic AEST/AEDT daylight saving — no manual offset needed</span>
+<span class="comment">// Auto AEST/AEDT — handles daylight saving without manual changes</span>
 setenv(<span class="value">"TZ"</span>, <span class="value">"AEST-10AEDT,M10.1.0,M4.1.0/3"</span>, 1);
 tzset();
 configTime(0, 0, <span class="value">"pool.ntp.org"</span>);
 
-<span class="comment">// OLED clock display — 12-hour AM/PM format</span>
+<span class="comment">// OLED clock — 12-hour AM/PM format</span>
 strftime(timeStr, sizeof(timeStr), <span class="value">"%I:%M %p"</span>, &amp;timeinfo);
         </div>
 
-        <p><b>Web Dashboard:</b> A lightweight HTTP server runs on the ESP32, protected by <b>Basic Auth</b>. From any browser on the same network, the dashboard shows live sensor distance, armed/disarmed state, detection threshold, and a timestamped alert history log.</p>
+        <p><b>Web Dashboard:</b> A lightweight HTTP server runs on the ESP32 and is protected by <b>Basic Auth</b>. From any browser on the same WiFi network, the dashboard shows the live sensor distance, armed/disarmed status, current threshold, and a timestamped alert history log. Arm and disarm can also be triggered remotely via <b>Telegram bot commands</b> — /start and /status.</p>
+
+        <p><b>Multi-Network WiFi:</b> The firmware stores up to <b>3 WiFi networks</b> and auto-connects to whichever is available, with reconnect logic on drop. The device works at home, at another location, or wherever it's deployed without code changes.</p>
+
+        <div class="code-block">
+<span class="comment">// System Architecture</span>
+<span class="label">HC-SR04      </span>  Ping every 500ms  →  <span class="value">distance reading</span>
+<span class="label">Filter       </span>  N consistent readings below threshold  →  <span class="value">intrusion confirmed</span>
+<span class="label">Telegram     </span>  Alert to <span class="value">2× chat IDs</span>  [timestamp + intrusion duration]
+<span class="label">Arm/Disarm   </span>  /start  /status commands back to bot  →  <span class="value">remote control</span>
+<span class="label">OLED         </span>  Idle: <span class="value">live clock</span>  |  Active: <span class="value">distance</span>  |  Alert: <span class="value">intruder status</span>
+<span class="label">Heartbeat    </span>  Ping Healthchecks.io every <span class="value">60s</span>  →  miss 3 = downtime email
+<span class="label">Web Server   </span>  HTTP Basic Auth  →  arm / disarm / threshold / history
+<span class="label">Threshold    </span>  Button A/B  →  OLED feedback  →  <span class="value">saved to Preferences</span>
+        </div>
+    </div>
+
+    <!-- 05 -->
+    <div class="section">
+        <h2>05. Results</h2>
+        <div class="result-box">
+            <p>✅ System live and running for <b>3+ months</b> with 99.9% uptime.</p>
+            <p>✅ Intrusion alerts delivered via Telegram in under <b>2 seconds</b> of detection.</p>
+            <p>✅ Zero false positives since the multi-ping filter was implemented.</p>
+            <p>✅ Healthchecks.io correctly flagged every unplanned downtime event.</p>
+            <p>✅ NTP clock accurate and auto-adjusting for daylight saving — zero manual changes needed.</p>
+            <p>✅ Detection threshold adjustable on-device without re-flashing firmware.</p>
+        </div>
     </div>
 
     <!-- 06 -->
     <div class="section">
-        <h2>06. System Architecture</h2>
-        <div class="code-block">
-<span class="comment">// Detection Loop</span>
-<span class="label">HC-SR04      </span>  Ping every 500ms  →  <span class="value">distance reading</span>
-<span class="label">Filter       </span>  N consecutive readings below threshold  →  <span class="value">intrusion confirmed</span>
-<span class="label">Telegram     </span>  Alert sent to <span class="value">2× chat IDs</span>  [timestamp + duration]
-<span class="label">OLED         </span>  Shows: time (idle) / distance (active) / alert (triggered)
+        <h2>06. Lessons Learned</h2>
 
-<span class="comment">// Heartbeat Loop</span>
-<span class="label">Healthchecks </span>  Ping every <span class="value">60s</span>  →  miss 3 = downtime email sent
+        <div class="lesson-box">
+            <div class="lesson-label">Silent Failure Is Unacceptable in Security Systems</div>
+            <p>A device that fails without telling you is worse than no device. Healthchecks.io solved this with the heartbeat model — the device actively proves it's alive rather than passively hoping nothing goes wrong.</p>
+        </div>
 
-<span class="comment">// Web Server</span>
-<span class="label">HTTP Auth    </span>  Basic Auth protected  →  arm / disarm / threshold / history
+        <div class="lesson-box">
+            <div class="lesson-label">Never Act on Raw Sensor Readings</div>
+            <p>A single ultrasonic ping is unreliable. Environmental noise, reflections, and interference cause spurious values. Requiring consistency across multiple consecutive readings before acting eliminated false positives completely.</p>
+        </div>
 
-<span class="comment">// Threshold Control</span>
-<span class="label">Button A     </span>  Increase range  →  OLED feedback  →  <span class="value">saved to Preferences</span>
-<span class="label">Button B     </span>  Decrease range  →  OLED feedback  →  <span class="value">saved to Preferences</span>
+        <div class="lesson-box">
+            <div class="lesson-label">Hardcoded Configuration Is a Maintenance Problem</div>
+            <p>Re-flashing firmware to change a detection threshold is impractical in a real deployment. Physical buttons plus Preferences-backed persistent storage made the device fully self-contained and field-adjustable.</p>
+        </div>
+
+        <div class="lesson-box">
+            <div class="lesson-label">Use POSIX Timezone Strings for Embedded Systems</div>
+            <p>Hardcoding UTC+10 breaks for half the year in Melbourne. The POSIX TZ string <code style="color:var(--status-done); font-family:var(--font-mono); font-size:0.85em;">AEST-10AEDT,M10.1.0,M4.1.0/3</code> handles all daylight saving transitions automatically — the correct approach for any Australian IoT device.</p>
         </div>
     </div>
 
     <!-- 07 -->
     <div class="section">
-        <h2>07. Results</h2>
-        <div class="result-box">
-            <p>✅ System live and running for <b>3+ months</b> with 99.9% uptime.</p>
-            <p>✅ Intrusion alerts delivered via Telegram in under <b>2 seconds</b> of detection.</p>
-            <p>✅ Zero false positives since ping filter algorithm was implemented.</p>
-            <p>✅ Healthchecks.io correctly flagged every unplanned downtime event.</p>
-            <p>✅ NTP clock accurate and automatically adjusting for daylight saving — zero manual intervention.</p>
-            <p>✅ Detection threshold adjustable on the fly without reflashing firmware.</p>
-        </div>
-    </div>
-
-    <!-- 08 -->
-    <div class="section">
-        <h2>08. Lessons Learned</h2>
-
-        <div class="lesson-box">
-            <div class="lesson-label">Silent Failure Is Unacceptable in Security Systems</div>
-            <p>A device that fails without telling you is worse than no device. Healthchecks.io solved this elegantly — the heartbeat model means the system actively proves it's alive rather than passively hoping nothing goes wrong.</p>
-        </div>
-
-        <div class="lesson-box">
-            <div class="lesson-label">Filter Sensor Data — Never Act on Raw Readings</div>
-            <p>A single ultrasonic ping is unreliable. Environmental noise, reflections, and interference all cause spurious readings. Requiring consistency across multiple consecutive readings before acting eliminated false positives entirely.</p>
-        </div>
-
-        <div class="lesson-box">
-            <div class="lesson-label">Hardcoded Configuration Is a Maintenance Problem</div>
-            <p>Re-flashing firmware to change a detection threshold is impractical. Physical buttons + persistent Preferences storage made the device truly self-contained and adjustable without a laptop.</p>
-        </div>
-
-        <div class="lesson-box">
-            <div class="lesson-label">POSIX Timezone Strings Handle DST Automatically</div>
-            <p>Hardcoding UTC+10 breaks for half the year in Melbourne. The POSIX TZ string <code style="color:var(--status-done); font-family:var(--font-mono); font-size:0.85em;">AEST-10AEDT,M10.1.0,M4.1.0/3</code> handles all daylight saving transitions automatically — the right way to do timezones on embedded systems.</p>
-        </div>
-    </div>
-
-    <!-- 09 -->
-    <div class="section">
-        <h2>09. Gallery</h2>
+        <h2>07. Gallery</h2>
         <div class="gallery-grid">
             <figure>
                 <img src="roommonitor 1 (1).jpeg" alt="Starting screen">
                 <figcaption>OLED – device initialising on boot</figcaption>
             </figure>
             <figure>
-                <img src="room monitor 2 (1).jpeg" alt="OLED and ESP32 powered on">
+                <img src="room monitor 2 (1).jpeg" alt="OLED and ESP32 on">
                 <figcaption>OLED + ESP32 powered on</figcaption>
             </figure>
             <figure>
@@ -520,9 +443,9 @@ strftime(timeStr, sizeof(timeStr), <span class="value">"%I:%M %p"</span>, &amp;t
         </div>
     </div>
 
-    <!-- 10 -->
+    <!-- 08 -->
     <div class="section">
-        <h2>10. Source Code</h2>
+        <h2>08. Source Code</h2>
         <p>Full firmware source available on GitHub.</p>
         <a href="https://github.com/Sam2001115" class="github-link" target="_blank">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
