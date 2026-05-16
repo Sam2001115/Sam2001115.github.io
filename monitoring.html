@@ -4,200 +4,539 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Room Monitor | Sameer Appasa</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
             --background: #050505;
             --foreground: #fafafa;
             --primary: #4169E1;
+            --primary-dim: rgba(65,105,225,0.13);
             --card: #0d0d0d;
             --border: #1f1f1f;
-            --font-mono: 'JetBrains Mono', monospace;
+            --font-mono: 'Space Mono', monospace;
+            --font-sans: 'Syne', sans-serif;
             --status-done: #00ffcc;
-            --muted-foreground: #888;
+            --muted: #888;
+            --warn: #f59e0b;
         }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
         body {
             background-color: var(--background);
             color: var(--foreground);
-            font-family: 'Inter', sans-serif;
-            margin: 0;
-            line-height: 1.6;
+            font-family: var(--font-sans);
+            line-height: 1.7;
+            overflow-x: hidden;
         }
+
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(65,105,225,0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(65,105,225,0.03) 1px, transparent 1px);
+            background-size: 40px 40px;
+            pointer-events: none;
+            z-index: 0;
+        }
+
         .container {
-            max-width: 850px;
+            max-width: 900px;
             margin: 0 auto;
-            padding: 4rem 2rem;
+            padding: 3rem 2rem 6rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .nav-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 3rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border);
         }
         .nav-back {
             font-family: var(--font-mono);
+            font-size: 0.8rem;
             color: var(--primary);
             text-decoration: none;
-            margin-bottom: 2rem;
-            display: inline-block;
-            border-bottom: 1px solid transparent;
+            transition: opacity 0.2s;
         }
-        .nav-back:hover {
-            border-bottom: 1px solid var(--primary);
+        .nav-back:hover { opacity: 0.7; }
+        .nav-siblings { display: flex; gap: 1.5rem; }
+        .nav-siblings a {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            color: var(--muted);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        .nav-siblings a:hover { color: var(--primary); }
+
+        .project-label {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            color: var(--muted);
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            margin-bottom: 0.75rem;
         }
         h1 {
             font-family: var(--font-mono);
-            font-size: 2.5rem;
+            font-size: clamp(1.8rem, 5vw, 2.8rem);
             color: var(--primary);
-            border-bottom: 1px solid var(--border);
-            padding-bottom: 1rem;
+            letter-spacing: -0.02em;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
         }
-        .section {
+        .status-row {
+            display: flex;
+            gap: 0.75rem;
+            flex-wrap: wrap;
             margin-bottom: 3.5rem;
         }
+        .badge {
+            font-family: var(--font-mono);
+            font-size: 0.72rem;
+            padding: 0.3rem 0.75rem;
+            border-radius: 2px;
+            letter-spacing: 0.05em;
+        }
+        .badge-done { background: rgba(0,255,204,0.08); border: 1px solid var(--status-done); color: var(--status-done); }
+        .badge-type { background: var(--primary-dim); border: 1px solid var(--primary); color: var(--primary); }
+
+        .section { margin-bottom: 4rem; }
         .section h2 {
             font-family: var(--font-mono);
-            font-size: 1.1rem;
+            font-size: 0.8rem;
             color: var(--primary);
             text-transform: uppercase;
+            letter-spacing: 0.12em;
             border-left: 3px solid var(--primary);
             padding-left: 1rem;
-            margin-bottom: 1rem;
+            margin-bottom: 1.5rem;
         }
-        .tech-tags {
-            display: flex;
-            gap: 0.5rem;
-            flex-wrap: wrap;
-            margin-top: 1rem;
+        .section p { color: #ccc; margin-bottom: 1rem; font-size: 0.97rem; }
+        .section p:last-child { margin-bottom: 0; }
+        b { color: var(--foreground); font-weight: 700; }
+
+        .tag-group { margin-bottom: 1rem; }
+        .tag-group-label {
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            color: var(--muted);
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            margin-bottom: 0.5rem;
         }
+        .tech-tags { display: flex; gap: 0.5rem; flex-wrap: wrap; }
         .tag {
             font-family: var(--font-mono);
-            font-size: 0.8rem;
-            background: #111;
+            font-size: 0.75rem;
+            background: #0f0f0f;
             border: 1px solid var(--border);
-            padding: 0.3rem 0.8rem;
+            padding: 0.35rem 0.85rem;
             color: var(--primary);
+            transition: border-color 0.2s, background 0.2s;
         }
-        .result-box {
-            background: #0a1a1a;
-            border: 1px solid var(--status-done);
+        .tag:hover { border-color: var(--primary); background: var(--primary-dim); }
+
+        /* Feature grid */
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 0.75rem;
+            margin: 1.25rem 0;
+        }
+        .feature-card {
+            background: #080808;
+            border: 1px solid var(--border);
+            border-radius: 3px;
+            padding: 1rem 1.1rem;
+            transition: border-color 0.2s;
+        }
+        .feature-card:hover { border-color: var(--primary); }
+        .feature-card .fc-label {
+            font-family: var(--font-mono);
+            font-size: 0.68rem;
+            color: var(--primary);
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            margin-bottom: 0.35rem;
+        }
+        .feature-card p {
+            color: #aaa !important;
+            font-size: 0.87rem !important;
+            margin-bottom: 0 !important;
+        }
+
+        .code-block {
+            background: #080808;
+            border: 1px solid var(--border);
+            border-left: 3px solid var(--primary);
             padding: 1.5rem;
             margin: 1.5rem 0;
-            border-radius: 4px;
+            font-family: var(--font-mono);
+            font-size: 0.82rem;
+            color: #88ccff;
+            overflow-x: auto;
+            line-height: 1.9;
         }
-        .result-box p {
-            margin: 0;
-            color: var(--status-done);
+        .code-block .comment { color: #333; }
+        .code-block .value   { color: var(--status-done); }
+        .code-block .label   { color: var(--warn); }
+
+        .result-box {
+            background: rgba(0,255,204,0.04);
+            border: 1px solid var(--status-done);
+            padding: 1.5rem 1.75rem;
+            border-radius: 3px;
         }
-        b {
-            color: var(--primary);
+        .result-box p { color: var(--status-done) !important; margin-bottom: 0.5rem !important; }
+        .result-box p:last-child { margin-bottom: 0 !important; }
+
+        .lesson-box {
+            background: rgba(245,158,11,0.05);
+            border: 1px solid rgba(245,158,11,0.3);
+            padding: 1.25rem 1.5rem;
+            border-radius: 3px;
+            margin-bottom: 0.75rem;
         }
+        .lesson-label {
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            color: var(--warn);
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            margin-bottom: 0.4rem;
+        }
+        .lesson-box p { color: #ccc !important; font-size: 0.92rem !important; margin-bottom: 0 !important; }
+
         .gallery-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1.5rem;
-            margin-top: 1rem;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 1rem;
         }
         figure {
             margin: 0;
             background: var(--card);
             border: 1px solid var(--border);
-            border-radius: 4px;
+            border-radius: 3px;
             padding: 0.5rem;
-            transition: border-color 0.3s ease;
+            transition: border-color 0.25s;
         }
-        figure:hover {
-            border-color: var(--primary);
-        }
+        figure:hover { border-color: var(--primary); }
         figure img {
             width: 100%;
-            height: auto;
+            height: 180px;
+            object-fit: cover;
             display: block;
-            border-radius: 4px;
-            background: var(--card);
+            border-radius: 2px;
+            background: #111;
         }
         figcaption {
             font-family: var(--font-mono);
-            font-size: 0.8rem;
-            color: var(--muted-foreground);
+            font-size: 0.72rem;
+            color: var(--muted);
             margin-top: 0.5rem;
             text-align: center;
             line-height: 1.4;
         }
+
+        .github-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            font-family: var(--font-mono);
+            font-size: 0.82rem;
+            color: var(--foreground);
+            background: #0f0f0f;
+            border: 1px solid var(--border);
+            padding: 0.75rem 1.25rem;
+            text-decoration: none;
+            border-radius: 2px;
+            transition: border-color 0.2s, background 0.2s, color 0.2s;
+            margin-top: 0.5rem;
+        }
+        .github-link:hover { border-color: var(--primary); background: var(--primary-dim); color: var(--primary); }
+
+        .footer-nav {
+            display: flex;
+            justify-content: space-between;
+            padding-top: 3rem;
+            border-top: 1px solid var(--border);
+            margin-top: 2rem;
+        }
+        .footer-nav a {
+            font-family: var(--font-mono);
+            font-size: 0.78rem;
+            color: var(--muted);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        .footer-nav a:hover { color: var(--primary); }
+
+        @media (max-width: 600px) {
+            .nav-siblings { display: none; }
+            .feature-grid { grid-template-columns: 1fr; }
+            .gallery-grid { grid-template-columns: 1fr; }
+            .footer-nav { flex-direction: column; gap: 1rem; }
+        }
     </style>
 </head>
 <body>
-    <div class="container">
-        <a href="index.html" class="nav-back">< RETURN_TO_DASHBOARD</a>
-        <h1>PROJECT: ROOM_MONITOR_DEVICE</h1>
+<div class="container">
 
-        <div class="section">
-            <h2>01. Objective</h2>
-            <p>Monitoring my room for any intrusion while I'm out. The device detects movement and sends real-time alerts to my phone via Telegram, including the duration of the intrusion.</p>
+    <nav class="nav-bar">
+        <a href="index.html" class="nav-back">← RETURN_TO_DASHBOARD</a>
+        <div class="nav-siblings">
+            <a href="rover.html">← CLEANING ROVER</a>
+            <a href="ousb.html">OUSB SIMULATOR →</a>
         </div>
+    </nav>
 
-        <div class="section">
-            <h2>02. Technology Used</h2>
+    <div class="project-label">Project [03] / Personal Build</div>
+    <h1>PROJECT:<br>ROOM_MONITOR &amp;<br>SECURITY_SYSTEM</h1>
+    <div class="status-row">
+        <span class="badge badge-done">✓ LIVE — 3 MONTHS UPTIME</span>
+        <span class="badge badge-type">IoT</span>
+        <span class="badge badge-type">EMBEDDED SYSTEMS</span>
+        <span class="badge badge-type">API INTEGRATION</span>
+        <span class="badge badge-type">NETWORKING</span>
+    </div>
+
+    <!-- 01 -->
+    <div class="section">
+        <h2>01. Objective</h2>
+        <p>Build a low-cost, always-on room security monitor that detects intrusions and delivers instant alerts to my phone via Telegram — regardless of where I am. The system needed to be wireless, self-monitoring, and deployable without a fixed position in the room.</p>
+    </div>
+
+    <!-- 02 -->
+    <div class="section">
+        <h2>02. Technology Used</h2>
+
+        <div class="tag-group">
+            <div class="tag-group-label">Microcontroller & Software</div>
             <div class="tech-tags">
                 <span class="tag">ESP32 DevKit V1</span>
+                <span class="tag">C++ / Arduino Framework</span>
+                <span class="tag">PlatformIO</span>
+                <span class="tag">NTP Time Sync</span>
+                <span class="tag">Non-Volatile Storage (Preferences)</span>
+            </div>
+        </div>
+
+        <div class="tag-group">
+            <div class="tag-group-label">Hardware</div>
+            <div class="tech-tags">
                 <span class="tag">HC-SR04 Ultrasonic Sensor</span>
-                <span class="tag">1.3" I2C OLED Display</span>
+                <span class="tag">SSD1306 OLED Display (I2C)</span>
+                <span class="tag">2× Push Buttons</span>
+                <span class="tag">Voltage Divider (5V→3.3V Echo)</span>
+                <span class="tag">5V Power Supply</span>
+            </div>
+        </div>
+
+        <div class="tag-group">
+            <div class="tag-group-label">Connectivity & APIs</div>
+            <div class="tech-tags">
                 <span class="tag">Telegram Bot API</span>
-                <span class="tag">Healthchecks.io (Pinging)</span>
-                <span class="tag">Push Buttons (Input)</span>
-            </div>
-        </div>
-
-        <div class="section">
-            <h2>03. Challenges</h2>
-            <p><b>1. Connectivity Awareness:</b> If the device is turned off or loses power, there was no way to know, leaving the room unprotected without notice.</p>
-            <p><b>2. Dynamic Placement:</b> The detection range needed to be adjusted constantly in the code because the device doesn't have a fixed place, making it inefficient to re-flash the firmware every time I moved it.</p>
-        </div>
-
-        <div class="section">
-            <h2>04. Resolution</h2>
-            <p>I utilized <b>Healthchecks</b> to send an automated email if the device goes offline by tracking the last ping sent by the ESP32.</p>
-            
-            <p>To solve the range issue, I added <b>two push buttons</b> that allow for manual adjustment of the ultrasonic threshold directly on the device. The <b>OLED display</b> provides real-time feedback on the current range settings and connection status.</p>
-            
-            <p>When movement is detected within the set range, the ESP32 communicates with a <b>Telegram Bot</b> on my phone to provide instant security updates and timestamps.</p>
-
-            <h2>05. Results</h2>
-            <div class="result-box">
-                <p>✅ The system has been running for 3 months with 99.9% uptime, alerting me within 5 seconds of any intrusion. Healthchecks.io now sends a downtime alert if the device misses three consecutive pings, ensuring I never unknowingly leave the room unprotected.</p>
-            </div>
-        </div>
-
-        <div class="section">
-            <h2>06. Gallery</h2>
-            <div class="gallery-grid">
-                
-                <figure>
-                    <img src="roommonitor 1 (1).jpeg" alt="Starting screen">
-                    <figcaption>Starting screen – device initialising</figcaption>
-                </figure>
-                
-                <figure>
-                    <img src="room monitor 2 (1).jpeg" alt="Top view">
-                    <figcaption>OLED And ESP32 ON</figcaption>
-                </figure>
-                
-                <figure>
-                    <img src="room monitor3.jpeg" alt="Side view">
-                    <figcaption>TOP View</figcaption>
-                </figure>
-                
-                <figure>
-                    <img src="secite of the monitor (1).jpeg" alt="Detection screen">
-                    <figcaption>Wiring and voltage divider circuit</figcaption>
-                </figure>
-                
-                <figure>
-                    <img src="phonescreanshot of boot.jpeg" alt="Telegram bot screen">
-                    <figcaption>Telegram Bot Chat Interface</figcaption>
-                </figure>
-                
-                <figure>
-                    <img src="room monitor4.jpeg" alt="Detection view">
-                    <figcaption>Detection Of Intruder Status</figcaption>
-                </figure>
-                
+                <span class="tag">Healthchecks.io Heartbeat</span>
+                <span class="tag">HTTP Basic Auth Web Dashboard</span>
+                <span class="tag">Multi-Network WiFi (3 networks)</span>
+                <span class="tag">AEST/AEDT Auto Timezone</span>
             </div>
         </div>
     </div>
+
+    <!-- 03 -->
+    <div class="section">
+        <h2>03. Features</h2>
+        <div class="feature-grid">
+            <div class="feature-card">
+                <div class="fc-label">Intrusion Detection</div>
+                <p>HC-SR04 scans the room continuously. A multi-ping filter confirms real movement before triggering an alert.</p>
+            </div>
+            <div class="feature-card">
+                <div class="fc-label">Telegram Alerts</div>
+                <p>Instant message sent to 2 Telegram chat IDs with intrusion timestamp and duration. Alert within 2 seconds of detection.</p>
+            </div>
+            <div class="feature-card">
+                <div class="fc-label">Remote Arm / Disarm</div>
+                <p>Send /start or /status commands back to the Telegram bot to arm, disarm, or check room status remotely.</p>
+            </div>
+            <div class="feature-card">
+                <div class="fc-label">NTP Real-Time Clock</div>
+                <p>OLED shows live time in 12-hour AM/PM format when no alert is active. Auto-adjusts for AEST/AEDT daylight saving.</p>
+            </div>
+            <div class="feature-card">
+                <div class="fc-label">Web Dashboard</div>
+                <p>HTTP Basic Auth dashboard — arm/disarm, adjust detection threshold, and view alert history from any browser on the network.</p>
+            </div>
+            <div class="feature-card">
+                <div class="fc-label">Healthchecks.io Heartbeat</div>
+                <p>ESP32 pings Healthchecks.io every minute. If 3 consecutive pings are missed, an email downtime alert is sent automatically.</p>
+            </div>
+            <div class="feature-card">
+                <div class="fc-label">Threshold Adjustment</div>
+                <p>Two physical buttons adjust the detection range directly on the device. OLED gives live feedback. Threshold persists across reboots via Preferences.</p>
+            </div>
+            <div class="feature-card">
+                <div class="fc-label">Multi-Network WiFi</div>
+                <p>Auto-connects to up to 3 saved networks with reconnect logic — works at home, office, or wherever it's deployed.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 04 -->
+    <div class="section">
+        <h2>04. Challenges</h2>
+
+        <p><b>Challenge 1 — Silent Failure:</b> If the device lost power or WiFi, there was no way to know the room was unprotected. A standard security device that fails silently is worse than no device at all.</p>
+
+        <p><b>Challenge 2 — False Triggers:</b> Ultrasonic sensors are sensitive to minor environmental changes — air currents, reflections, sensor noise. A naive implementation triggered alerts constantly on non-events.</p>
+
+        <p><b>Challenge 3 — Dynamic Placement:</b> The device doesn't have a fixed position in the room. Re-flashing the firmware every time the detection range needed adjusting was completely impractical.</p>
+
+        <p><b>Challenge 4 — No Clock Without Internet:</b> Timestamps in Telegram alerts and the web dashboard were meaningless without real wall-clock time. The ESP32 has no RTC, so time had to come from the network — and needed to handle Australian daylight saving automatically.</p>
+    </div>
+
+    <!-- 05 -->
+    <div class="section">
+        <h2>05. Solutions</h2>
+
+        <p><b>Silent Failure — Healthchecks.io:</b> The ESP32 sends a heartbeat ping to <b>Healthchecks.io</b> every minute. If the service misses three consecutive pings — due to power loss, WiFi drop, or crash — it automatically sends a downtime email alert. The device can't go silently offline.</p>
+
+        <p><b>False Triggers — Ping Filter Algorithm:</b> Rather than acting on any single sensor reading, the firmware requires a <b>consistent change in distance across multiple consecutive pings</b> before confirming an intrusion. Noise and one-off reflections are ignored. Only a sustained, real presence triggers the alert.</p>
+
+        <p><b>Dynamic Range — Physical Buttons + Persistent Storage:</b> Two push buttons increment and decrement the detection threshold directly on the device. The SSD1306 OLED provides real-time feedback showing the current range setting. The threshold is saved to <b>non-volatile flash storage</b> via the ESP32's Preferences library — it survives reboots and power cuts.</p>
+
+        <p><b>Real-Time Clock — NTP + Auto Timezone:</b> The ESP32 syncs time over WiFi using NTP on boot. The timezone is set using the POSIX string for automatic AEST/AEDT switching — no manual daylight saving adjustment ever needed.</p>
+
+        <div class="code-block">
+<span class="comment">// Automatic AEST/AEDT daylight saving — no manual offset needed</span>
+setenv(<span class="value">"TZ"</span>, <span class="value">"AEST-10AEDT,M10.1.0,M4.1.0/3"</span>, 1);
+tzset();
+configTime(0, 0, <span class="value">"pool.ntp.org"</span>);
+
+<span class="comment">// OLED clock display — 12-hour AM/PM format</span>
+strftime(timeStr, sizeof(timeStr), <span class="value">"%I:%M %p"</span>, &amp;timeinfo);
+        </div>
+
+        <p><b>Web Dashboard:</b> A lightweight HTTP server runs on the ESP32, protected by <b>Basic Auth</b>. From any browser on the same network, the dashboard shows live sensor distance, armed/disarmed state, detection threshold, and a timestamped alert history log.</p>
+    </div>
+
+    <!-- 06 -->
+    <div class="section">
+        <h2>06. System Architecture</h2>
+        <div class="code-block">
+<span class="comment">// Detection Loop</span>
+<span class="label">HC-SR04      </span>  Ping every 500ms  →  <span class="value">distance reading</span>
+<span class="label">Filter       </span>  N consecutive readings below threshold  →  <span class="value">intrusion confirmed</span>
+<span class="label">Telegram     </span>  Alert sent to <span class="value">2× chat IDs</span>  [timestamp + duration]
+<span class="label">OLED         </span>  Shows: time (idle) / distance (active) / alert (triggered)
+
+<span class="comment">// Heartbeat Loop</span>
+<span class="label">Healthchecks </span>  Ping every <span class="value">60s</span>  →  miss 3 = downtime email sent
+
+<span class="comment">// Web Server</span>
+<span class="label">HTTP Auth    </span>  Basic Auth protected  →  arm / disarm / threshold / history
+
+<span class="comment">// Threshold Control</span>
+<span class="label">Button A     </span>  Increase range  →  OLED feedback  →  <span class="value">saved to Preferences</span>
+<span class="label">Button B     </span>  Decrease range  →  OLED feedback  →  <span class="value">saved to Preferences</span>
+        </div>
+    </div>
+
+    <!-- 07 -->
+    <div class="section">
+        <h2>07. Results</h2>
+        <div class="result-box">
+            <p>✅ System live and running for <b>3+ months</b> with 99.9% uptime.</p>
+            <p>✅ Intrusion alerts delivered via Telegram in under <b>2 seconds</b> of detection.</p>
+            <p>✅ Zero false positives since ping filter algorithm was implemented.</p>
+            <p>✅ Healthchecks.io correctly flagged every unplanned downtime event.</p>
+            <p>✅ NTP clock accurate and automatically adjusting for daylight saving — zero manual intervention.</p>
+            <p>✅ Detection threshold adjustable on the fly without reflashing firmware.</p>
+        </div>
+    </div>
+
+    <!-- 08 -->
+    <div class="section">
+        <h2>08. Lessons Learned</h2>
+
+        <div class="lesson-box">
+            <div class="lesson-label">Silent Failure Is Unacceptable in Security Systems</div>
+            <p>A device that fails without telling you is worse than no device. Healthchecks.io solved this elegantly — the heartbeat model means the system actively proves it's alive rather than passively hoping nothing goes wrong.</p>
+        </div>
+
+        <div class="lesson-box">
+            <div class="lesson-label">Filter Sensor Data — Never Act on Raw Readings</div>
+            <p>A single ultrasonic ping is unreliable. Environmental noise, reflections, and interference all cause spurious readings. Requiring consistency across multiple consecutive readings before acting eliminated false positives entirely.</p>
+        </div>
+
+        <div class="lesson-box">
+            <div class="lesson-label">Hardcoded Configuration Is a Maintenance Problem</div>
+            <p>Re-flashing firmware to change a detection threshold is impractical. Physical buttons + persistent Preferences storage made the device truly self-contained and adjustable without a laptop.</p>
+        </div>
+
+        <div class="lesson-box">
+            <div class="lesson-label">POSIX Timezone Strings Handle DST Automatically</div>
+            <p>Hardcoding UTC+10 breaks for half the year in Melbourne. The POSIX TZ string <code style="color:var(--status-done); font-family:var(--font-mono); font-size:0.85em;">AEST-10AEDT,M10.1.0,M4.1.0/3</code> handles all daylight saving transitions automatically — the right way to do timezones on embedded systems.</p>
+        </div>
+    </div>
+
+    <!-- 09 -->
+    <div class="section">
+        <h2>09. Gallery</h2>
+        <div class="gallery-grid">
+            <figure>
+                <img src="roommonitor 1 (1).jpeg" alt="Starting screen">
+                <figcaption>OLED – device initialising on boot</figcaption>
+            </figure>
+            <figure>
+                <img src="room monitor 2 (1).jpeg" alt="OLED and ESP32 powered on">
+                <figcaption>OLED + ESP32 powered on</figcaption>
+            </figure>
+            <figure>
+                <img src="room monitor3.jpeg" alt="Top view">
+                <figcaption>Top view – full assembly</figcaption>
+            </figure>
+            <figure>
+                <img src="secite of the monitor (1).jpeg" alt="Wiring">
+                <figcaption>Wiring – voltage divider circuit</figcaption>
+            </figure>
+            <figure>
+                <img src="phonescreanshot of boot.jpeg" alt="Telegram bot">
+                <figcaption>Telegram Bot – alert interface</figcaption>
+            </figure>
+            <figure>
+                <img src="room monitor4.jpeg" alt="Detection status">
+                <figcaption>OLED – intruder detected status</figcaption>
+            </figure>
+        </div>
+    </div>
+
+    <!-- 10 -->
+    <div class="section">
+        <h2>10. Source Code</h2>
+        <p>Full firmware source available on GitHub.</p>
+        <a href="https://github.com/Sam2001115" class="github-link" target="_blank">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/>
+            </svg>
+            github.com/Sam2001115
+        </a>
+    </div>
+
+    <div class="footer-nav">
+        <a href="rover.html">← CLEANING ROVER</a>
+        <a href="ousb.html">NEXT: OUSB SIMULATOR →</a>
+    </div>
+
+</div>
 </body>
 </html>
