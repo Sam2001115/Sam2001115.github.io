@@ -3,216 +3,564 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rover Details | Sameer Appasa</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <title>Cleaning Rover | Sameer Appasa</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
             --background: #050505;
             --foreground: #fafafa;
             --primary: #4169E1;
+            --primary-dim: rgba(65,105,225,0.15);
             --card: #0d0d0d;
             --border: #1f1f1f;
-            --font-mono: 'JetBrains Mono', monospace;
+            --font-mono: 'Space Mono', monospace;
+            --font-sans: 'Syne', sans-serif;
             --status-done: #00ffcc;
-            --muted-foreground: #888;
+            --muted: #888;
+            --warn: #f59e0b;
         }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
         body {
             background-color: var(--background);
             color: var(--foreground);
-            font-family: 'Inter', sans-serif;
-            margin: 0;
-            line-height: 1.6;
+            font-family: var(--font-sans);
+            line-height: 1.7;
+            overflow-x: hidden;
         }
+
+        /* Subtle grid bg */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(65,105,225,0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(65,105,225,0.03) 1px, transparent 1px);
+            background-size: 40px 40px;
+            pointer-events: none;
+            z-index: 0;
+        }
+
         .container {
-            max-width: 850px;
+            max-width: 900px;
             margin: 0 auto;
-            padding: 4rem 2rem;
+            padding: 3rem 2rem 6rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* NAV */
+        .nav-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 3rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border);
         }
         .nav-back {
             font-family: var(--font-mono);
+            font-size: 0.8rem;
             color: var(--primary);
             text-decoration: none;
-            margin-bottom: 2rem;
-            display: inline-block;
-            border-bottom: 1px solid transparent;
+            letter-spacing: 0.05em;
+            transition: opacity 0.2s;
         }
-        .nav-back:hover {
-            border-bottom: 1px solid var(--primary);
+        .nav-back:hover { opacity: 0.7; }
+
+        .nav-siblings {
+            display: flex;
+            gap: 1.5rem;
+        }
+        .nav-siblings a {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            color: var(--muted);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        .nav-siblings a:hover { color: var(--primary); }
+
+        /* HEADER */
+        .project-header {
+            margin-bottom: 3.5rem;
+        }
+        .project-label {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            color: var(--muted);
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            margin-bottom: 0.75rem;
         }
         h1 {
             font-family: var(--font-mono);
-            font-size: 2.5rem;
+            font-size: clamp(1.8rem, 5vw, 2.8rem);
             color: var(--primary);
-            border-bottom: 1px solid var(--border);
-            padding-bottom: 1rem;
+            letter-spacing: -0.02em;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
         }
+        .status-row {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+        .badge {
+            font-family: var(--font-mono);
+            font-size: 0.72rem;
+            padding: 0.3rem 0.75rem;
+            border-radius: 2px;
+            letter-spacing: 0.05em;
+        }
+        .badge-done {
+            background: rgba(0,255,204,0.1);
+            border: 1px solid var(--status-done);
+            color: var(--status-done);
+        }
+        .badge-type {
+            background: var(--primary-dim);
+            border: 1px solid var(--primary);
+            color: var(--primary);
+        }
+
+        /* SECTIONS */
         .section {
-            margin-bottom: 3.5rem;
+            margin-bottom: 4rem;
         }
         .section h2 {
             font-family: var(--font-mono);
-            font-size: 1.1rem;
+            font-size: 0.8rem;
             color: var(--primary);
             text-transform: uppercase;
+            letter-spacing: 0.12em;
             border-left: 3px solid var(--primary);
             padding-left: 1rem;
-            margin-bottom: 1rem;
+            margin-bottom: 1.5rem;
         }
+        .section p {
+            color: #ccc;
+            margin-bottom: 1rem;
+            font-size: 0.97rem;
+        }
+        .section p:last-child { margin-bottom: 0; }
+        b { color: var(--foreground); font-weight: 700; }
+
+        /* TECH TAGS */
         .tech-tags {
             display: flex;
             gap: 0.5rem;
             flex-wrap: wrap;
-            margin-top: 1rem;
         }
         .tag {
             font-family: var(--font-mono);
-            font-size: 0.8rem;
-            background: #111;
+            font-size: 0.75rem;
+            background: #0f0f0f;
             border: 1px solid var(--border);
-            padding: 0.3rem 0.8rem;
+            padding: 0.35rem 0.85rem;
             color: var(--primary);
+            transition: border-color 0.2s, background 0.2s;
         }
-        .math-block {
-            background: #0a0a0a;
+        .tag:hover {
+            border-color: var(--primary);
+            background: var(--primary-dim);
+        }
+        .tag-group {
+            margin-bottom: 1rem;
+        }
+        .tag-group-label {
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            color: var(--muted);
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            margin-bottom: 0.5rem;
+        }
+
+        /* CODE / MATH BLOCKS */
+        .code-block {
+            background: #080808;
             border: 1px solid var(--border);
+            border-left: 3px solid var(--primary);
             padding: 1.5rem;
             margin: 1.5rem 0;
             font-family: var(--font-mono);
+            font-size: 0.82rem;
             color: #88ccff;
             overflow-x: auto;
+            line-height: 1.8;
         }
+        .code-block .comment { color: #444; }
+        .code-block .value { color: var(--status-done); }
+        .code-block .label { color: var(--warn); }
+
+        /* PIN TABLE */
+        .pin-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-family: var(--font-mono);
+            font-size: 0.78rem;
+            margin-top: 1rem;
+        }
+        .pin-table th {
+            text-align: left;
+            padding: 0.6rem 1rem;
+            background: #0a0a0a;
+            border: 1px solid var(--border);
+            color: var(--primary);
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+        .pin-table td {
+            padding: 0.55rem 1rem;
+            border: 1px solid var(--border);
+            color: #ccc;
+        }
+        .pin-table tr:hover td { background: #0f0f0f; }
+        .pin-table .gpio { color: var(--warn); }
+        .pin-table .func { color: var(--status-done); }
+
+        /* RESULT BOX */
         .result-box {
-            background: #0a1a1a;
+            background: rgba(0,255,204,0.04);
             border: 1px solid var(--status-done);
-            padding: 1.5rem;
-            margin: 1.5rem 0;
-            border-radius: 4px;
+            padding: 1.5rem 1.75rem;
+            border-radius: 3px;
         }
         .result-box p {
-            margin: 0;
-            color: var(--status-done);
+            color: var(--status-done) !important;
+            margin-bottom: 0.5rem !important;
         }
-        b {
-            color: var(--primary);
+        .result-box p:last-child { margin-bottom: 0 !important; }
+
+        /* LESSON BOX */
+        .lesson-box {
+            background: rgba(245,158,11,0.05);
+            border: 1px solid rgba(245,158,11,0.3);
+            padding: 1.5rem 1.75rem;
+            border-radius: 3px;
+            margin-bottom: 1rem;
         }
+        .lesson-box .lesson-label {
+            font-family: var(--font-mono);
+            font-size: 0.72rem;
+            color: var(--warn);
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            margin-bottom: 0.4rem;
+        }
+        .lesson-box p {
+            color: #ccc !important;
+            font-size: 0.93rem !important;
+            margin-bottom: 0 !important;
+        }
+
+        /* GALLERY */
         .gallery-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1.5rem;
-            margin-top: 1rem;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 1rem;
         }
         figure {
             margin: 0;
             background: var(--card);
             border: 1px solid var(--border);
-            border-radius: 4px;
+            border-radius: 3px;
             padding: 0.5rem;
-            transition: border-color 0.3s ease;
+            transition: border-color 0.25s ease;
         }
-        figure:hover {
-            border-color: var(--primary);
-        }
+        figure:hover { border-color: var(--primary); }
         figure img {
             width: 100%;
-            height: auto;
+            height: 180px;
+            object-fit: cover;
             display: block;
-            border-radius: 4px;
-            background: var(--card);
+            border-radius: 2px;
+            background: #111;
         }
         figcaption {
             font-family: var(--font-mono);
-            font-size: 0.8rem;
-            color: var(--muted-foreground);
+            font-size: 0.72rem;
+            color: var(--muted);
             margin-top: 0.5rem;
             text-align: center;
             line-height: 1.4;
         }
+
+        /* GITHUB LINK */
+        .github-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            font-family: var(--font-mono);
+            font-size: 0.82rem;
+            color: var(--foreground);
+            background: #0f0f0f;
+            border: 1px solid var(--border);
+            padding: 0.75rem 1.25rem;
+            text-decoration: none;
+            transition: border-color 0.2s, background 0.2s;
+            border-radius: 2px;
+            margin-top: 0.5rem;
+        }
+        .github-link:hover {
+            border-color: var(--primary);
+            background: var(--primary-dim);
+            color: var(--primary);
+        }
+
+        /* FOOTER NAV */
+        .footer-nav {
+            display: flex;
+            justify-content: space-between;
+            padding-top: 3rem;
+            border-top: 1px solid var(--border);
+            margin-top: 2rem;
+        }
+        .footer-nav a {
+            font-family: var(--font-mono);
+            font-size: 0.78rem;
+            color: var(--muted);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        .footer-nav a:hover { color: var(--primary); }
+
+        @media (max-width: 600px) {
+            .nav-siblings { display: none; }
+            .gallery-grid { grid-template-columns: 1fr; }
+            .footer-nav { flex-direction: column; gap: 1rem; }
+        }
     </style>
 </head>
 <body>
-    <div class="container">
-        <a href="index.html" class="nav-back">< RETURN_TO_DASHBOARD</a>
-        <h1>PROJECT: CLEANING_ROVER</h1>
+<div class="container">
 
-        <div class="section">
-            <h2>01. Objective</h2>
-            <p>The goal of this project is to build a cleaning rover that would regularly clean the room it's placed in unattended.</p>
+    <!-- NAV -->
+    <nav class="nav-bar">
+        <a href="index.html" class="nav-back">← RETURN_TO_DASHBOARD</a>
+        <div class="nav-siblings">
+            <a href="ousb.html">NEXT: OUSB_SIM →</a>
+            <a href="monitoring.html">NEXT: ROOM_MONITOR →</a>
         </div>
+    </nav>
 
-        <div class="section">
-            <h2>02. Technology Used</h2>
+    <!-- HEADER -->
+    <div class="project-header">
+        <div class="project-label">Project [01] / Personal Build</div>
+        <h1>PROJECT:<br>CLEANING_ROVER</h1>
+        <div class="status-row">
+            <span class="badge badge-done">✓ OPERATIONAL</span>
+            <span class="badge badge-type">EMBEDDED SYSTEMS</span>
+            <span class="badge badge-type">ROBOTICS</span>
+            <span class="badge badge-type">IoT</span>
+        </div>
+    </div>
+
+    <!-- OBJECTIVE -->
+    <div class="section">
+        <h2>01. Objective</h2>
+        <p>The goal of this project was to build an autonomous cleaning rover that could regularly clean the room it's placed in, completely unattended. The rover needed to scan its surroundings, avoid obstacles, and drive a brush mechanism — all while being controllable remotely over WiFi.</p>
+    </div>
+
+    <!-- TECH STACK -->
+    <div class="section">
+        <h2>02. Technology Used</h2>
+
+        <div class="tag-group">
+            <div class="tag-group-label">Microcontroller & Comms</div>
             <div class="tech-tags">
-                <span class="tag">ESP32 DevKit V1</span>
-                <span class="tag">DRV8833 Motor Driver</span>
-                <span class="tag">TT Gear Motors</span>
-                <span class="tag">HC-SR04 Ultrasonic Sensors</span>
+                <span class="tag">ESP32-WROOM-32</span>
+                <span class="tag">WiFi (HTTP Server)</span>
+                <span class="tag">PlatformIO</span>
+                <span class="tag">C++ / Arduino Framework</span>
+            </div>
+        </div>
+
+        <div class="tag-group">
+            <div class="tag-group-label">Motors & Drivers</div>
+            <div class="tech-tags">
+                <span class="tag">DRV8833 Motor Driver ×2</span>
+                <span class="tag">TT Gear Motors (6V)</span>
                 <span class="tag">130 DC Motors (Brushes)</span>
-                <span class="tag">18650 Li-ion (11.1V)</span>
-                <span class="tag">Buck Converters</span>
             </div>
         </div>
 
-        <div class="section">
-            <h2>03. The Challenges</h2>
-            <p>The challenges faced in the process of building this project were finding the right motors and the motor driver chip to use to run them. After researching, the choice was the <b>130 DC motor</b> for its small size with high RPM; however, there was a problem of torque, thus the 130 DC motor's torque is very low. Another challenge faced was the battery unit to use in this project. The final challenge was the use of ultrasonic sensors with the <b>ESP32</b>. The ESP32 receives a signal in 3.3V, but the ultrasonic sensors' echo pin sends a 5V signal; thus, connecting the Echo pin to the ESP32 directly would damage it.</p>
-        </div>
-
-        <div class="section">
-            <h2>04. The Solutions</h2>
-            <p>The solution for the torque challenge was to 3D print a gear reduction mechanism containing a 12-tooth gear and a 60-tooth gear with a ratio of 5:1, and the motor drive chip chosen was the <b>L298n</b>. However, that caused a voltage drop as soon as the wheels touched the ground, as the motors draw current, and that would cause significant damage to the circuit.</p>
-            
-            <p>The solution for this problem was achieved through using the <b>TT motor</b> with a built-in gear unit and replacing the L298n with a <b>DRV8833</b>, as it’s efficient and doesn't release as much heat as the L298n; thus, the torque and motor driver problem was solved. As well as a great addition was adding a <b>wifi interface</b> that let me control the rover manually as well as putting it on auto mode while also a window that shows how far obstacles are.</p>
-
-            <div class="math-block">
-                // Power Configuration<br>
-                Source: 3x 18650E 3.7V (11.1V Total)<br>
-                Logic Rail: Buck Converter to 5V (ESP32)<br>
-                Motor Rail: Buck Converter to 6V (DRV8833)
-            </div>
-
-            <p>As for the Ultrasonic Echo pin challenge, it was overcome by using a <b>voltage divider</b> of two resistors to lower the signal voltage to 3.3V so that the ESP32 can receive it safely by placing four of them to scan the robot's surroundings. For the brushes, the 130DC motors were placed there, as well as adding the DRV8833 to the schematics to run them with ordinary cleaning rover brushes attached to it.</p>
-        </div>
-
-        <div class="section">
-            <h2>05. Results</h2>
-            <div class="result-box">
-                <p>✅ Finally, the robot is operating perfectly, and the goal was achieved. The rover scans its surroundings perfectly, navigates around the room, and cleans the room effectively, running for around 50 Hours.</p>
+        <div class="tag-group">
+            <div class="tag-group-label">Sensors</div>
+            <div class="tech-tags">
+                <span class="tag">HC-SR04 Ultrasonic ×4</span>
+                <span class="tag">ACS712 Current Sensor</span>
             </div>
         </div>
 
-        <div class="section">
-            <h2>06. Gallery</h2>
-            <div class="gallery-grid">
-                <figure>
-                    <img src="Fainal Rbot view1.jpeg" alt="Final robot view 1">
-                    <figcaption>Final assembly – side view</figcaption>
-                </figure>
-                <figure>
-                    <img src="Fainal view deaning robot2.jpeg" alt="Final cleaning robot view 2">
-                    <figcaption>Final assembly – top view</figcaption>
-                </figure>
-                <figure>
-                    <img src="deaning robot webpage.jpeg" alt="Cleaning robot webpage">
-                    <figcaption>Web interface screenshot</figcaption>
-                </figure>
-                <figure>
-                    <img src="Cleaning robot Top view.png" alt="Cleaning robot top view">
-                    <figcaption>Top view – chassis layout</figcaption>
-                </figure>
-                <figure>
-                    <img src="Cleaning robot isomtric view.png" alt="Cleaning robot isometric view">
-                    <figcaption>Isometric view – complete rover</figcaption>
-                </figure>
-                <figure>
-                    <img src="Cleaning robotFront view.png" alt="Cleaning robot front view">
-                    <figcaption>Front view – sensor placement</figcaption>
-                </figure>
-                <figure>
-                    <img src="Cleaning rover technical drawing .png" alt="Technical drawing">
-                    <figcaption>Technical drawing of gear assembly</figcaption>
-                </figure>
+        <div class="tag-group">
+            <div class="tag-group-label">Power System</div>
+            <div class="tech-tags">
+                <span class="tag">3S2P 18650 Li-ion Pack (11.1V)</span>
+                <span class="tag">3S BMS Board</span>
+                <span class="tag">EY9 5V Regulator (ESP32 / Sensors)</span>
+                <span class="tag">XL4015 Buck Converter (6V Motors)</span>
+                <span class="tag">Voltage Dividers (5V → 3.3V)</span>
             </div>
         </div>
     </div>
+
+    <!-- CHALLENGES -->
+    <div class="section">
+        <h2>03. The Challenges</h2>
+        <p>The first challenge was selecting the right motors and driver. The <b>130 DC motor</b> was initially chosen for its small size and high RPM, but its native torque was far too low to move the chassis under load.</p>
+        <p>The second challenge was the power system — selecting the correct battery configuration, regulators, and protection circuitry for reliable long-term operation.</p>
+        <p>The third challenge was a <b>logic level mismatch</b> between the HC-SR04 ultrasonic sensors and the ESP32. The ESP32 operates on 3.3V logic, but the sensors' Echo pin outputs a 5V signal. Connecting this directly would have damaged the microcontroller's GPIO registers.</p>
+    </div>
+
+    <!-- SOLUTIONS -->
+    <div class="section">
+        <h2>04. The Solutions</h2>
+
+        <p><b>Motor & Driver:</b> The initial approach used a 3D-printed 5:1 gear reduction (12T to 60T) with an <b>L298N</b> driver. This solved the torque issue in theory, but caused a significant voltage drop the moment the wheels touched the ground and the motors drew current — threatening the circuit. The fix was to switch to <b>TT gear motors</b> with built-in reduction and replace the L298N with a <b>DRV8833</b>. The DRV8833 is far more efficient, generates much less heat, and handles the current draw without voltage collapse.</p>
+
+        <p><b>Power System:</b> A <b>3S2P 18650 Li-ion pack</b> provides 11.1V with a 3S BMS board for protection. Two separate rails step the voltage down — an <b>EY9 regulator</b> provides stable 5V for the ESP32 and sensors, while an <b>XL4015 buck converter</b> is set to 6V for the DRV8833 motor drivers.</p>
+
+        <div class="code-block">
+<span class="comment">// Power Architecture</span>
+<span class="label">SOURCE  </span>  3S2P 18650 Li-ion  →  <span class="value">11.1V</span>  [BMS Protected]
+<span class="label">RAIL A  </span>  EY9 Regulator      →  <span class="value">5V</span>    [ESP32 + Sensors]
+<span class="label">RAIL B  </span>  XL4015 Buck Conv   →  <span class="value">6V</span>    [DRV8833 Drive Motors]
+<span class="label">MONITOR </span>  ACS712 + V-Divider →  <span class="value">GPIO34/35</span> [Current + Voltage ADC]
+        </div>
+
+        <p><b>Logic Level Fix:</b> A <b>voltage divider</b> (two resistors per sensor) steps the 5V Echo signal down to a safe 3.3V before it reaches the ESP32 GPIO. Four of these are placed for the four sensors scanning the robot's surroundings.</p>
+
+        <p><b>Brush Motors:</b> The original 130 DC motors were repurposed to drive the cleaning brushes, managed by a second <b>DRV8833</b> integrated into the schematic.</p>
+
+        <p><b>WiFi Interface:</b> A full web dashboard was built and served directly from the ESP32, accessible from any device on the same network. It includes:</p>
+        <div class="tech-tags" style="margin-top:0.5rem; margin-bottom:1rem;">
+            <span class="tag">Radar Obstacle Display</span>
+            <span class="tag">Manual Drive Controls</span>
+            <span class="tag">Auto Avoidance Mode</span>
+            <span class="tag">Motor Speed Sliders</span>
+            <span class="tag">Brush Speed Control</span>
+            <span class="tag">Battery Voltage Monitor</span>
+        </div>
+    </div>
+
+    <!-- GPIO TABLE -->
+    <div class="section">
+        <h2>05. GPIO Pin Allocation</h2>
+        <table class="pin-table">
+            <thead>
+                <tr>
+                    <th>GPIO</th>
+                    <th>Function</th>
+                    <th>Component</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td class="gpio">22, 23</td><td class="func">Drive Motor A</td><td>DRV8833 #1 (Left)</td></tr>
+                <tr><td class="gpio">25, 26</td><td class="func">Drive Motor B</td><td>DRV8833 #1 (Right)</td></tr>
+                <tr><td class="gpio">19, 18</td><td class="func">Brush Motor A</td><td>DRV8833 #2</td></tr>
+                <tr><td class="gpio">17, 16</td><td class="func">Brush Motor B</td><td>DRV8833 #2</td></tr>
+                <tr><td class="gpio">27, 14, 13, 15</td><td class="func">Ultrasonic TRIG ×4</td><td>HC-SR04</td></tr>
+                <tr><td class="gpio">32, 33, 36, 21</td><td class="func">Ultrasonic ECHO ×4</td><td>HC-SR04 (via V-Divider)</td></tr>
+                <tr><td class="gpio">35</td><td class="func">Current Sense (ADC)</td><td>ACS712</td></tr>
+                <tr><td class="gpio">34</td><td class="func">Battery Voltage (ADC)</td><td>V-Divider R1=100kΩ, R2=32.2kΩ</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- RESULTS -->
+    <div class="section">
+        <h2>06. Results</h2>
+        <div class="result-box">
+            <p>✅ The rover is fully operational. It scans its surroundings, navigates around obstacles, and cleans the room effectively.</p>
+            <p>✅ Cumulative runtime of approximately <b>50 hours</b> with no failures or reboots.</p>
+            <p>✅ WiFi dashboard responsive and stable across all test devices.</p>
+            <p>✅ Battery voltage and current monitoring confirmed accurate readings via ACS712 and ADC divider.</p>
+        </div>
+    </div>
+
+    <!-- LESSONS LEARNED -->
+    <div class="section">
+        <h2>07. Lessons Learned</h2>
+
+        <div class="lesson-box">
+            <div class="lesson-label">Motor Selection</div>
+            <p>Never select a motor based on RPM alone. Torque under load is the critical spec — the 130 DC motor looked ideal on paper but failed the moment the chassis weight was applied. TT gear motors with built-in reduction were the right call from the start.</p>
+        </div>
+
+        <div class="lesson-box">
+            <div class="lesson-label">Driver Efficiency Matters</div>
+            <p>The L298N is a legacy driver with significant heat dissipation and voltage drop. The DRV8833 is a far better fit for battery-powered mobile robotics — lower dropout, less heat, smaller footprint.</p>
+        </div>
+
+        <div class="lesson-box">
+            <div class="lesson-label">Logic Level Mismatches Are Silent Killers</div>
+            <p>The 5V Echo signal issue could have permanently damaged the ESP32. Always check logic levels before connecting sensors — a simple two-resistor voltage divider is a cheap insurance policy.</p>
+        </div>
+
+        <div class="lesson-box">
+            <div class="lesson-label">Power Rails Should Be Isolated</div>
+            <p>Separating the logic rail (5V) from the motor rail (6V) was essential. Motors draw large, noisy currents that can cause voltage dips and glitch the microcontroller if they share a rail.</p>
+        </div>
+    </div>
+
+    <!-- GALLERY -->
+    <div class="section">
+        <h2>08. Gallery</h2>
+        <div class="gallery-grid">
+            <figure>
+                <img src="Fainal Rbot view1.jpeg" alt="Final robot side view">
+                <figcaption>Final assembly – side view</figcaption>
+            </figure>
+            <figure>
+                <img src="Fainal view deaning robot2.jpeg" alt="Final cleaning robot top view">
+                <figcaption>Final assembly – top view</figcaption>
+            </figure>
+            <figure>
+                <img src="deaning robot webpage.jpeg" alt="Web interface">
+                <figcaption>WiFi dashboard – web interface</figcaption>
+            </figure>
+            <figure>
+                <img src="Cleaning robot Top view.png" alt="Chassis top view">
+                <figcaption>Top view – chassis layout</figcaption>
+            </figure>
+            <figure>
+                <img src="Cleaning robot isomtric view.png" alt="Isometric view">
+                <figcaption>Isometric view – complete rover</figcaption>
+            </figure>
+            <figure>
+                <img src="Cleaning robotFront view.png" alt="Front view">
+                <figcaption>Front view – sensor placement</figcaption>
+            </figure>
+            <figure>
+                <img src="Cleaning rover technical drawing .png" alt="Technical drawing">
+                <figcaption>Technical drawing – gear assembly</figcaption>
+            </figure>
+        </div>
+    </div>
+
+    <!-- SOURCE CODE -->
+    <div class="section">
+        <h2>09. Source Code</h2>
+        <p>Full source code, schematics, and build notes available on GitHub.</p>
+        <a href="https://github.com/Sam2001115" class="github-link" target="_blank">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/>
+            </svg>
+            github.com/Sam2001115
+        </a>
+    </div>
+
+    <!-- FOOTER NAV -->
+    <div class="footer-nav">
+        <a href="index.html">← DASHBOARD</a>
+        <a href="ousb.html">NEXT PROJECT: OUSB SIMULATOR →</a>
+    </div>
+
+</div>
 </body>
 </html>
