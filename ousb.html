@@ -3,146 +3,392 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OUSB Details | Sameer Appasa</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <title>OUSB Simulator | Sameer Appasa</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
     <style>
-        :root { 
-            --background: #050505; 
-            --foreground: #fafafa; 
-            --primary: #4169E1; 
-            --card: #0d0d0d; 
-            --border: #1f1f1f; 
-            --font-mono: 'JetBrains Mono', monospace; 
+        :root {
+            --background: #050505;
+            --foreground: #fafafa;
+            --primary: #4169E1;
+            --primary-dim: rgba(65,105,225,0.13);
+            --card: #0d0d0d;
+            --border: #1f1f1f;
+            --font-mono: 'Space Mono', monospace;
+            --font-sans: 'Syne', sans-serif;
             --status-done: #00ffcc;
+            --muted: #888;
+            --warn: #f59e0b;
+            --fail: #ef4444;
         }
-        body { 
-            background-color: var(--background); 
-            color: var(--foreground); 
-            font-family: 'Inter', sans-serif; 
-            margin: 0; 
-            line-height: 1.6; 
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            background-color: var(--background);
+            color: var(--foreground);
+            font-family: var(--font-sans);
+            line-height: 1.7;
+            overflow-x: hidden;
         }
-        .container { 
-            max-width: 850px; 
-            margin: 0 auto; 
-            padding: 4rem 2rem; 
+
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(65,105,225,0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(65,105,225,0.03) 1px, transparent 1px);
+            background-size: 40px 40px;
+            pointer-events: none;
+            z-index: 0;
         }
-        .nav-back { 
-            font-family: var(--font-mono); 
-            color: var(--primary); 
-            text-decoration: none; 
-            margin-bottom: 2rem; 
-            display: inline-block; 
-            border-bottom: 1px solid transparent; 
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 3rem 2rem 6rem;
+            position: relative;
+            z-index: 1;
         }
-        .nav-back:hover { 
-            border-bottom: 1px solid var(--primary); 
+
+        .nav-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 3rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border);
         }
-        h1 { 
-            font-family: var(--font-mono); 
-            font-size: 2.5rem; 
-            color: var(--primary); 
-            border-bottom: 1px solid var(--border); 
-            padding-bottom: 1rem; 
+        .nav-back {
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            color: var(--primary);
+            text-decoration: none;
+            transition: opacity 0.2s;
         }
-        .section { 
-            margin-bottom: 3.5rem; 
+        .nav-back:hover { opacity: 0.7; }
+        .nav-siblings { display: flex; gap: 1.5rem; }
+        .nav-siblings a {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            color: var(--muted);
+            text-decoration: none;
+            transition: color 0.2s;
         }
-        .section h2 { 
-            font-family: var(--font-mono); 
-            font-size: 1.1rem; 
-            color: var(--primary); 
-            text-transform: uppercase; 
-            border-left: 3px solid var(--primary); 
-            padding-left: 1rem; 
-            margin-bottom: 1rem; 
+        .nav-siblings a:hover { color: var(--primary); }
+
+        .project-label {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            color: var(--muted);
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            margin-bottom: 0.75rem;
         }
-        .tech-tags { 
-            display: flex; 
-            gap: 0.5rem; 
-            flex-wrap: wrap; 
-            margin-top: 1rem; 
+        h1 {
+            font-family: var(--font-mono);
+            font-size: clamp(1.8rem, 5vw, 2.8rem);
+            color: var(--primary);
+            letter-spacing: -0.02em;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
         }
-        .tag { 
-            font-family: var(--font-mono); 
-            font-size: 0.8rem; 
-            background: #111; 
-            border: 1px solid var(--border); 
-            padding: 0.3rem 0.8rem; 
-            color: var(--primary); 
+        .status-row {
+            display: flex;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+            margin-bottom: 3.5rem;
         }
-        .code-snippet { 
-            background: #0a0a0a; 
-            border: 1px solid var(--border); 
-            padding: 1.5rem; 
-            margin: 1.5rem 0; 
-            font-family: var(--font-mono); 
-            color: #88ccff; 
-            overflow-x: auto; 
-            white-space: pre; 
+        .badge {
+            font-family: var(--font-mono);
+            font-size: 0.72rem;
+            padding: 0.3rem 0.75rem;
+            border-radius: 2px;
+            letter-spacing: 0.05em;
         }
-        .result-box { 
-            background: #0a1a1a; 
-            border: 1px solid var(--status-done); 
-            padding: 1.5rem; 
-            margin: 1.5rem 0; 
-            border-radius: 4px; 
+        .badge-done { background: rgba(0,255,204,0.08); border: 1px solid var(--status-done); color: var(--status-done); }
+        .badge-type { background: var(--primary-dim); border: 1px solid var(--primary); color: var(--primary); }
+
+        .section { margin-bottom: 4rem; }
+        .section h2 {
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            border-left: 3px solid var(--primary);
+            padding-left: 1rem;
+            margin-bottom: 1.5rem;
         }
-        .result-box p { 
-            margin: 0; 
-            color: var(--status-done); 
+        .section p { color: #ccc; margin-bottom: 1rem; font-size: 0.97rem; }
+        .section p:last-child { margin-bottom: 0; }
+        b { color: var(--foreground); font-weight: 700; }
+
+        .tag-group { margin-bottom: 1rem; }
+        .tag-group-label {
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            color: var(--muted);
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            margin-bottom: 0.5rem;
         }
-        b { 
-            color: var(--primary); 
+        .tech-tags { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+        .tag {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            background: #0f0f0f;
+            border: 1px solid var(--border);
+            padding: 0.35rem 0.85rem;
+            color: var(--primary);
+            transition: border-color 0.2s, background 0.2s;
+        }
+        .tag:hover { border-color: var(--primary); background: var(--primary-dim); }
+
+        .code-block {
+            background: #080808;
+            border: 1px solid var(--border);
+            border-left: 3px solid var(--primary);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            font-family: var(--font-mono);
+            font-size: 0.82rem;
+            color: #88ccff;
+            overflow-x: auto;
+            line-height: 1.9;
+            white-space: pre;
+        }
+        .code-block .comment { color: #333; }
+        .code-block .value   { color: var(--status-done); }
+        .code-block .label   { color: var(--warn); }
+        .code-block .kw      { color: #c792ea; }
+        .code-block .type    { color: #ffcb6b; }
+
+        .result-box {
+            background: rgba(0,255,204,0.04);
+            border: 1px solid var(--status-done);
+            padding: 1.5rem 1.75rem;
+            border-radius: 3px;
+        }
+        .result-box p { color: var(--status-done) !important; margin-bottom: 0.5rem !important; }
+        .result-box p:last-child { margin-bottom: 0 !important; }
+
+        .lesson-box {
+            background: rgba(245,158,11,0.05);
+            border: 1px solid rgba(245,158,11,0.3);
+            padding: 1.25rem 1.5rem;
+            border-radius: 3px;
+            margin-bottom: 0.75rem;
+        }
+        .lesson-label {
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            color: var(--warn);
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            margin-bottom: 0.4rem;
+        }
+        .lesson-box p { color: #ccc !important; font-size: 0.92rem !important; margin-bottom: 0 !important; }
+
+        .github-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            font-family: var(--font-mono);
+            font-size: 0.82rem;
+            color: var(--foreground);
+            background: #0f0f0f;
+            border: 1px solid var(--border);
+            padding: 0.75rem 1.25rem;
+            text-decoration: none;
+            border-radius: 2px;
+            transition: border-color 0.2s, background 0.2s, color 0.2s;
+            margin-top: 0.5rem;
+        }
+        .github-link:hover { border-color: var(--primary); background: var(--primary-dim); color: var(--primary); }
+
+        .footer-nav {
+            display: flex;
+            justify-content: space-between;
+            padding-top: 3rem;
+            border-top: 1px solid var(--border);
+            margin-top: 2rem;
+        }
+        .footer-nav a {
+            font-family: var(--font-mono);
+            font-size: 0.78rem;
+            color: var(--muted);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        .footer-nav a:hover { color: var(--primary); }
+
+        @media (max-width: 600px) {
+            .nav-siblings { display: none; }
+            .footer-nav { flex-direction: column; gap: 1rem; }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <a href="index.html" class="nav-back">< RETURN_TO_DASHBOARD</a>
-        <h1>PROJECT: OUSB_SIMULATOR</h1>
+<div class="container">
 
-        <div class="section">
-            <h2>01. Objective</h2>
-            <p>The objective of this project was to develop a high-fidelity hardware simulator in C++ that monitors the behaviour of an OUSB (Open USB) board. The goal was to create a functional software environment where digital logic and register manipulations could be tested without physical hardware.</p>
+    <nav class="nav-bar">
+        <a href="index.html" class="nav-back">← RETURN_TO_DASHBOARD</a>
+        <div class="nav-siblings">
+            <a href="rover.html">← CLEANING ROVER</a>
+            <a href="monitoring.html">ROOM MONITOR →</a>
         </div>
+    </nav>
 
-        <div class="section">
-            <h2>02. Technology Used</h2>
+    <div class="project-label">Project [02] / University Build</div>
+    <h1>PROJECT:<br>OUSB_SIMULATOR</h1>
+    <div class="status-row">
+        <span class="badge badge-done">✓ FULLY FUNCTIONAL</span>
+        <span class="badge badge-type">C++ / LOW-LEVEL</span>
+        <span class="badge badge-type">EMBEDDED LOGIC</span>
+        <span class="badge badge-type">AVR ARCHITECTURE</span>
+    </div>
+
+    <!-- 01 -->
+    <div class="section">
+        <h2>01. Objective</h2>
+        <p>Develop a high-fidelity hardware simulator in C++ that replicates the behaviour of an OUSB (Open USB) board — a physical AVR-based development board used in university coursework. The goal was to create a fully functional software environment where digital logic and register-level manipulations could be tested and validated without requiring the physical hardware.</p>
+    </div>
+
+    <!-- 02 -->
+    <div class="section">
+        <h2>02. Technology Used</h2>
+
+        <div class="tag-group">
+            <div class="tag-group-label">Language & Paradigm</div>
             <div class="tech-tags">
-                <span class="tag">C++</span> 
-                <span class="tag">AVR Architecture</span> 
-                <span class="tag">Register-Level Logic</span> 
+                <span class="tag">C++</span>
+                <span class="tag">Object-Oriented Design</span>
                 <span class="tag">Bitwise Operations</span>
-                <span class="tag">File I/O Parser</span>
             </div>
         </div>
 
-        <div class="section">
-            <h2>03. The Challenges</h2>
-            <p>The main challenge was emulating the <b>Register-Level Logic</b> of the AVR architecture used in OUSB boards. I had to ensure that software instructions correctly manipulated virtual pins and ports in the exact sequence the hardware would. Another significant hurdle was managing <b>Error Precedence</b>. In a hardware environment, certain errors (like invalid port access) must be caught and reported in a specific order of priority to prevent the simulator from crashing or providing false data. Finally, I had to implement a way to handle <b>File I/O</b> so that the simulator could read a list of hardware commands from a text file and execute them in real-time.</p>
+        <div class="tag-group">
+            <div class="tag-group-label">Architecture Emulated</div>
+            <div class="tech-tags">
+                <span class="tag">AVR Register Architecture</span>
+                <span class="tag">Port B / Port D Virtual Registers</span>
+                <span class="tag">Digital Pin States (HIGH / LOW)</span>
+            </div>
         </div>
 
-        <div class="section">
-            <h2>04. The Solutions</h2>
-            <p>To solve the register challenge, I used <b>C++ classes</b> to represent the hardware ports (Port B, Port D, etc.) and implemented <b>Bitwise Operations</b> to handle the masking and setting of individual pins. This allowed the software to mimic the "High" and "Low" states of a physical circuit. For error management, I developed a robust validation engine that checks for instruction syntax and hardware constraints before execution, ensuring the simulator follows strict "Fail-Safe" protocols.</p>
-            
-            <p>To handle the command execution, I built a custom <b>Parser</b> that reads external files, translates the strings into hardware instructions, and updates the virtual registers accordingly. I also integrated a feedback loop that outputs the state of the "LEDs" and "Switches" to the console, providing a visual representation of the virtual hardware state.</p>
-
-            <div class="code-snippet">
-// Example of Bitwise Register Manipulation
-void updatePort(uint8_t &port, uint8_t mask, bool state) {
-    if (state) port |= mask;  // Set bit
-    else port &= ~mask;       // Clear bit
-}</div>
-        </div>
-
-        <div class="section">
-            <h2>05. Results</h2>
-            <div class="result-box">
-                <p>✅ The simulator is fully functional and accurately mirrors the behaviour of a physical OUSB board. It successfully handles complex instruction sets and reports errors with 100% accuracy according to the hardware specification. This project demonstrated my ability to bridge the gap between high-level C++ programming and low-level hardware logic, providing a reliable tool for debugging embedded software.</p>
+        <div class="tag-group">
+            <div class="tag-group-label">Systems & Techniques</div>
+            <div class="tech-tags">
+                <span class="tag">File I/O Command Parser</span>
+                <span class="tag">Error Precedence Engine</span>
+                <span class="tag">Fail-Safe Validation</span>
+                <span class="tag">Console State Feedback</span>
             </div>
         </div>
     </div>
+
+    <!-- 03 -->
+    <div class="section">
+        <h2>03. The Challenges</h2>
+
+        <p><b>Challenge 1 — Register-Level Emulation:</b> The AVR architecture manipulates hardware at the bit level — individual pins are set or cleared by masking specific bits within 8-bit port registers. Replicating this in software meant every instruction had to manipulate virtual registers in the exact sequence and precedence the real hardware would follow.</p>
+
+        <p><b>Challenge 2 — Error Precedence:</b> In a real hardware environment, certain errors — such as invalid port access, out-of-range values, or malformed instructions — must be caught and reported in a strict order of priority. Reporting errors in the wrong order would cause the simulator to provide false data or crash rather than fail safely. Implementing this required a carefully ordered validation engine that ran before any instruction was executed.</p>
+
+        <p><b>Challenge 3 — File I/O Command Execution:</b> The simulator needed to accept a plain text file containing a sequence of hardware instructions and execute them in real-time — translating human-readable command strings into register manipulations and outputting the resulting virtual hardware state.</p>
+    </div>
+
+    <!-- 04 -->
+    <div class="section">
+        <h2>04. The Solutions</h2>
+
+        <p><b>Register Emulation — C++ Classes + Bitwise Ops:</b> Each hardware port (Port B, Port D, etc.) was represented as a C++ class containing an 8-bit virtual register. Individual pin states were controlled using bitwise OR to set bits and bitwise AND with NOT-mask to clear them — directly mirroring the way AVR hardware operates.</p>
+
+<div class="code-block"><span class="comment">// Virtual register pin control — mirrors AVR hardware behaviour</span>
+<span class="kw">void</span> <span class="value">setPin</span>(<span class="type">uint8_t</span> &port, <span class="type">uint8_t</span> mask, <span class="type">bool</span> state) {
+    <span class="kw">if</span> (state) port |=  mask;   <span class="comment">// Set bit   — HIGH</span>
+    <span class="kw">else</span>       port &= ~mask;   <span class="comment">// Clear bit — LOW</span>
+}
+
+<span class="comment">// Read individual pin state from virtual register</span>
+<span class="type">bool</span> <span class="value">readPin</span>(<span class="type">uint8_t</span> port, <span class="type">uint8_t</span> mask) {
+    <span class="kw">return</span> (port & mask) != 0;
+}</div>
+
+        <p><b>Error Precedence — Validation Engine:</b> A structured validation engine runs before any instruction is executed. It checks — in priority order — for syntax errors, invalid port references, out-of-range pin numbers, and data type mismatches. If any check fails, execution halts and the correct error code is reported according to the hardware specification. This ensures the simulator follows strict <b>Fail-Safe</b> protocols at all times.</p>
+
+        <p><b>File I/O — Custom Command Parser:</b> A custom parser reads the instruction file line-by-line, tokenises each command string, maps tokens to internal port/pin operations, and updates the virtual registers accordingly. After each instruction executes, the simulator outputs the current state of all virtual LEDs and switches to the console — providing a clear, visual representation of the virtual hardware state at every step.</p>
+
+<div class="code-block"><span class="comment">// Simplified parser + console feedback loop</span>
+<span class="kw">while</span> (getline(inputFile, line)) {
+    <span class="kw">auto</span> tokens = tokenise(line);
+
+    <span class="comment">// 1. Validate instruction before executing</span>
+    ErrorCode err = validate(tokens);
+    <span class="kw">if</span> (err != <span class="value">OK</span>) { reportError(err); <span class="kw">continue</span>; }
+
+    <span class="comment">// 2. Execute and update virtual registers</span>
+    execute(tokens, virtualPorts);
+
+    <span class="comment">// 3. Output virtual hardware state to console</span>
+    printState(virtualPorts);   <span class="comment">// LED[7:0] | SW[7:0]</span>
+}</div>
+    </div>
+
+    <!-- 05 -->
+    <div class="section">
+        <h2>05. Results</h2>
+        <div class="result-box">
+            <p>✅ Simulator fully functional — accurately mirrors the behaviour of a physical OUSB board.</p>
+            <p>✅ Handles complex instruction sets with <b>100% error reporting accuracy</b> against the hardware specification.</p>
+            <p>✅ Error precedence engine correctly prioritises and reports all failure modes in the specified order.</p>
+            <p>✅ Demonstrated ability to bridge high-level C++ and low-level hardware logic — debugging embedded software without physical hardware.</p>
+        </div>
+    </div>
+
+    <!-- 06 -->
+    <div class="section">
+        <h2>06. Lessons Learned</h2>
+
+        <div class="lesson-box">
+            <div class="lesson-label">Abstraction Enables Hardware Emulation</div>
+            <p>Representing each hardware port as a C++ class with an 8-bit internal register made the simulation both accurate and extensible. Good abstraction meant adding new ports or pin behaviours required minimal changes to the core logic.</p>
+        </div>
+
+        <div class="lesson-box">
+            <div class="lesson-label">Error Ordering Is Part of the Specification</div>
+            <p>In embedded systems, the order in which errors are detected and reported is not a minor detail — it is part of the hardware contract. Implementing the validation engine in strict priority order was essential to matching real hardware behaviour exactly.</p>
+        </div>
+
+        <div class="lesson-box">
+            <div class="lesson-label">Bitwise Operations Are the Language of Hardware</div>
+            <p>Every pin state change in AVR comes down to bit masking. Writing this in C++ reinforced how closely low-level programming maps to physical circuit behaviour — and why understanding bitwise logic is fundamental to embedded systems work.</p>
+        </div>
+
+        <div class="lesson-box">
+            <div class="lesson-label">Simulators Are Powerful Debugging Tools</div>
+            <p>Being able to test complex instruction sequences in software — without needing the physical board — dramatically accelerated debugging. Building the simulator deepened the understanding of the hardware it was emulating far more than just using the board would have.</p>
+        </div>
+    </div>
+
+    <!-- 07 -->
+    <div class="section">
+        <h2>07. Source Code</h2>
+        <p>Full source code available on GitHub.</p>
+        <a href="https://github.com/Sam2001115" class="github-link" target="_blank">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/>
+            </svg>
+            github.com/Sam2001115
+        </a>
+    </div>
+
+    <div class="footer-nav">
+        <a href="rover.html">← CLEANING ROVER</a>
+        <a href="monitoring.html">NEXT: ROOM MONITOR →</a>
+    </div>
+
+</div>
 </body>
 </html>
