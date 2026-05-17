@@ -318,6 +318,9 @@
                 <span class="tag">HTTP Basic Auth Web Dashboard</span>
                 <span class="tag">Multi-Network WiFi (3 networks)</span>
                 <span class="tag">AEST/AEDT Auto Timezone</span>
+                <span class="tag">WiFi Provisioning AP</span>
+                <span class="tag">NVS Credential Storage</span>
+                <span class="tag">Telegram IP Boot Alert</span>
             </div>
         </div>
     </div>
@@ -359,7 +362,18 @@ strftime(timeStr, sizeof(timeStr), <span class="value">"%I:%M %p"</span>, &amp;t
 
         <p><b>Web Dashboard:</b> A lightweight HTTP server runs on the ESP32 and is protected by <b>Basic Auth</b>. From any browser on the same WiFi network, the dashboard shows the live sensor distance, armed/disarmed status, current threshold, and a timestamped alert history log. Arm and disarm can also be triggered remotely via <b>Telegram bot commands</b> — /start and /status.</p>
 
-        <p><b>Multi-Network WiFi:</b> The firmware stores up to <b>3 WiFi networks</b> and auto-connects to whichever is available, with reconnect logic on drop. The device works at home, at another location, or wherever it's deployed without code changes.</p>
+        <p><b>Multi-Network WiFi + Provisioning:</b> The firmware uses a <b>3-stage boot sequence</b> to connect: first tries credentials saved in NVS flash, then falls back to any hardcoded networks, and if all fail it launches its own open AP — <b>RoomMonitor_Setup</b>. Connecting to that AP and visiting <code style="color:var(--status-done); font-family:var(--font-mono); font-size:0.85em;">192.168.4.1</code> opens a simple web form to enter any WiFi network name and password. Credentials are saved to NVS flash and survive reboots and power cuts. A <b>Reset WiFi</b> button on the dashboard wipes saved credentials and triggers re-provisioning — the same pattern used in commercial IoT products like Sonoff and Shelly.</p>
+
+        <div class="code-block">
+<span class="comment">// 3-stage WiFi boot sequence</span>
+<span class="label">STAGE 1 </span>  Try saved creds from NVS (Preferences)     →  <span class="value">connected ✅</span>
+<span class="label">STAGE 2 </span>  Try hardcoded fallback network list         →  <span class="value">connected ✅</span>
+<span class="label">STAGE 3 </span>  All failed → launch AP <span class="value">"RoomMonitor_Setup"</span>  →  user provisions via web form
+           User connects → 192.168.4.1 → enters SSID + pass
+           Saved to NVS → <span class="value">ESP.restart()</span> → connects ✅ permanently
+        </div>
+
+        <p><b>Telegram IP Alert on Boot:</b> Every time the device comes online, a Telegram message is sent with the current local IP address — so the web dashboard is always reachable even if the router assigns a new IP.</p>
 
         <div class="code-block">
 <span class="comment">// System Architecture</span>
@@ -371,6 +385,9 @@ strftime(timeStr, sizeof(timeStr), <span class="value">"%I:%M %p"</span>, &amp;t
 <span class="label">Heartbeat    </span>  Ping Healthchecks.io every <span class="value">60s</span>  →  miss 3 = downtime email
 <span class="label">Web Server   </span>  HTTP Basic Auth  →  arm / disarm / threshold / history
 <span class="label">Threshold    </span>  Button A/B  →  OLED feedback  →  <span class="value">saved to Preferences</span>
+<span class="label">WiFi Boot    </span>  NVS creds → hardcoded list → <span class="value">RoomMonitor_Setup AP</span>
+<span class="label">Boot Alert   </span>  Telegram → <span class="value">"Online
+IP: 192.168.x.x"</span>  on every connect
         </div>
     </div>
 
@@ -384,6 +401,8 @@ strftime(timeStr, sizeof(timeStr), <span class="value">"%I:%M %p"</span>, &amp;t
             <p>✅ Healthchecks.io correctly flagged every unplanned downtime event.</p>
             <p>✅ NTP clock accurate and auto-adjusting for daylight saving — zero manual changes needed.</p>
             <p>✅ Detection threshold adjustable on-device without re-flashing firmware.</p>
+            <p>✅ WiFi provisioning works first time — device deploys to any network without code changes.</p>
+            <p>✅ Telegram boot message delivers current IP on every startup — dashboard always reachable.</p>
         </div>
     </div>
 
@@ -404,6 +423,11 @@ strftime(timeStr, sizeof(timeStr), <span class="value">"%I:%M %p"</span>, &amp;t
         <div class="lesson-box">
             <div class="lesson-label">Hardcoded Configuration Is a Maintenance Problem</div>
             <p>Re-flashing firmware to change a detection threshold is impractical in a real deployment. Physical buttons plus Preferences-backed persistent storage made the device fully self-contained and field-adjustable.</p>
+        </div>
+
+        <div class="lesson-box">
+            <div class="lesson-label">WiFi Provisioning Makes Devices Truly Portable</div>
+            <p>Hardcoding WiFi credentials means the device only works at home. The 3-stage provisioning boot — NVS first, fallback list second, AP mode last — is the same pattern commercial IoT products use. It makes the device deployable anywhere without touching the code.</p>
         </div>
 
         <div class="lesson-box">
