@@ -332,8 +332,12 @@
             background: var(--card);
             border: 1px solid var(--border);
             transition: border-color 0.2s;
+            position: relative;
+            height: 52px;
+            overflow: visible;
+            z-index: 10;
         }
-        .year-item[open] { border-color: var(--primary); }
+        .year-item[open] { border-color: var(--primary); z-index: 100; }
         .year-item > summary {
             list-style: none;
             outline: none;
@@ -352,17 +356,37 @@
         .year-item[open] > summary::after { transform: rotate(45deg); }
 
         .sem-list {
-            padding: 0 0.75rem 0.75rem;
+            position: absolute;
+            top: 100%;
+            left: -1px;
+            width: calc(100% + 2px);
+            background: #0d0d0d;
+            border: 1px solid var(--primary);
+            border-top: none;
+            padding: 0.75rem;
             display: flex;
             flex-direction: column;
             gap: 0.5rem;
+            z-index: 1000;
+            opacity: 0;
+            transform: translateY(-4px);
+            transition: opacity 0.2s, transform 0.2s;
+            pointer-events: none;
+        }
+        .year-item[open] .sem-list {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: auto;
         }
         .sem-item {
             background: #0a0a0a;
             border: 1px solid var(--border);
             transition: border-color 0.2s;
+            position: relative;
+            height: 38px;
+            overflow: visible;
         }
-        .sem-item[open] { border-color: rgba(65,105,225,0.5); }
+        .sem-item[open] { border-color: rgba(65,105,225,0.5); z-index: 200; }
         .sem-item > summary {
             list-style: none;
             outline: none;
@@ -371,7 +395,7 @@
             font-weight: 700;
             color: #aaa;
             letter-spacing: 0.06em;
-            padding: 0.65rem 1rem;
+            padding: 0.6rem 1rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -382,9 +406,26 @@
         .sem-item[open] > summary::after { transform: rotate(45deg); }
 
         .sem-subjects {
+            position: absolute;
+            top: 100%;
+            left: -1px;
+            width: calc(100% + 2px);
+            background: #080808;
+            border: 1px solid rgba(65,105,225,0.5);
+            border-top: none;
             list-style: none;
-            padding: 0 1rem 0.75rem;
+            padding: 0 1rem 0.5rem;
             margin: 0;
+            z-index: 2000;
+            opacity: 0;
+            transform: translateY(-4px);
+            transition: opacity 0.2s, transform 0.2s;
+            pointer-events: none;
+        }
+        .sem-item[open] .sem-subjects {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: auto;
         }
         .sem-subjects li {
             font-family: var(--font-mono);
