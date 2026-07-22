@@ -3,22 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OUSB Simulator | Sameer Appasa</title>
+    <title>Sameer Appasa | Engineering Portfolio</title>
+
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2220%22 fill=%22%2300008B%22/><text y=%22.7em%22 x=%2250%22 font-family=%22monospace%22 font-weight=%22bold%22 font-size=%2260%22 text-anchor=%22middle%22 fill=%22white%22>SA</text></svg>">
+
     <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+
     <style>
         :root {
             --background: #050505;
             --foreground: #fafafa;
             --primary: #4169E1;
-            --primary-dim: rgba(65,105,225,0.13);
+            --primary-dim: rgba(65,105,225,0.10);
             --card: #0d0d0d;
             --border: #1f1f1f;
             --font-mono: 'Space Mono', monospace;
             --font-sans: 'Syne', sans-serif;
             --status-done: #00ffcc;
+            --status-progress: #ffd700;
             --muted: #888;
-            --warn: #f59e0b;
-            --fail: #ef4444;
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -44,351 +47,628 @@
         }
 
         .container {
-            max-width: 900px;
+            max-width: 1000px;
             margin: 0 auto;
-            padding: 3rem 2rem 6rem;
+            padding: 4rem 2rem 6rem;
             position: relative;
             z-index: 1;
         }
 
-        .nav-bar {
+        /* ── HEADER ── */
+        .header {
             display: flex;
             justify-content: space-between;
-            align-items: center;
-            margin-bottom: 3rem;
-            padding-bottom: 1rem;
+            align-items: flex-start;
+            margin-bottom: 2rem;
+            padding-bottom: 2rem;
             border-bottom: 1px solid var(--border);
         }
-        .nav-back {
-            font-family: var(--font-mono);
-            font-size: 0.8rem;
-            color: var(--primary);
-            text-decoration: none;
-            transition: opacity 0.2s;
-        }
-        .nav-back:hover { opacity: 0.7; }
-        .nav-siblings { display: flex; gap: 1.5rem; }
-        .nav-siblings a {
-            font-family: var(--font-mono);
-            font-size: 0.75rem;
-            color: var(--muted);
-            text-decoration: none;
-            transition: color 0.2s;
-        }
-        .nav-siblings a:hover { color: var(--primary); }
 
-        .project-label {
-            font-family: var(--font-mono);
-            font-size: 0.75rem;
-            color: var(--muted);
-            letter-spacing: 0.15em;
-            text-transform: uppercase;
-            margin-bottom: 0.75rem;
-        }
         h1 {
             font-family: var(--font-mono);
-            font-size: clamp(1.8rem, 5vw, 2.8rem);
+            font-size: clamp(2rem, 7vw, 3.8rem);
+            font-weight: 700;
+            letter-spacing: -0.03em;
+            line-height: 1.05;
+            margin-bottom: 0.6rem;
+        }
+
+        .cursor {
+            display: inline-block;
+            width: 10px;
+            height: 0.9em;
+            background: var(--primary);
+            margin-left: 4px;
+            animation: blink 1s step-end infinite;
+            vertical-align: middle;
+        }
+        @keyframes blink { 0%,50%{opacity:1} 51%,100%{opacity:0} }
+
+        .degree {
+            font-family: var(--font-mono);
             color: var(--primary);
-            letter-spacing: -0.02em;
-            line-height: 1.1;
-            margin-bottom: 1.5rem;
+            font-size: 0.85rem;
+            letter-spacing: 0.04em;
+            margin-bottom: 0.3rem;
         }
-        .status-row {
-            display: flex;
-            gap: 0.75rem;
-            flex-wrap: wrap;
-            margin-bottom: 3.5rem;
-        }
-        .badge {
+
+        .ea-id {
             font-family: var(--font-mono);
             font-size: 0.72rem;
-            padding: 0.3rem 0.75rem;
-            border-radius: 2px;
-            letter-spacing: 0.05em;
-        }
-        .badge-done { background: rgba(0,255,204,0.08); border: 1px solid var(--status-done); color: var(--status-done); }
-        .badge-type { background: var(--primary-dim); border: 1px solid var(--primary); color: var(--primary); }
-
-        .section { margin-bottom: 4rem; }
-        .section h2 {
-            font-family: var(--font-mono);
-            font-size: 0.8rem;
-            color: var(--primary);
-            text-transform: uppercase;
-            letter-spacing: 0.12em;
-            border-left: 3px solid var(--primary);
-            padding-left: 1rem;
-            margin-bottom: 1.5rem;
-        }
-        .section p { color: #ccc; margin-bottom: 1rem; font-size: 0.97rem; }
-        .section p:last-child { margin-bottom: 0; }
-        b { color: var(--foreground); font-weight: 700; }
-
-        .tag-group { margin-bottom: 1rem; }
-        .tag-group-label {
-            font-family: var(--font-mono);
-            font-size: 0.7rem;
             color: var(--muted);
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            margin-bottom: 0.5rem;
+            letter-spacing: 0.06em;
         }
-        .tech-tags { display: flex; gap: 0.5rem; flex-wrap: wrap; }
-        .tag {
-            font-family: var(--font-mono);
-            font-size: 0.75rem;
-            background: #0f0f0f;
-            border: 1px solid var(--border);
-            padding: 0.35rem 0.85rem;
-            color: var(--primary);
-            transition: border-color 0.2s, background 0.2s;
-        }
-        .tag:hover { border-color: var(--primary); background: var(--primary-dim); }
 
-        .code-block {
-            background: #080808;
+        .rmit-logo {
+            width: 140px;
+            height: auto;
+            margin-top: 8px;
+            filter: brightness(0) invert(1);
+            opacity: 0.8;
+            transition: opacity 0.3s;
+        }
+        .rmit-logo:hover { opacity: 1; }
+
+        /* ── STATEMENT ── */
+        .statement-box {
+            margin-bottom: 1.5rem;
+            padding: 1.5rem 1.75rem;
             border: 1px solid var(--border);
             border-left: 3px solid var(--primary);
-            padding: 1.5rem;
-            margin: 1.5rem 0;
-            font-family: var(--font-mono);
-            font-size: 0.82rem;
-            color: #88ccff;
-            overflow-x: auto;
-            line-height: 1.9;
-            white-space: pre;
+            background: var(--primary-dim);
+            color: #ccc;
+            font-size: 0.96rem;
+            line-height: 1.75;
         }
-        .code-block .comment { color: #333; }
-        .code-block .value   { color: var(--status-done); }
-        .code-block .label   { color: var(--warn); }
-        .code-block .kw      { color: #c792ea; }
-        .code-block .type    { color: #ffcb6b; }
 
-        .result-box {
-            background: rgba(0,255,204,0.04);
-            border: 1px solid var(--status-done);
-            padding: 1.5rem 1.75rem;
-            border-radius: 3px;
-        }
-        .result-box p { color: var(--status-done) !important; margin-bottom: 0.5rem !important; }
-        .result-box p:last-child { margin-bottom: 0 !important; }
-
-        .lesson-box {
-            background: rgba(245,158,11,0.05);
-            border: 1px solid rgba(245,158,11,0.3);
-            padding: 1.25rem 1.5rem;
-            border-radius: 3px;
-            margin-bottom: 0.75rem;
-        }
-        .lesson-label {
-            font-family: var(--font-mono);
-            font-size: 0.7rem;
-            color: var(--warn);
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            margin-bottom: 0.4rem;
-        }
-        .lesson-box p { color: #ccc !important; font-size: 0.92rem !important; margin-bottom: 0 !important; }
-
-        .github-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.6rem;
-            font-family: var(--font-mono);
-            font-size: 0.82rem;
-            color: var(--foreground);
-            background: #0f0f0f;
-            border: 1px solid var(--border);
-            padding: 0.75rem 1.25rem;
-            text-decoration: none;
-            border-radius: 2px;
-            transition: border-color 0.2s, background 0.2s, color 0.2s;
-            margin-top: 0.5rem;
-        }
-        .github-link:hover { border-color: var(--primary); background: var(--primary-dim); color: var(--primary); }
-
-        .footer-nav {
-            display: flex;
-            justify-content: space-between;
-            padding-top: 3rem;
-            border-top: 1px solid var(--border);
-            margin-top: 2rem;
-        }
-        .footer-nav a {
+        /* ── CONTACT ── */
+        .contact-row {
             font-family: var(--font-mono);
             font-size: 0.78rem;
             color: var(--muted);
-            text-decoration: none;
-            transition: color 0.2s;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem 1.2rem;
+            margin-bottom: 1rem;
+            align-items: center;
         }
-        .footer-nav a:hover { color: var(--primary); }
+        .contact-row a {
+            color: var(--primary);
+            text-decoration: none;
+            border-bottom: 1px solid transparent;
+            transition: border-color 0.2s;
+        }
+        .contact-row a:hover { border-bottom-color: var(--primary); }
+        .contact-divider { color: var(--border); }
+
+        /* ── SECTION HEADINGS ── */
+        .section-heading {
+            font-family: var(--font-mono);
+            font-size: 0.78rem;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 0.14em;
+            margin-bottom: 1.25rem;
+            border-left: 3px solid var(--primary);
+            padding-left: 1rem;
+        }
+
+        /* ── SKILLS GRID ── */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 1rem;
+            margin-bottom: 4rem;
+        }
+
+        .skill-item {
+            background: var(--card);
+            border: 1px solid var(--border);
+            padding: 1rem 1.25rem;
+            position: relative;
+            height: 52px;
+            overflow: visible;
+            transition: border-color 0.2s;
+        }
+        .skill-item:hover,
+        .skill-item[open] { border-color: var(--primary); z-index: 100; }
+
+        .skill-item summary {
+            list-style: none;
+            outline: none;
+            font-family: var(--font-mono);
+            font-size: 0.78rem;
+            font-weight: 700;
+            color: var(--primary);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            letter-spacing: 0.08em;
+        }
+        .skill-item summary::after { content: '+'; font-size: 1.1rem; transition: transform 0.25s; }
+        .skill-item[open] summary::after { transform: rotate(45deg); }
+
+        .skill-content {
+            position: absolute;
+            top: 100%;
+            left: -1px;
+            width: calc(100% + 2px);
+            background: #0d0d0d;
+            border: 1px solid var(--primary);
+            border-top: none;
+            padding: 0.75rem 1.25rem;
+            list-style: none;
+            z-index: 1000;
+            opacity: 0;
+            transform: translateY(-4px);
+            transition: opacity 0.2s, transform 0.2s;
+            pointer-events: none;
+        }
+        .skill-item[open] .skill-content {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: auto;
+        }
+        .skill-content li {
+            font-family: var(--font-mono);
+            font-size: 0.78rem;
+            color: #ccc;
+            padding: 7px 0;
+            border-bottom: 1px solid #1a1a1a;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .skill-content li:last-child { border-bottom: none; }
+
+        .status-tag {
+            font-size: 0.62rem;
+            font-weight: 700;
+            padding: 2px 7px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        .done     { color: var(--status-done);     border: 1px solid var(--status-done); }
+        .progress { color: var(--status-progress); border: 1px solid var(--status-progress); }
+
+        /* ── PROJECT CARDS ── */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+            gap: 1.25rem;
+            margin-bottom: 4rem;
+        }
+
+        .card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            transition: border-color 0.25s, transform 0.25s, box-shadow 0.25s;
+        }
+        .card:hover {
+            border-color: var(--primary);
+            transform: translateY(-4px);
+            box-shadow: 0 0 28px rgba(65,105,225,0.15);
+        }
+
+        .card-index {
+            font-family: var(--font-mono);
+            font-size: 0.68rem;
+            color: var(--muted);
+            letter-spacing: 0.12em;
+            margin-bottom: 0.5rem;
+        }
+        .card h3 {
+            font-family: var(--font-mono);
+            color: var(--primary);
+            font-size: 1.15rem;
+            margin-bottom: 1rem;
+        }
+        .card p {
+            color: var(--muted);
+            font-size: 0.9rem;
+            flex-grow: 1;
+            margin-bottom: 1.5rem;
+            line-height: 1.65;
+        }
+        .card-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+            margin-bottom: 1.25rem;
+        }
+        .card-tag {
+            font-family: var(--font-mono);
+            font-size: 0.68rem;
+            color: var(--primary);
+            border: 1px solid var(--border);
+            padding: 0.2rem 0.55rem;
+            background: #0f0f0f;
+        }
+
+        .btn {
+            display: inline-block;
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            color: var(--primary);
+            border: 1px solid var(--primary);
+            padding: 0.55rem 1.1rem;
+            text-decoration: none;
+            text-align: center;
+            transition: background 0.2s, color 0.2s;
+            letter-spacing: 0.05em;
+        }
+        .btn:hover { background: var(--primary); color: white; }
+
+        /* ── FOOTER ── */
+        footer {
+            margin-top: 2rem;
+            border-top: 1px solid var(--border);
+            padding: 2rem 0 0;
+            color: var(--muted);
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            letter-spacing: 0.06em;
+        }
 
         @media (max-width: 600px) {
-            .nav-siblings { display: none; }
-            .footer-nav { flex-direction: column; gap: 1rem; }
+            .header { flex-direction: column; gap: 1.5rem; }
+            .rmit-logo { width: 110px; }
+            .contact-row { flex-direction: column; gap: 0.3rem; }
+            .contact-divider { display: none; }
         }
+
+        /* ── NESTED COURSEWORK ── */
+        .course-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 1rem;
+            margin-bottom: 4rem;
+        }
+        .year-item {
+            background: var(--card);
+            border: 1px solid var(--border);
+            transition: border-color 0.2s;
+            position: relative;
+            height: 52px;
+            overflow: visible;
+            z-index: 10;
+        }
+        .year-item[open] { border-color: var(--primary); z-index: 100; }
+        .year-item > summary {
+            list-style: none;
+            outline: none;
+            font-family: var(--font-mono);
+            font-size: 0.78rem;
+            font-weight: 700;
+            color: var(--primary);
+            letter-spacing: 0.08em;
+            padding: 1rem 1.25rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+        }
+        .year-item > summary::after { content: '+'; font-size: 1.1rem; transition: transform 0.25s; }
+        .year-item[open] > summary::after { transform: rotate(45deg); }
+
+        .sem-list {
+            position: absolute;
+            top: 100%;
+            left: -1px;
+            width: calc(100% + 2px);
+            background: #0d0d0d;
+            border: 1px solid var(--primary);
+            border-top: none;
+            padding: 0.75rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            z-index: 1000;
+            opacity: 0;
+            transform: translateY(-4px);
+            transition: opacity 0.2s, transform 0.2s;
+            pointer-events: none;
+        }
+        .year-item[open] .sem-list {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: auto;
+        }
+        .sem-item {
+            background: #0a0a0a;
+            border: 1px solid var(--border);
+            transition: border-color 0.2s;
+            position: relative;
+            height: 38px;
+            overflow: visible;
+        }
+        .sem-item[open] { border-color: rgba(65,105,225,0.5); z-index: 200; }
+        .sem-item > summary {
+            list-style: none;
+            outline: none;
+            font-family: var(--font-mono);
+            font-size: 0.72rem;
+            font-weight: 700;
+            color: #aaa;
+            letter-spacing: 0.06em;
+            padding: 0.6rem 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+        }
+        .sem-item[open] > summary { color: var(--primary); }
+        .sem-item > summary::after { content: '+'; font-size: 1rem; transition: transform 0.25s; }
+        .sem-item[open] > summary::after { transform: rotate(45deg); }
+
+        .sem-subjects {
+            position: absolute;
+            top: 100%;
+            left: -1px;
+            width: calc(100% + 2px);
+            background: #080808;
+            border: 1px solid rgba(65,105,225,0.5);
+            border-top: none;
+            list-style: none;
+            padding: 0 1rem 0.5rem;
+            margin: 0;
+            z-index: 2000;
+            opacity: 0;
+            transform: translateY(-4px);
+            transition: opacity 0.2s, transform 0.2s;
+            pointer-events: none;
+        }
+        .sem-item[open] .sem-subjects {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: auto;
+        }
+        .sem-subjects li {
+            font-family: var(--font-mono);
+            font-size: 0.74rem;
+            color: #ccc;
+            padding: 6px 0;
+            border-bottom: 1px solid #1a1a1a;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .sem-subjects li:last-child { border-bottom: none; }
     </style>
 </head>
 <body>
 <div class="container">
 
-    <nav class="nav-bar">
-        <a href="index.html" class="nav-back">← RETURN_TO_DASHBOARD</a>
-        <div class="nav-siblings">
-            <a href="rover.html">← CLEANING ROVER</a>
-            <a href="monitoring.html">ROOM MONITOR →</a>
+    <!-- HEADER -->
+    <div class="header">
+        <div>
+            <h1>Sameer Appasa<span class="cursor"></span></h1>
+            <div class="degree">Bachelor of Electrical Engineering (Honours)</div>
+            <div class="ea-id">Engineering Australia ID: 10791344</div>
         </div>
-    </nav>
-
-    <div class="project-label">Project [02] / University Build</div>
-    <h1>PROJECT:<br>OUSB_SIMULATOR</h1>
-    <div class="status-row">
-        <span class="badge badge-done">✓ FULLY FUNCTIONAL</span>
-        <span class="badge badge-type">C++ / LOW-LEVEL</span>
-        <span class="badge badge-type">EMBEDDED LOGIC</span>
-        <span class="badge badge-type">AVR ARCHITECTURE</span>
+        <img src="image_0.png" alt="RMIT Logo" class="rmit-logo">
     </div>
 
-    <!-- 01 -->
-    <div class="section">
-        <h2>01. Objective</h2>
-        <p>Develop a high-fidelity hardware simulator in C++ that replicates the behaviour of an OUSB (Open USB) board — a physical AVR-based development board used in university coursework. The goal was to create a fully functional software environment where digital logic and register-level manipulations could be tested and validated without requiring the physical hardware.</p>
+    <!-- STATEMENT -->
+    <!-- CONTACT -->
+    <div class="contact-row">
+        <span>Melbourne, AU</span>
+        <span class="contact-divider">|</span>
+        <span>0422 759 942</span>
+        <span class="contact-divider">|</span>
+        <a href="mailto:sameer.appasa20@gmail.com">sameer.appasa20@gmail.com</a>
+        <span class="contact-divider">|</span>
+        <a href="https://www.linkedin.com/in/sameer-appasa-ba033931a/" target="_blank">LinkedIn</a>
+        <span class="contact-divider">|</span>
+        <a href="https://github.com/Sam2001115" target="_blank">GitHub</a>
     </div>
 
-    <!-- 02 -->
-    <div class="section">
-        <h2>02. Technology Used</h2>
+    <div class="statement-box">
+        EE student at RMIT University. Originally from Iraq — arrived in Australia as a refugee in 2022. Completed high school in Sydney while working at Fairfield City Open Library, then moved to Melbourne to study Engineering at RMIT. Passionate about electricity and embedded systems since childhood. Outside of study I build hardware projects, write firmware, and design circuits to stay work-ready.
+    </div>
 
-        <div class="tag-group">
-            <div class="tag-group-label">Language & Paradigm</div>
-            <div class="tech-tags">
-                <span class="tag">C++</span>
-                <span class="tag">Object-Oriented Design</span>
-                <span class="tag">Bitwise Operations</span>
+    <!-- TECHNICAL TOOLKIT -->
+    <div class="section-heading">🛠 Technical Toolkit</div>
+    <div class="skills-grid">
+        <details class="skill-item">
+            <summary>SOFTWARE</summary>
+            <ul class="skill-content">
+                <li>Altium Designer</li>
+                <li>SolidWorks</li>
+                <li>Multisim</li>
+                <li>MATLAB</li>
+                <li>PowerFactory DIgSILENT</li>
+                <li>PlatformIO</li>
+                <li>VS Code</li>
+                <li>GitHub</li>
+                <li>KiCad</li>
+            </ul>
+        </details>
+        <details class="skill-item">
+            <summary>PROGRAMMING</summary>
+            <ul class="skill-content">
+                <li>C++ (Embedded)</li>
+                <li>Python</li>
+                <li>Java</li>
+                <li>HTML / CSS</li>
+            </ul>
+        </details>
+        <details class="skill-item">
+            <summary>HARDWARE</summary>
+            <ul class="skill-content">
+                <li>ESP32</li>
+                <li>Raspberry Pi</li>
+                <li>DRV8833 Motor Driver</li>
+                <li>ACS712 Current Sensor</li>
+                <li>Soldering & PCB Assembly</li>
+                <li>Oscilloscope Operation</li>
+                <li>Circuit Troubleshooting</li>
+                <li>3D Printing (FDM / PLA)</li>
+            </ul>
+        </details>
+    </div>
+
+    <!-- CORE COURSEWORK -->
+    <div class="section-heading">📚 Core Coursework</div>
+    <div class="course-grid">
+
+        <!-- YEAR 1 -->
+        <details class="year-item">
+            <summary>YEAR 1</summary>
+            <div class="sem-list">
+                <details class="sem-item">
+                    <summary>SEMESTER 1</summary>
+                    <ul class="sem-subjects">
+                        <li>OENG1206 Digital Fundamentals <span class="status-tag done">DONE</span></li>
+                        <li>OENG1166 Prof Eng Prac <span class="status-tag done">DONE</span></li>
+                        <li>OENG1208 Engineering Science <span class="status-tag done">DONE</span></li>
+                        <li>MATH2393 Engineering Mathematics <span class="status-tag done">DONE</span></li>
+                    </ul>
+                </details>
+                <details class="sem-item">
+                    <summary>SEMESTER 2</summary>
+                    <ul class="sem-subjects">
+                        <li>OENG1250 Intro to Engineering Design <span class="status-tag done">DONE</span></li>
+                        <li>CIVE1186 Intro to Env &amp; Sustain <span class="status-tag done">DONE</span></li>
+                        <li>EEET2246 Engineering Computing 1 <span class="status-tag done">DONE</span></li>
+                        <li>EEET2249 Intro to Elec &amp; Electronic <span class="status-tag done">DONE</span></li>
+                    </ul>
+                </details>
             </div>
-        </div>
+        </details>
 
-        <div class="tag-group">
-            <div class="tag-group-label">Architecture Emulated</div>
-            <div class="tech-tags">
-                <span class="tag">AVR Register Architecture</span>
-                <span class="tag">Port B / Port D Virtual Registers</span>
-                <span class="tag">Digital Pin States (HIGH / LOW)</span>
+        <!-- YEAR 2 -->
+        <details class="year-item">
+            <summary>YEAR 2</summary>
+            <div class="sem-list">
+                <details class="sem-item">
+                    <summary>SEMESTER 1</summary>
+                    <ul class="sem-subjects">
+                        <li>MATH2161 Mathematics for ECE <span class="status-tag done">DONE</span></li>
+                        <li>EEET2255 Electronics <span class="status-tag done">DONE</span></li>
+                        <li>EEET2369 Signals and Systems 1 <span class="status-tag done">DONE</span></li>
+                        <li>EEET2613 Smart Grids <span class="status-tag done">DONE</span></li>
+                    </ul>
+                </details>
+                <details class="sem-item">
+                    <summary>SEMESTER 2</summary>
+                    <ul class="sem-subjects">
+                        <li>EEET1316 Electrical Engineering 1 <span class="status-tag progress">IN PROGRESS</span></li>
+                        <li>MIET2385 Systems Engineering Principles <span class="status-tag progress">IN PROGRESS</span></li>
+                        <li>EEET2556 Introduction to Embedded Systems <span class="status-tag progress">IN PROGRESS</span></li>
+                        <li>EEET2257 Engineering Design 2 <span class="status-tag progress">IN PROGRESS</span></li>
+                    </ul>
+                </details>
             </div>
+        </details>
+
+    </div>
+
+    <!-- ACHIEVEMENTS -->
+    <div class="section-heading">🏆 Achievements</div>
+    <div class="skills-grid" style="margin-bottom: 4rem;">
+
+        <div style="background: var(--card); border: 1px solid var(--border); border-left: 3px solid var(--status-done); padding: 1.25rem 1.5rem;">
+            <div style="font-family: var(--font-mono); font-size: 0.68rem; color: var(--status-done); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 0.5rem;">2025 &amp; 2026</div>
+            <div style="font-family: var(--font-mono); font-size: 0.9rem; color: var(--foreground); font-weight: 700; margin-bottom: 0.5rem;">Friends of Zainab Tertiary Scholarship</div>
+            <div style="font-size: 0.88rem; color: #aaa; line-height: 1.6;">Awarded by the Public Education Foundation — a scholarship recognising academic achievement and resilience for students from refugee and migrant backgrounds pursuing tertiary education.</div>
         </div>
 
-        <div class="tag-group">
-            <div class="tag-group-label">Systems & Techniques</div>
-            <div class="tech-tags">
-                <span class="tag">File I/O Command Parser</span>
-                <span class="tag">Error Precedence Engine</span>
-                <span class="tag">Fail-Safe Validation</span>
-                <span class="tag">Console State Feedback</span>
+        <div style="background: var(--card); border: 1px solid var(--border); border-left: 3px solid var(--status-done); padding: 1.25rem 1.5rem;">
+            <div style="font-family: var(--font-mono); font-size: 0.68rem; color: var(--status-done); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 0.5rem;">2025 — 1st Place</div>
+            <div style="font-family: var(--font-mono); font-size: 0.9rem; color: var(--foreground); font-weight: 700; margin-bottom: 0.5rem;">RMIT BESS Med-Tech Hackathon</div>
+            <div style="font-size: 0.88rem; color: #aaa; line-height: 1.6;">Placed first in the RMIT Biomedical Engineering Student Society Med-Tech Hackathon 2025 — competing against engineering teams to design innovative medical technology solutions.</div>
+        </div>
+
+    </div>
+
+    <!-- PROJECTS -->
+    <div class="section-heading">🚀 Featured Projects</div>
+    <div class="projects-grid">
+        <div class="card">
+            <div class="card-index">PROJECT [01] / PERSONAL BUILD</div>
+            <h3>Cleaning Rover</h3>
+            <p>Autonomous floor cleaning robot built on ESP32-WROOM-32. Features 4× HC-SR04 ultrasonic sensors, dual DRV8833 motor drivers, 3S2P Li-ion power system with BMS, and a WiFi Access Point dashboard with radar display, manual controls, and live battery monitoring.</p>
+            <div class="card-tags">
+                <span class="card-tag">ESP32</span>
+                <span class="card-tag">C++</span>
+                <span class="card-tag">SolidWorks</span>
+                <span class="card-tag">3D Print</span>
+                <span class="card-tag">DRV8833</span>
+                <span class="card-tag">IoT</span>
             </div>
+            <a href="rover.html" class="btn">VIEW_TECHNICAL_LOGS →</a>
+        </div>
+
+        <div class="card">
+            <div class="card-index">PROJECT [02] / UNIVERSITY BUILD</div>
+            <h3>OUSB Simulator</h3>
+            <p>High-fidelity C++ hardware simulator emulating the AVR register architecture of an OUSB board. Implements bitwise port manipulation, a strict error-precedence validation engine, and a custom file I/O command parser — achieving 100% accuracy against hardware specification.</p>
+            <div class="card-tags">
+                <span class="card-tag">C++</span>
+                <span class="card-tag">AVR Architecture</span>
+                <span class="card-tag">Bitwise Ops</span>
+                <span class="card-tag">File I/O</span>
+            </div>
+            <a href="ousb.html" class="btn">VIEW_TECHNICAL_LOGS →</a>
+        </div>
+
+        <div class="card">
+            <div class="card-index">PROJECT [03] / PERSONAL BUILD</div>
+            <h3>Room Monitor &amp; Security System</h3>
+            <p>Always-on IoT security monitor running on ESP32. Delivers Telegram intrusion alerts in under 2 seconds, with a multi-ping false-trigger filter, NTP real-time clock on OLED, HTTP Basic Auth web dashboard, and Healthchecks.io heartbeat for silent-failure detection. 3+ months uptime at 99.9%.</p>
+            <div class="card-tags">
+                <span class="card-tag">ESP32</span>
+                <span class="card-tag">Telegram API</span>
+                <span class="card-tag">NTP</span>
+                <span class="card-tag">IoT</span>
+                <span class="card-tag">OLED</span>
+            </div>
+            <a href="monitoring.html" class="btn">VIEW_TECHNICAL_LOGS →</a>
+        </div>
+
+        <div class="card">
+            <div class="card-index">PROJECT [04] / PERSONAL BUILD &nbsp;·&nbsp; <span style="color:var(--status-progress); font-size:0.65rem; letter-spacing:0.05em;">⚙ IN DEVELOPMENT</span></div>
+            <h3>Smart Energy Monitor</h3>
+            <p>Solar-powered energy monitoring system built on ESP32-C3. Measures solar input current via ACS712, estimates battery state via voltage divider, and switches loads through a relay. Real-time data served over a WiFi web dashboard — designed to monitor and manage off-grid power systems.</p>
+            <div class="card-tags">
+                <span class="card-tag">ESP32-C3</span>
+                <span class="card-tag">ACS712</span>
+                <span class="card-tag">Solar</span>
+                <span class="card-tag">Relay</span>
+                <span class="card-tag">3S BMS</span>
+                <span class="card-tag">IoT</span>
+            </div>
+            <span class="btn" style="opacity:0.45; cursor:default; pointer-events:none;">COMING_SOON</span>
         </div>
     </div>
 
-    <!-- 03 -->
-    <div class="section">
-        <h2>03. The Challenges</h2>
-
-        <p><b>Challenge 1 — Register-Level Emulation:</b> The AVR architecture manipulates hardware at the bit level — individual pins are set or cleared by masking specific bits within 8-bit port registers. Replicating this in software meant every instruction had to manipulate virtual registers in the exact sequence and precedence the real hardware would follow.</p>
-
-        <p><b>Challenge 2 — Error Precedence:</b> In a real hardware environment, certain errors — such as invalid port access, out-of-range values, or malformed instructions — must be caught and reported in a strict order of priority. Reporting errors in the wrong order would cause the simulator to provide false data or crash rather than fail safely. Implementing this required a carefully ordered validation engine that ran before any instruction was executed.</p>
-
-        <p><b>Challenge 3 — File I/O Command Execution:</b> The simulator needed to accept a plain text file containing a sequence of hardware instructions and execute them in real-time — translating human-readable command strings into register manipulations and outputting the resulting virtual hardware state.</p>
-    </div>
-
-    <!-- 04 -->
-    <div class="section">
-        <h2>04. The Solutions</h2>
-
-        <p><b>Register Emulation — C++ Classes + Bitwise Ops:</b> Each hardware port (Port B, Port D, etc.) was represented as a C++ class containing an 8-bit virtual register. Individual pin states were controlled using bitwise OR to set bits and bitwise AND with NOT-mask to clear them — directly mirroring the way AVR hardware operates.</p>
-
-<div class="code-block"><span class="comment">// Virtual register pin control — mirrors AVR hardware behaviour</span>
-<span class="kw">void</span> <span class="value">setPin</span>(<span class="type">uint8_t</span> &port, <span class="type">uint8_t</span> mask, <span class="type">bool</span> state) {
-    <span class="kw">if</span> (state) port |=  mask;   <span class="comment">// Set bit   — HIGH</span>
-    <span class="kw">else</span>       port &= ~mask;   <span class="comment">// Clear bit — LOW</span>
-}
-
-<span class="comment">// Read individual pin state from virtual register</span>
-<span class="type">bool</span> <span class="value">readPin</span>(<span class="type">uint8_t</span> port, <span class="type">uint8_t</span> mask) {
-    <span class="kw">return</span> (port & mask) != 0;
-}</div>
-
-        <p><b>Error Precedence — Validation Engine:</b> A structured validation engine runs before any instruction is executed. It checks — in priority order — for syntax errors, invalid port references, out-of-range pin numbers, and data type mismatches. If any check fails, execution halts and the correct error code is reported according to the hardware specification. This ensures the simulator follows strict <b>Fail-Safe</b> protocols at all times.</p>
-
-        <p><b>File I/O — Custom Command Parser:</b> A custom parser reads the instruction file line-by-line, tokenises each command string, maps tokens to internal port/pin operations, and updates the virtual registers accordingly. After each instruction executes, the simulator outputs the current state of all virtual LEDs and switches to the console — providing a clear, visual representation of the virtual hardware state at every step.</p>
-
-<div class="code-block"><span class="comment">// Simplified parser + console feedback loop</span>
-<span class="kw">while</span> (getline(inputFile, line)) {
-    <span class="kw">auto</span> tokens = tokenise(line);
-
-    <span class="comment">// 1. Validate instruction before executing</span>
-    ErrorCode err = validate(tokens);
-    <span class="kw">if</span> (err != <span class="value">OK</span>) { reportError(err); <span class="kw">continue</span>; }
-
-    <span class="comment">// 2. Execute and update virtual registers</span>
-    execute(tokens, virtualPorts);
-
-    <span class="comment">// 3. Output virtual hardware state to console</span>
-    printState(virtualPorts);   <span class="comment">// LED[7:0] | SW[7:0]</span>
-}</div>
-    </div>
-
-    <!-- 05 -->
-    <div class="section">
-        <h2>05. Results</h2>
-        <div class="result-box">
-            <p>✅ Simulator fully functional — accurately mirrors the behaviour of a physical OUSB board.</p>
-            <p>✅ Handles complex instruction sets with <b>100% error reporting accuracy</b> against the hardware specification.</p>
-            <p>✅ Error precedence engine correctly prioritises and reports all failure modes in the specified order.</p>
-            <p>✅ Demonstrated ability to bridge high-level C++ and low-level hardware logic — debugging embedded software without physical hardware.</p>
-        </div>
-    </div>
-
-    <!-- 06 -->
-    <div class="section">
-        <h2>06. Lessons Learned</h2>
-
-        <div class="lesson-box">
-            <div class="lesson-label">Abstraction Enables Hardware Emulation</div>
-            <p>Representing each hardware port as a C++ class with an 8-bit internal register made the simulation both accurate and extensible. Good abstraction meant adding new ports or pin behaviours required minimal changes to the core logic.</p>
-        </div>
-
-        <div class="lesson-box">
-            <div class="lesson-label">Error Ordering Is Part of the Specification</div>
-            <p>In embedded systems, the order in which errors are detected and reported is not a minor detail — it is part of the hardware contract. Implementing the validation engine in strict priority order was essential to matching real hardware behaviour exactly.</p>
-        </div>
-
-        <div class="lesson-box">
-            <div class="lesson-label">Bitwise Operations Are the Language of Hardware</div>
-            <p>Every pin state change in AVR comes down to bit masking. Writing this in C++ reinforced how closely low-level programming maps to physical circuit behaviour — and why understanding bitwise logic is fundamental to embedded systems work.</p>
-        </div>
-
-        <div class="lesson-box">
-            <div class="lesson-label">Simulators Are Powerful Debugging Tools</div>
-            <p>Being able to test complex instruction sequences in software — without needing the physical board — dramatically accelerated debugging. Building the simulator deepened the understanding of the hardware it was emulating far more than just using the board would have.</p>
-        </div>
-    </div>
-
-    <!-- 07 -->
-    <div class="section">
-        <h2>07. Source Code</h2>
-        <p>Full source code available on GitHub.</p>
-        <a href="https://github.com/Sam2001115" class="github-link" target="_blank">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/>
-            </svg>
-            github.com/Sam2001115
-        </a>
-    </div>
-
-    <div class="footer-nav">
-        <a href="rover.html">← CLEANING ROVER</a>
-        <a href="monitoring.html">NEXT: ROOM MONITOR →</a>
-    </div>
-
+    <footer>RMIT_ENGINEERING // 2026 // ALL_SYSTEMS_OPERATIONAL</footer>
 </div>
+
+<script>
+    // Hover for toolkit skills
+    document.querySelectorAll('.skill-item').forEach((el) => {
+        el.addEventListener('mouseenter', () => el.setAttribute('open', true));
+        el.addEventListener('mouseleave', () => el.removeAttribute('open'));
+    });
+
+    // Hover for year dropdowns
+    document.querySelectorAll('.year-item').forEach((el) => {
+        el.addEventListener('mouseenter', () => el.setAttribute('open', true));
+        el.addEventListener('mouseleave', () => el.removeAttribute('open'));
+    });
+
+    // Hover for semester dropdowns
+    document.querySelectorAll('.sem-item').forEach((el) => {
+        el.addEventListener('mouseenter', () => el.setAttribute('open', true));
+        el.addEventListener('mouseleave', () => el.removeAttribute('open'));
+    });
+</script>
 </body>
 </html>
