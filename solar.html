@@ -1,128 +1,615 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Smart Solar Energy Monitor | Sameer Appasa</title>
-<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2220%22 fill=%22%2300008B%22/><text y=%22.7em%22 x=%2250%22 font-family=%22monospace%22 font-weight=%22bold%22 font-size=%2260%22 text-anchor=%22middle%22 fill=%22white%22>SA</text></svg>">
-<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
-<style>
-:root{--background:#050505;--foreground:#fafafa;--primary:#4169E1;--primary-dim:rgba(65,105,225,0.10);--card:#0d0d0d;--border:#1f1f1f;--font-mono:'Space Mono',monospace;--font-sans:'Syne',sans-serif;--status-done:#00ffcc;--muted:#888}
-*{box-sizing:border-box;margin:0;padding:0}
-body{background-color:var(--background);color:var(--foreground);font-family:var(--font-sans);line-height:1.7;overflow-x:hidden}
-body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(65,105,225,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(65,105,225,0.03) 1px,transparent 1px);background-size:40px 40px;pointer-events:none;z-index:0}
-.container{max-width:1000px;margin:0 auto;padding:4rem 2rem 6rem;position:relative;z-index:1}
-.back-link{font-family:var(--font-mono);font-size:0.78rem;color:var(--primary);text-decoration:none;letter-spacing:0.08em;display:inline-block;margin-bottom:2.5rem;border-bottom:1px solid transparent;transition:border-color 0.2s}
-.back-link:hover{border-bottom-color:var(--primary)}
-.project-header{margin-bottom:3rem;padding-bottom:2rem;border-bottom:1px solid var(--border)}
-.project-index{font-family:var(--font-mono);font-size:0.68rem;color:var(--muted);letter-spacing:0.14em;text-transform:uppercase;margin-bottom:0.75rem}
-.project-title{font-family:var(--font-mono);font-size:clamp(1.6rem,5vw,2.8rem);font-weight:700;color:var(--primary);letter-spacing:-0.02em;line-height:1.1;margin-bottom:1rem}
-.status-badge{display:inline-block;font-family:var(--font-mono);font-size:0.7rem;color:var(--status-done);border:1px solid var(--status-done);padding:0.25rem 0.75rem;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:1.25rem}
-.tag-row{display:flex;flex-wrap:wrap;gap:0.4rem}
-.tag{font-family:var(--font-mono);font-size:0.68rem;color:var(--primary);border:1px solid var(--border);padding:0.2rem 0.55rem;background:#0f0f0f}
-.section-heading{font-family:var(--font-mono);font-size:0.78rem;color:var(--primary);text-transform:uppercase;letter-spacing:0.14em;margin-bottom:1.25rem;border-left:3px solid var(--primary);padding-left:1rem}
-.section{margin-bottom:3rem}
-.objective-box{background:var(--card);border:1px solid var(--border);border-left:3px solid var(--primary);padding:1.5rem 1.75rem;color:#ccc;font-size:0.96rem;line-height:1.75;margin-bottom:3rem}
-.photo-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1rem;margin-bottom:3rem}
-.photo-grid img{width:100%;height:260px;object-fit:cover;border:1px solid var(--border);display:block;transition:border-color 0.25s}
-.photo-grid img:hover{border-color:var(--primary)}
-.photo-caption{font-family:var(--font-mono);font-size:0.68rem;color:var(--muted);margin-top:0.4rem;letter-spacing:0.05em}
-.photo-item{display:flex;flex-direction:column}
-.img-full{width:100%;border:1px solid var(--border);display:block;margin-bottom:0.5rem}
-.spec-table{width:100%;border-collapse:collapse;font-family:var(--font-mono);font-size:0.8rem;margin-bottom:2rem}
-.spec-table th{text-align:left;color:var(--primary);border-bottom:1px solid var(--border);padding:0.5rem 1rem 0.5rem 0;font-size:0.7rem;letter-spacing:0.08em;text-transform:uppercase}
-.spec-table td{padding:0.55rem 1rem 0.55rem 0;color:#ccc;border-bottom:1px solid #111;vertical-align:top}
-.spec-table td:first-child{color:var(--muted);white-space:nowrap;padding-right:2rem}
-.challenge-list{display:flex;flex-direction:column;gap:1rem}
-.challenge-block{background:var(--card);border:1px solid var(--border);border-left:3px solid var(--primary);padding:1.25rem 1.5rem}
-.challenge-title{font-family:var(--font-mono);font-size:0.82rem;color:var(--primary);font-weight:700;margin-bottom:0.5rem;letter-spacing:0.05em}
-.challenge-block p{color:#aaa;font-size:0.9rem;line-height:1.65}
-.challenge-block .solution{margin-top:0.5rem;color:var(--status-done);font-size:0.88rem;font-family:var(--font-mono)}
-.results-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem}
-.result-item{background:var(--card);border:1px solid var(--border);border-top:3px solid var(--status-done);padding:1.25rem;font-family:var(--font-mono);font-size:0.82rem;color:#ccc;line-height:1.5}
-footer{margin-top:2rem;border-top:1px solid var(--border);padding:2rem 0 0;color:var(--muted);font-family:var(--font-mono);font-size:0.75rem;letter-spacing:0.06em}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Solar Energy Monitor | Sameer Appasa</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --background: #050505;
+            --foreground: #fafafa;
+            --primary: #4169E1;
+            --primary-dim: rgba(65,105,225,0.13);
+            --card: #0d0d0d;
+            --border: #1f1f1f;
+            --font-mono: 'Space Mono', monospace;
+            --font-sans: 'Syne', sans-serif;
+            --status-done: #00ffcc;
+            --muted: #888;
+            --warn: #f59e0b;
+            --fail: #ef4444;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            background-color: var(--background);
+            color: var(--foreground);
+            font-family: var(--font-sans);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(65,105,225,0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(65,105,225,0.03) 1px, transparent 1px);
+            background-size: 40px 40px;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 3rem 2rem 6rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .nav-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 3rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .nav-back {
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            color: var(--primary);
+            text-decoration: none;
+            transition: opacity 0.2s;
+        }
+        .nav-back:hover { opacity: 0.7; }
+        .nav-siblings { display: flex; gap: 1.5rem; }
+        .nav-siblings a {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            color: var(--muted);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        .nav-siblings a:hover { color: var(--primary); }
+
+        .project-label {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            color: var(--muted);
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            margin-bottom: 0.75rem;
+        }
+        h1 {
+            font-family: var(--font-mono);
+            font-size: clamp(1.8rem, 5vw, 2.8rem);
+            color: var(--primary);
+            letter-spacing: -0.02em;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+        }
+        .status-row {
+            display: flex;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+            margin-bottom: 3.5rem;
+        }
+        .badge {
+            font-family: var(--font-mono);
+            font-size: 0.72rem;
+            padding: 0.3rem 0.75rem;
+            border-radius: 2px;
+            letter-spacing: 0.05em;
+        }
+        .badge-done { background: rgba(0,255,204,0.08); border: 1px solid var(--status-done); color: var(--status-done); }
+        .badge-type { background: var(--primary-dim); border: 1px solid var(--primary); color: var(--primary); }
+
+        .section { margin-bottom: 4rem; }
+        .section h2 {
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            border-left: 3px solid var(--primary);
+            padding-left: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        .section p { color: #ccc; margin-bottom: 1rem; font-size: 0.97rem; }
+        .section p:last-child { margin-bottom: 0; }
+        b { color: var(--foreground); font-weight: 700; }
+
+        .tag-group { margin-bottom: 1rem; }
+        .tag-group-label {
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            color: var(--muted);
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            margin-bottom: 0.5rem;
+        }
+        .tech-tags { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+        .tag {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            background: #0f0f0f;
+            border: 1px solid var(--border);
+            padding: 0.35rem 0.85rem;
+            color: var(--primary);
+            transition: border-color 0.2s, background 0.2s;
+        }
+        .tag:hover { border-color: var(--primary); background: var(--primary-dim); }
+
+        .code-block {
+            background: #080808;
+            border: 1px solid var(--border);
+            border-left: 3px solid var(--primary);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            font-family: var(--font-mono);
+            font-size: 0.82rem;
+            color: #88ccff;
+            overflow-x: auto;
+            line-height: 1.9;
+        }
+        .code-block .comment { color: #333; }
+        .code-block .value   { color: var(--status-done); }
+        .code-block .label   { color: var(--warn); }
+
+        .attempt-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+        .attempt-card {
+            background: #080808;
+            border: 1px solid var(--border);
+            border-radius: 3px;
+            padding: 1.25rem;
+        }
+        .attempt-card.failed  { border-color: rgba(239,68,68,0.4); }
+        .attempt-card.success { border-color: rgba(0,255,204,0.3); }
+        .attempt-label {
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            margin-bottom: 0.75rem;
+        }
+        .attempt-card.failed  .attempt-label { color: var(--fail); }
+        .attempt-card.success .attempt-label { color: var(--status-done); }
+        .attempt-card p { color: #aaa; font-size: 0.88rem; margin-bottom: 0.4rem; }
+        .attempt-card p:last-child { margin-bottom: 0; }
+
+        .pin-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-family: var(--font-mono);
+            font-size: 0.78rem;
+            margin-top: 1rem;
+        }
+        .pin-table th {
+            text-align: left;
+            padding: 0.6rem 1rem;
+            background: #0a0a0a;
+            border: 1px solid var(--border);
+            color: var(--primary);
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+        .pin-table td { padding: 0.55rem 1rem; border: 1px solid var(--border); color: #ccc; }
+        .pin-table tr:hover td { background: #0f0f0f; }
+        .gpio { color: var(--warn); }
+        .func { color: var(--status-done); }
+
+        .result-box {
+            background: rgba(0,255,204,0.04);
+            border: 1px solid var(--status-done);
+            padding: 1.5rem 1.75rem;
+            border-radius: 3px;
+        }
+        .result-box p { color: var(--status-done) !important; margin-bottom: 0.5rem !important; }
+        .result-box p:last-child { margin-bottom: 0 !important; }
+
+        .lesson-box {
+            background: rgba(245,158,11,0.05);
+            border: 1px solid rgba(245,158,11,0.3);
+            padding: 1.25rem 1.5rem;
+            border-radius: 3px;
+            margin-bottom: 0.75rem;
+        }
+        .lesson-label {
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            color: var(--warn);
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            margin-bottom: 0.4rem;
+        }
+        .lesson-box p { color: #ccc !important; font-size: 0.92rem !important; margin-bottom: 0 !important; }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 1rem;
+        }
+        figure {
+            margin: 0;
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 3px;
+            padding: 0.5rem;
+            transition: border-color 0.25s;
+        }
+        figure:hover { border-color: var(--primary); }
+        figure img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            display: block;
+            border-radius: 2px;
+            background: #111;
+        }
+        figcaption {
+            font-family: var(--font-mono);
+            font-size: 0.72rem;
+            color: var(--muted);
+            margin-top: 0.5rem;
+            text-align: center;
+            line-height: 1.4;
+        }
+
+        .github-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            font-family: var(--font-mono);
+            font-size: 0.82rem;
+            color: var(--foreground);
+            background: #0f0f0f;
+            border: 1px solid var(--border);
+            padding: 0.75rem 1.25rem;
+            text-decoration: none;
+            border-radius: 2px;
+            transition: border-color 0.2s, background 0.2s, color 0.2s;
+            margin-top: 0.5rem;
+        }
+        .github-link:hover { border-color: var(--primary); background: var(--primary-dim); color: var(--primary); }
+
+        .footer-nav {
+            display: flex;
+            justify-content: space-between;
+            padding-top: 3rem;
+            border-top: 1px solid var(--border);
+            margin-top: 2rem;
+        }
+        .footer-nav a {
+            font-family: var(--font-mono);
+            font-size: 0.78rem;
+            color: var(--muted);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        .footer-nav a:hover { color: var(--primary); }
+
+        .tft-wrap {
+            background: #000810;
+            border: 1px solid var(--border);
+            border-radius: 3px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            overflow-x: auto;
+        }
+        .tft-wrap svg { display: block; max-width: 100%; height: auto; }
+
+        @media (max-width: 600px) {
+            .nav-siblings { display: none; }
+            .attempt-grid { grid-template-columns: 1fr; }
+            .gallery-grid { grid-template-columns: 1fr; }
+            .footer-nav { flex-direction: column; gap: 1rem; }
+        }
+    </style>
 </head>
 <body>
 <div class="container">
-<a href="index.html" class="back-link">← BACK_TO_PORTFOLIO</a>
-<div class="project-header">
-<div class="project-index">PROJECT [04] / PERSONAL BUILD</div>
-<div class="project-title">Smart Solar Energy Monitor</div>
-<div class="status-badge">✓ OPERATIONAL</div>
-<div class="tag-row">
-<span class="tag">ESP32-C3</span><span class="tag">KiCad PCB</span><span class="tag">SolidWorks</span><span class="tag">ACS712</span><span class="tag">DHT22</span><span class="tag">ST7789 TFT</span><span class="tag">Relay Automation</span><span class="tag">WiFi AP</span><span class="tag">Solar</span><span class="tag">3S BMS</span><span class="tag">IoT</span>
-</div>
-</div>
-<div class="objective-box">Design and build a fully functional solar energy monitoring and management system capable of real-time power measurement, automated relay control, environmental sensing, and live data visualisation — accessible from any device without a router. The system targets the real-world challenge of small-scale solar integration, demonstrating hybrid charging management, demand response concepts, and energy data telemetry relevant to the Australian renewable energy sector.</div>
-<div class="section">
-<div class="section-heading">// Build Photos</div>
-<div class="photo-grid">
-<div class="photo-item"><img src="solar_build_1.jpeg" alt="Solar Monitor Build — top view"><div class="photo-caption">// PROTOTYPE — TOP VIEW — ESP32-C3, RELAYS, BUCK CONVERTERS, BMS</div></div>
-<div class="photo-item"><img src="solar_build_2.jpeg" alt="Solar Monitor Build — powered on"><div class="photo-caption">// PROTOTYPE — POWERED ON — RELAY INDICATORS LIT, BMS ACTIVE</div></div>
-</div>
-</div>
-<div class="section">
-<div class="section-heading">// TFT Dashboard UI (ST7789V 135×240)</div>
-<img src="solar_tft_screens.svg" alt="TFT UI Screens" class="img-full" style="background:#000810;padding:1.5rem;">
-<div class="photo-caption" style="margin-bottom:2rem;">// 4-SCREEN UI — MAIN / STATUS / SETTINGS / SCREEN LOCK — TRON CYAN THEME</div>
-</div>
-<div class="section">
-<div class="section-heading">// PCB Design &amp; Schematic (KiCad)</div>
-<div class="photo-grid">
-<div class="photo-item"><img src="solar_pcb.png" alt="KiCad PCB Layout" style="object-fit:contain;background:#0a0e1a;"><div class="photo-caption">// KICAD PCB LAYOUT — BMS, XL4015, RELAY, ACS712 FOOTPRINTS</div></div>
-<div class="photo-item"><img src="solar_schematic.png" alt="KiCad Schematic" style="object-fit:contain;background:#f5f0e8;"><div class="photo-caption">// KICAD SCHEMATIC — FULL POWER PATH, SENSORS, MICROCONTROLLER</div></div>
-</div>
-</div>
-<div class="section">
-<div class="section-heading">// Enclosure Design (SolidWorks)</div>
-<div class="photo-grid">
-<div class="photo-item"><img src="solar_3d_top.png" alt="SolidWorks Enclosure — top" style="object-fit:contain;background:#d0d4dc;"><div class="photo-caption">// SOLIDWORKS — TOP VIEW — TFT CUTOUT, TOUCH BUTTONS, FAN INTAKE</div></div>
-<div class="photo-item"><img src="solar_3d_iso.png" alt="SolidWorks Enclosure — isometric" style="object-fit:contain;background:#d0d4dc;"><div class="photo-caption">// SOLIDWORKS — ISOMETRIC — VENTILATION GRILLE, CONNECTOR CUTOUTS, SPLIT-BODY DESIGN</div></div>
-</div>
-</div>
-<div class="section">
-<div class="section-heading">// Technology Stack</div>
-<table class="spec-table">
-<tr><th>Category</th><th>Details</th></tr>
-<tr><td>Microcontroller</td><td>ESP32-C3 SuperMini — RISC-V, 160MHz, 4MB Flash, WiFi 802.11 b/g/n</td></tr>
-<tr><td>Firmware</td><td>C++ / Arduino Framework, PlatformIO, LovyanGFX, WiFi AP Mode, WebServer</td></tr>
-<tr><td>PCB Design</td><td>KiCad — custom schematic with BMS, relay, ACS712, and buck converter footprints</td></tr>
-<tr><td>Enclosure</td><td>SolidWorks — split-body 3D enclosure with ventilation, fan intake, connector cutouts</td></tr>
-<tr><td>Display</td><td>ST7789V 1.14" TFT (135×240) — 3-screen UI via LovyanGFX over hardware SPI</td></tr>
-<tr><td>Current Sensor</td><td>ACS712-5A — Hall-effect on solar input line (GPIO0 ADC1), calibrated offset 0.661V</td></tr>
-<tr><td>Voltage Monitor</td><td>Resistor voltage divider — battery pack voltage (GPIO1 ADC1), empirical ratio 23.0</td></tr>
-<tr><td>Env Sensor</td><td>DHT22 — temperature and humidity (GPIO20), 2s boot stabilisation required</td></tr>
-<tr><td>Relays</td><td>2× relay modules — Relay 1: load control, Relay 2: charge control</td></tr>
-<tr><td>Touch Input</td><td>2× TTP223 capacitive buttons — short / long / double press detection</td></tr>
-<tr><td>Power</td><td>5W 12V solar + USB-C 5V → XL4015 boost to 12.6V, diode OR combining, 3S 18650 BMS</td></tr>
-<tr><td>Connectivity</td><td>WiFi AP Mode — SSID: SolarMonitor, IP: 192.168.4.1, no router required</td></tr>
-</table>
-</div>
-<div class="section">
-<div class="section-heading">// Engineering Challenges</div>
-<div class="challenge-list">
-<div class="challenge-block"><div class="challenge-title">01 — GPIO9 Strapping Pin / Fan PWM Unusable</div><p>GPIO9 on the ESP32-C3 is a strapping pin tied to boot mode selection — cannot be driven LOW as a software output. Three approaches attempted before confirming the hardware limitation.</p><div class="solution">→ SOLUTION: Physical slide switch on 5V fan power line.</div></div>
-<div class="challenge-block"><div class="challenge-title">02 — ADC1 Pin Shortage</div><p>Only ADC1 channels exposed on ESP32-C3 SuperMini. With GPIO0, GPIO1, and GPIO20 already assigned, no free ADC1 pin remained for solar voltage monitoring.</p><div class="solution">→ SOLUTION: Solar voltage mirrors battery in v1. ADS1115 I2C ADC planned for v2.</div></div>
-<div class="challenge-block"><div class="challenge-title">03 — Relay Boot Flicker</div><p>GPIO pins float briefly before Arduino init on power-up, causing momentary relay energisation.</p><div class="solution">→ SOLUTION: ESP-IDF gpio_reset_pin() → gpio_set_direction() → gpio_set_level() before Arduino pinMode().</div></div>
-<div class="challenge-block"><div class="challenge-title">04 — ACS712 Zero-Current Offset Drift</div><p>Initial calibration at 1.56V produced a consistent -1.77A reading at zero current due to supply and temperature variation.</p><div class="solution">→ SOLUTION: Raw ADC calibration at no-load — midpoint corrected to 0.661V. ±0.15A deadband filter added.</div></div>
-<div class="challenge-block"><div class="challenge-title">05 — Voltage Divider Ratio Miscalculation</div><p>Theoretical ratio of 4.03 incorrect due to resistor tolerance stack-up in the physical build.</p><div class="solution">→ SOLUTION: Empirical calibration against multimeter — true ratio corrected to 23.0.</div></div>
-<div class="challenge-block"><div class="challenge-title">06 — DHT22 NaN on First Read</div><p>Sensor consistently returned NaN — requires stabilisation period after power-on.</p><div class="solution">→ SOLUTION: 2-second delay between Serial.begin() and dht.begin() in setup().</div></div>
-<div class="challenge-block"><div class="challenge-title">07 — TFT Display Ghosting</div><p>Partial-screen refresh left residual pixels from previous renders when switching text sizes.</p><div class="solution">→ SOLUTION: Per-zone fillRect() clearing before each redraw instead of full-screen clear.</div></div>
-</div>
-</div>
-<div class="section">
-<div class="section-heading">// Results</div>
-<div class="results-grid">
-<div class="result-item">System fully operational — real-time monitoring of current, voltage, power, temperature, and humidity.</div>
-<div class="result-item">Web dashboard live at 192.168.4.1 — relay control from any device, no router required.</div>
-<div class="result-item">Relay automation confirmed — load disconnect below 10.5V, charge enable when solar exceeds battery.</div>
-<div class="result-item">ACS712 stable at 0.00A no-load. Battery voltage accurate to ±0.1V vs multimeter.</div>
-<div class="result-item">TFT smooth — no ghosting or flicker across 3-screen navigation. All touch gestures functional.</div>
-<div class="result-item">Enclosure designed in SolidWorks — split body for 3D printing, ventilation grille, all connector cutouts.</div>
-</div>
-</div>
-<footer>RMIT_ENGINEERING // PROJECT_04 // SMART_SOLAR_ENERGY_MONITOR // OPERATIONAL</footer>
+
+    <nav class="nav-bar">
+        <a href="index.html" class="nav-back">← RETURN_TO_DASHBOARD</a>
+        <div class="nav-siblings">
+            <a href="rover.html">CLEANING ROVER →</a>
+            <a href="monitoring.html">ROOM MONITOR →</a>
+        </div>
+    </nav>
+
+    <div class="project-label">Project [04] / Personal Build</div>
+    <h1>PROJECT:<br>SMART_SOLAR_ENERGY_MONITOR</h1>
+    <div class="status-row">
+        <span class="badge badge-done">✓ OPERATIONAL</span>
+        <span class="badge badge-type">EMBEDDED SYSTEMS</span>
+        <span class="badge badge-type">POWER ELECTRONICS</span>
+        <span class="badge badge-type">KiCad PCB</span>
+        <span class="badge badge-type">SolidWorks</span>
+        <span class="badge badge-type">IoT</span>
+    </div>
+
+    <!-- 01 -->
+    <div class="section">
+        <h2>01. Objective</h2>
+        <p>Design and build a fully functional solar energy monitoring and management system capable of real-time power measurement, automated relay control, environmental sensing, and live data visualisation — accessible from any device without a router.</p>
+        <p>The system targets the real-world challenge of small-scale solar integration: measuring solar input current and battery state, switching loads automatically based on voltage thresholds, and presenting all data on a local TFT display and WiFi web dashboard. Custom PCB designed in KiCad. Enclosure designed in SolidWorks.</p>
+    </div>
+
+    <!-- 02 -->
+    <div class="section">
+        <h2>02. Technology Used</h2>
+
+        <div class="tag-group">
+            <div class="tag-group-label">Microcontroller &amp; Software</div>
+            <div class="tech-tags">
+                <span class="tag">ESP32-C3 SuperMini (RISC-V, 160MHz, 4MB Flash)</span>
+                <span class="tag">PlatformIO</span>
+                <span class="tag">C++ / Arduino Framework</span>
+                <span class="tag">LovyanGFX</span>
+                <span class="tag">WiFi Access Point (AP Mode)</span>
+                <span class="tag">ESP-IDF GPIO Init</span>
+            </div>
+        </div>
+
+        <div class="tag-group">
+            <div class="tag-group-label">Sensors &amp; Display</div>
+            <div class="tech-tags">
+                <span class="tag">ACS712-5A Current Sensor (Hall-effect)</span>
+                <span class="tag">DHT22 Temperature &amp; Humidity</span>
+                <span class="tag">ST7789V 1.14" TFT (135×240)</span>
+                <span class="tag">2× TTP223 Capacitive Touch Buttons</span>
+                <span class="tag">Resistor Voltage Divider (Battery ADC)</span>
+            </div>
+        </div>
+
+        <div class="tag-group">
+            <div class="tag-group-label">Power &amp; Switching</div>
+            <div class="tech-tags">
+                <span class="tag">5W 12V Solar Panel</span>
+                <span class="tag">3S 18650 Li-ion Pack + BMS</span>
+                <span class="tag">XL4015 Buck Converter (Solar → 12.6V charge)</span>
+                <span class="tag">2× Relay Modules (Load &amp; Charge control)</span>
+                <span class="tag">Diode OR combining (Solar + USB-C)</span>
+            </div>
+        </div>
+
+        <div class="tag-group">
+            <div class="tag-group-label">PCB &amp; Mechanical Design</div>
+            <div class="tech-tags">
+                <span class="tag">KiCad (Schematic + PCB Layout)</span>
+                <span class="tag">SolidWorks (Split-body Enclosure)</span>
+                <span class="tag">FDM 3D Printing — PLA</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- 03 -->
+    <div class="section">
+        <h2>03. The Challenges</h2>
+
+        <p><b>Challenge 1 — GPIO9 Strapping Pin:</b> GPIO9 on the ESP32-C3 is a strapping pin tied to boot mode selection. Any attempt to drive it LOW as a software output leaves it permanently HIGH — three approaches attempted before confirming the hardware-level limitation.</p>
+
+        <p><b>Challenge 2 — ADC1 Pin Shortage:</b> The ESP32-C3 SuperMini exposes only ADC1 channels (ADC2 unsupported in Arduino framework). With GPIO0, GPIO1, and GPIO20 already assigned for current, voltage, and DHT22, no free ADC1 pin remained for an independent solar voltage rail.</p>
+
+        <p><b>Challenge 3 — Relay Boot Flicker:</b> GPIO pins float briefly before the Arduino framework initialises on power-up. This caused relay coils to momentarily energise on every boot cycle — activating loads at unpredictable states for a split second.</p>
+
+        <p><b>Challenge 4 — ACS712 Zero-Current Offset Drift:</b> The ACS712's nominal midpoint is 2.5V (half of 5V supply), but actual supply rail variation and temperature shift moved the real midpoint — causing a consistent -1.77A phantom reading at zero current with the theoretical calibration constant.</p>
+
+        <p><b>Challenge 5 — Voltage Divider Ratio Miscalculation:</b> Theoretical VDIV_RATIO of 4.03 (calculated from resistor values) produced significantly incorrect battery voltage readings due to resistor tolerance stack-up in the physical divider chain.</p>
+
+        <p><b>Challenge 6 — DHT22 NaN on First Read:</b> The DHT22 consistently returned NaN on first read after power-on — the sensor requires a stabilisation window after dht.begin() before its output is valid.</p>
+
+        <p><b>Challenge 7 — TFT Display Ghosting:</b> Partial-screen refresh without full fillScreen() left residual pixels from previous renders, especially when switching between numeric text widths on the main dashboard screen.</p>
+    </div>
+
+    <!-- 04 -->
+    <div class="section">
+        <h2>04. The Solutions</h2>
+
+        <p><b>GPIO9 / Fan Control — Hardware Bypass:</b></p>
+        <div class="attempt-grid">
+            <div class="attempt-card failed">
+                <div class="attempt-label">✗ Attempt 1 — Failed</div>
+                <p>Software PWM on GPIO9 for fan speed control</p>
+                <p>Outcome: Pin permanently HIGH — strapping function overrides software regardless of pinMode()</p>
+            </div>
+            <div class="attempt-card success">
+                <div class="attempt-label">✓ Solution — Final Build</div>
+                <p>Physical slide switch on 5V fan power line</p>
+                <p>Outcome: Fan control reliable, no GPIO constraint, zero boot risk</p>
+            </div>
+        </div>
+
+        <p><b>Relay Boot Flicker — ESP-IDF Init Sequence:</b></p>
+        <div class="code-block">
+<span class="comment">// Run BEFORE Arduino's setup() to lock relays LOW at power-on</span>
+<span class="label">STEP 1  </span>  gpio_reset_pin(<span class="value">RELAY1_PIN</span>)   <span class="comment">// clear any boot-state</span>
+<span class="label">STEP 2  </span>  gpio_set_direction(<span class="value">RELAY1_PIN</span>, GPIO_MODE_OUTPUT)
+<span class="label">STEP 3  </span>  gpio_set_level(<span class="value">RELAY1_PIN</span>, <span class="value">0</span>)   <span class="comment">// force LOW before Arduino init</span>
+<span class="comment">// Repeat for RELAY2_PIN — then Arduino pinMode() can follow safely</span>
+        </div>
+
+        <p><b>ACS712 Calibration — Empirical Midpoint:</b></p>
+        <div class="code-block">
+<span class="comment">// Theoretical midpoint fails due to supply &amp; temperature variance</span>
+<span class="label">THEORY  </span>  midpoint = <span class="value">2.5V</span>  →  raw ADC ≈ <span class="value">1241</span>  <span class="comment">// wrong</span>
+<span class="label">ACTUAL  </span>  midpoint = <span class="value">0.661V</span> →  raw ADC ≈ <span class="value">820</span>   <span class="comment">// measured at zero current</span>
+<span class="label">FORMULA </span>  current = (rawADC - <span class="value">820</span>) * (3.3 / 4095.0) / <span class="value">0.185</span>
+<span class="label">DEADBAND</span>  if abs(current) &lt; <span class="value">0.15</span>: current = <span class="value">0.00</span>   <span class="comment">// ±0.15A noise floor</span>
+        </div>
+
+        <p><b>Voltage Divider — Empirical Ratio:</b></p>
+        <div class="code-block">
+<span class="comment">// Resistor tolerance stack-up invalidates theoretical ratio</span>
+<span class="label">THEORY  </span>  VDIV_RATIO = <span class="value">4.03</span>   <span class="comment">// R1+R2 / R2 — calculated</span>
+<span class="label">ACTUAL  </span>  VDIV_RATIO = <span class="value">23.0</span>   <span class="comment">// calibrated against multimeter reference</span>
+<span class="label">FORMULA </span>  battV = (rawADC / <span class="value">4095.0</span>) * <span class="value">3.3</span> * <span class="value">23.0</span>
+        </div>
+
+        <p><b>DHT22 Stabilisation &amp; TFT Anti-Ghosting:</b> A 2-second delay inserted between Serial.begin() and dht.begin() in setup() eliminates the NaN first read. For the TFT, per-zone fillRect() clearing before each redraw targets only dirty regions — eliminating ghosting without the full-screen black flash of fillScreen().</p>
+
+        <p><b>Power Architecture — Relay Logic:</b></p>
+        <div class="code-block">
+<span class="comment">// Dual relay automation thresholds</span>
+<span class="label">SOURCE  </span>  5W 12V Solar Panel + USB-C 5V → XL4015 boost → <span class="value">12.6V</span> charge rail
+<span class="label">BATTERY </span>  3S 18650 Li-ion [<span class="value">9.0V</span> min → <span class="value">12.6V</span> max] — BMS protected
+<span class="label">RELAY 1 </span>  Load control  — OFF when battV &lt; <span class="value">10.5V</span>  (protect from overdischarge)
+<span class="label">RELAY 2 </span>  Charge control — ON  when solarV &gt; battV  (enable charging)
+<span class="label">WiFi    </span>  AP Mode — SSID: <span class="value">SolarMonitor</span>  IP: <span class="value">192.168.4.1</span>  (no router required)
+        </div>
+    </div>
+
+    <!-- 05 -->
+    <div class="section">
+        <h2>05. GPIO Pin Allocation</h2>
+        <table class="pin-table">
+            <thead>
+                <tr><th>GPIO</th><th>Function</th><th>Component</th></tr>
+            </thead>
+            <tbody>
+                <tr><td class="gpio">0</td><td class="func">Current Sense (ADC1)</td><td>ACS712-5A — solar input line</td></tr>
+                <tr><td class="gpio">1</td><td class="func">Battery Voltage (ADC1)</td><td>Resistor Divider (R1=100kΩ, R2=10kΩ)</td></tr>
+                <tr><td class="gpio">2</td><td class="func">Relay 1 — Load Control</td><td>Relay Module (active HIGH)</td></tr>
+                <tr><td class="gpio">3</td><td class="func">Relay 2 — Charge Control</td><td>Relay Module (active HIGH)</td></tr>
+                <tr><td class="gpio">4</td><td class="func">TFT DC</td><td>ST7789V SPI</td></tr>
+                <tr><td class="gpio">5</td><td class="func">TFT CS</td><td>ST7789V SPI</td></tr>
+                <tr><td class="gpio">6</td><td class="func">SPI CLK</td><td>ST7789V SPI</td></tr>
+                <tr><td class="gpio">7</td><td class="func">SPI MOSI</td><td>ST7789V SPI</td></tr>
+                <tr><td class="gpio">8</td><td class="func">TFT RST</td><td>ST7789V SPI</td></tr>
+                <tr><td class="gpio">10</td><td class="func">Touch Button T1</td><td>TTP223 — screen nav / short press</td></tr>
+                <tr><td class="gpio">20</td><td class="func">DHT22 Data</td><td>DHT22 — temp &amp; humidity</td></tr>
+                <tr><td class="gpio">21</td><td class="func">Touch Button T2</td><td>TTP223 — screen nav / long press unlock</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- 06 -->
+    <div class="section">
+        <h2>06. TFT Dashboard UI (ST7789V 135×240)</h2>
+        <p>3-screen navigation system with screen lock. Touch T1 to cycle screens. Long-press T2 to unlock from the lock screen. All screens share the same Tron Cyan theme over a deep navy background.</p>
+        <div class="tft-wrap">
+            <img src="solar_tft_screens.svg" alt="TFT UI — all 4 screens" style="width:100%; height:auto; display:block;">
+        </div>
+        <div style="font-family: var(--font-mono); font-size: 0.72rem; color: var(--muted); margin-top: 0.75rem; text-align: center;">
+            MAIN / STATUS / SETTINGS / SCREEN LOCK — rendered at 135×240 ST7789V resolution
+        </div>
+    </div>
+
+    <!-- 07 -->
+    <div class="section">
+        <h2>07. PCB Design &amp; Schematic (KiCad)</h2>
+        <div class="gallery-grid">
+            <figure>
+                <img src="solar_pcb.png" alt="KiCad PCB Layout" style="object-fit: contain; background: #0a0e1a; height: 220px;">
+                <figcaption>PCB layout — BMS, XL4015, relay, ACS712 footprints</figcaption>
+            </figure>
+            <figure>
+                <img src="solar_schematic.png" alt="KiCad Schematic" style="object-fit: contain; background: #f5f0e8; height: 220px;">
+                <figcaption>Full schematic — power path, sensors, ESP32-C3</figcaption>
+            </figure>
+        </div>
+    </div>
+
+    <!-- 08 -->
+    <div class="section">
+        <h2>08. Enclosure Design (SolidWorks)</h2>
+        <div class="gallery-grid">
+            <figure>
+                <img src="solar_3d_top.png" alt="SolidWorks — top view" style="object-fit: contain; background: #d0d4dc; height: 220px;">
+                <figcaption>Top view — TFT cutout, touch buttons, fan intake</figcaption>
+            </figure>
+            <figure>
+                <img src="solar_3d_iso.png" alt="SolidWorks — isometric" style="object-fit: contain; background: #d0d4dc; height: 220px;">
+                <figcaption>Isometric — ventilation grille, connector cutouts, split-body</figcaption>
+            </figure>
+        </div>
+    </div>
+
+    <!-- 09 -->
+    <div class="section">
+        <h2>09. Results</h2>
+        <div class="result-box">
+            <p>✅ System fully operational — real-time current, voltage, power, temperature, and humidity on TFT and web dashboard.</p>
+            <p>✅ ACS712 stable at <b>0.00A</b> no-load after empirical calibration. Battery voltage accurate to ±0.1V against multimeter.</p>
+            <p>✅ Relay automation confirmed — load disconnects below 10.5V, charge enables when solar exceeds battery voltage.</p>
+            <p>✅ WiFi web dashboard live at <b>192.168.4.1</b> — relay toggle and live sensor data, no router required.</p>
+            <p>✅ TFT smooth across all 3 screens — no ghosting or flicker. Touch gestures (short / long / double press) all functional.</p>
+            <p>✅ KiCad PCB layout completed with BMS, relay, XL4015, and ACS712 footprints. SolidWorks enclosure fully modelled.</p>
+        </div>
+    </div>
+
+    <!-- 10 -->
+    <div class="section">
+        <h2>10. Lessons Learned</h2>
+
+        <div class="lesson-box">
+            <div class="lesson-label">Always Check Strapping Pins Before GPIO Assignment</div>
+            <p>GPIO9 on the ESP32-C3 cannot be used as a general output — the boot-mode strapping function takes hardware priority. Consulting the chip's Technical Reference Manual before pin assignment would have saved multiple failed iterations.</p>
+        </div>
+
+        <div class="lesson-box">
+            <div class="lesson-label">Calibrate Sensors Empirically, Not Theoretically</div>
+            <p>Both the ACS712 and the voltage divider produced incorrect readings from their theoretical values. Real-world resistor tolerance and supply variation shift calibration constants significantly. Always measure at known reference conditions and work backwards to the actual constant.</p>
+        </div>
+
+        <div class="lesson-box">
+            <div class="lesson-label">Relay Boot State Requires Hardware-Level Init</div>
+            <p>Arduino's setup() runs too late to prevent relay flicker on power-up. ESP-IDF GPIO calls (gpio_reset_pin → gpio_set_direction → gpio_set_level) execute before the Arduino layer and are the correct fix. Learned that safety-critical outputs need initialisation at the lowest available layer.</p>
+        </div>
+
+        <div class="lesson-box">
+            <div class="lesson-label">Targeted Refresh Beats Full-Screen Clear</div>
+            <p>fillScreen() eliminates ghosting but causes a visible black flash on every update cycle. fillRect() targeting only the dirty region is the professional approach — zero visual artifact, same result. This pattern applies to any embedded UI with partial state updates.</p>
+        </div>
+
+        <div class="lesson-box">
+            <div class="lesson-label">Plan ADC Pin Budget Early in Hardware Design</div>
+            <p>The ESP32-C3 SuperMini's limited ADC1 exposure forced a compromise — solar voltage mirrors battery voltage in v1 because no free ADC pin remained. This is a hardware planning failure. Next revision will include an ADS1115 I2C ADC module for independent multi-channel voltage monitoring.</p>
+        </div>
+    </div>
+
+    <!-- 11 -->
+    <div class="section">
+        <h2>11. Build Gallery</h2>
+        <div class="gallery-grid">
+            <figure>
+                <img src="solar_build_1.jpeg" alt="Solar Monitor — top view">
+                <figcaption>Prototype — top view — ESP32-C3, relays, BMS</figcaption>
+            </figure>
+            <figure>
+                <img src="solar_build_2.jpeg" alt="Solar Monitor — powered on">
+                <figcaption>Prototype — powered on — relay indicators lit</figcaption>
+            </figure>
+        </div>
+    </div>
+
+    <!-- 12 -->
+    <div class="section">
+        <h2>12. Source Code</h2>
+        <p>Full firmware, KiCad schematics, PCB files, and SolidWorks enclosure available on GitHub.</p>
+        <a href="https://github.com/Sam2001115" class="github-link" target="_blank">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/>
+            </svg>
+            github.com/Sam2001115
+        </a>
+    </div>
+
+    <div class="footer-nav">
+        <a href="index.html">← DASHBOARD</a>
+        <a href="rover.html">NEXT: CLEANING ROVER →</a>
+    </div>
+
 </div>
 </body>
 </html>
