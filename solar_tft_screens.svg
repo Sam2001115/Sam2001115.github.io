@@ -1,0 +1,111 @@
+<svg viewBox="0 0 620 310" xmlns="http://www.w3.org/2000/svg">
+
+<!-- Screen 1: MAIN -->
+<g transform="translate(10,10)">
+  <rect width="135" height="240" rx="6" fill="#000810" stroke="#00ffff" stroke-width="1.5"/>
+  <rect width="135" height="20" fill="#0a1a2a"/>
+  <line x1="0" y1="20" x2="135" y2="20" stroke="#00ffff" stroke-width="0.8"/>
+  <text x="67" y="13" text-anchor="middle" font-family="monospace" font-size="7" fill="#00ffff">SLR MON V2</text>
+  <text x="6" y="32" font-family="monospace" font-size="5.5" fill="#1a5a5a">SOLAR INPUT</text>
+  <text x="72" y="32" font-family="monospace" font-size="5.5" fill="#1a5a5a">PACK VOLT</text>
+  <text x="6" y="46" font-family="monospace" font-size="12" font-weight="bold" fill="#00ffff">0.0V</text>
+  <text x="72" y="46" font-family="monospace" font-size="12" font-weight="bold" fill="#00ff88">11.7V</text>
+  <line x1="6" y1="52" x2="129" y2="52" stroke="#0a2a2a" stroke-width="0.5"/>
+  <text x="6" y="61" font-family="monospace" font-size="5.5" fill="#1a5a5a">AMPERAGE</text>
+  <text x="72" y="61" font-family="monospace" font-size="5.5" fill="#1a5a5a">OUTPUT PWR</text>
+  <text x="6" y="75" font-family="monospace" font-size="12" font-weight="bold" fill="#00ffff">0.00A</text>
+  <text x="72" y="75" font-family="monospace" font-size="12" font-weight="bold" fill="#ff8840">0.0W</text>
+  <line x1="6" y1="81" x2="129" y2="81" stroke="#0a2a2a" stroke-width="0.5"/>
+  <text x="6" y="90" font-family="monospace" font-size="5.5" fill="#1a5a5a">TEMP</text>
+  <text x="72" y="90" font-family="monospace" font-size="5.5" fill="#1a5a5a">HUMID</text>
+  <text x="6" y="104" font-family="monospace" font-size="12" font-weight="bold" fill="#ff4488">17.4C</text>
+  <text x="72" y="104" font-family="monospace" font-size="12" font-weight="bold" fill="#00ffff">72%</text>
+  <line x1="6" y1="110" x2="129" y2="110" stroke="#0a2a2a" stroke-width="0.5"/>
+  <text x="6" y="119" font-family="monospace" font-size="5.5" fill="#1a5a5a">CHARGE</text>
+  <text x="100" y="119" font-family="monospace" font-size="5.5" fill="#1a5a5a">53%</text>
+  <rect x="6" y="122" width="123" height="4" fill="#0a2a2a"/>
+  <rect x="6" y="122" width="65" height="4" fill="#00ffff"/>
+  <text x="6" y="136" font-family="monospace" font-size="6" fill="#00ffff">FAN AUTO</text>
+  <line x1="0" y1="218" x2="135" y2="218" stroke="#00ffff" stroke-width="0.8"/>
+  <rect x="2" y="220" width="63" height="17" fill="#0a1a2a"/>
+  <rect x="70" y="220" width="63" height="17" fill="#000810"/>
+  <text x="33" y="231" text-anchor="middle" font-family="monospace" font-size="6" fill="#00ffff">STATUS</text>
+  <text x="101" y="231" text-anchor="middle" font-family="monospace" font-size="6" fill="#1a5a5a">SETTINGS</text>
+  <text x="67" y="255" text-anchor="middle" font-family="monospace" font-size="7" fill="#555">MAIN</text>
+</g>
+
+<!-- Screen 2: STATUS -->
+<g transform="translate(165,10)">
+  <rect width="135" height="240" rx="6" fill="#000810" stroke="#00ffff" stroke-width="1.5"/>
+  <rect width="135" height="20" fill="#0a1a2a"/>
+  <line x1="0" y1="20" x2="135" y2="20" stroke="#00ffff" stroke-width="0.8"/>
+  <text x="67" y="13" text-anchor="middle" font-family="monospace" font-size="7" fill="#00ffff">STATUS</text>
+  <text x="8" y="32" font-family="monospace" font-size="5.5" fill="#1a5a5a">RELAY 1</text>
+  <rect x="8" y="35" width="119" height="26" rx="3" fill="#003300"/>
+  <text x="16" y="52" font-family="monospace" font-size="11" font-weight="bold" fill="#00ff88">ON</text>
+  <rect x="90" y="40" width="32" height="14" rx="7" fill="#00ff88"/>
+  <circle cx="113" cy="47" r="5" fill="#ffffff"/>
+  <text x="8" y="70" font-family="monospace" font-size="5.5" fill="#1a5a5a">RELAY 2</text>
+  <rect x="8" y="73" width="119" height="26" rx="3" fill="#003300"/>
+  <text x="16" y="90" font-family="monospace" font-size="11" font-weight="bold" fill="#00ff88">ON</text>
+  <rect x="90" y="78" width="32" height="14" rx="7" fill="#00ff88"/>
+  <circle cx="113" cy="85" r="5" fill="#ffffff"/>
+  <text x="8" y="108" font-family="monospace" font-size="5.5" fill="#1a5a5a">BATTERY</text>
+  <rect x="8" y="112" width="119" height="9" fill="#0a2a2a"/>
+  <rect x="8" y="112" width="63" height="9" fill="#00ff88"/>
+  <text x="107" y="120" font-family="monospace" font-size="5.5" fill="#00ff88">53%</text>
+  <line x1="8" y1="128" x2="127" y2="128" stroke="#0a2a2a" stroke-width="0.5"/>
+  <text x="8" y="137" font-family="monospace" font-size="5.5" fill="#1a5a5a">TEMP</text>
+  <text x="78" y="137" font-family="monospace" font-size="5.5" fill="#1a5a5a">UPTIME</text>
+  <text x="8" y="149" font-family="monospace" font-size="7" fill="#ff4488">17.4C</text>
+  <text x="78" y="149" font-family="monospace" font-size="7" fill="#1a5a5a">00:12:34</text>
+  <line x1="0" y1="218" x2="135" y2="218" stroke="#00ffff" stroke-width="0.8"/>
+  <rect x="2" y="220" width="63" height="17" fill="#0a1a2a"/>
+  <rect x="70" y="220" width="63" height="17" fill="#000810"/>
+  <text x="33" y="231" text-anchor="middle" font-family="monospace" font-size="6" fill="#00ffff">MAIN</text>
+  <text x="101" y="231" text-anchor="middle" font-family="monospace" font-size="6" fill="#1a5a5a">SETTINGS</text>
+  <text x="67" y="255" text-anchor="middle" font-family="monospace" font-size="7" fill="#555">STATUS</text>
+</g>
+
+<!-- Screen 3: SETTINGS -->
+<g transform="translate(320,10)">
+  <rect width="135" height="240" rx="6" fill="#000810" stroke="#00ffff" stroke-width="1.5"/>
+  <rect width="135" height="20" fill="#0a1a2a"/>
+  <line x1="0" y1="20" x2="135" y2="20" stroke="#00ffff" stroke-width="0.8"/>
+  <text x="67" y="13" text-anchor="middle" font-family="monospace" font-size="7" fill="#00ffff">SETTINGS</text>
+  <text x="8" y="32" font-family="monospace" font-size="5.5" fill="#1a5a5a">RELAY 1 MODE</text>
+  <rect x="8" y="35" width="119" height="16" rx="2" fill="#0a1a2a"/>
+  <text x="67" y="46" text-anchor="middle" font-family="monospace" font-size="6" fill="#00ffff">AUTO</text>
+  <text x="8" y="60" font-family="monospace" font-size="5.5" fill="#1a5a5a">RELAY 2 MODE</text>
+  <rect x="8" y="63" width="119" height="16" rx="2" fill="#0a1a2a"/>
+  <text x="67" y="74" text-anchor="middle" font-family="monospace" font-size="6" fill="#00ffff">AUTO</text>
+  <text x="8" y="88" font-family="monospace" font-size="5.5" fill="#1a5a5a">FAN MODE</text>
+  <rect x="8" y="91" width="119" height="16" rx="2" fill="#0a1a2a"/>
+  <text x="67" y="102" text-anchor="middle" font-family="monospace" font-size="6" fill="#00ffff">AUTO</text>
+  <text x="8" y="116" font-family="monospace" font-size="5.5" fill="#1a5a5a">WIFI AP: SolarMonitor</text>
+  <text x="8" y="128" font-family="monospace" font-size="5.5" fill="#1a5a5a">IP: 192.168.4.1</text>
+  <text x="8" y="140" font-family="monospace" font-size="5.5" fill="#ff4444">NO CLIENT</text>
+  <line x1="0" y1="218" x2="135" y2="218" stroke="#00ffff" stroke-width="0.8"/>
+  <rect x="2" y="220" width="63" height="17" fill="#0a1a2a"/>
+  <rect x="70" y="220" width="63" height="17" fill="#000810"/>
+  <text x="33" y="231" text-anchor="middle" font-family="monospace" font-size="6" fill="#00ffff">MAIN</text>
+  <text x="101" y="231" text-anchor="middle" font-family="monospace" font-size="6" fill="#1a5a5a">STATUS</text>
+  <text x="67" y="255" text-anchor="middle" font-family="monospace" font-size="7" fill="#555">SETTINGS</text>
+</g>
+
+<!-- Screen 4: LOCKED -->
+<g transform="translate(475,10)">
+  <rect width="135" height="240" rx="6" fill="#000810" stroke="#00ffff" stroke-width="1.5"/>
+  <rect width="135" height="20" fill="#0a1a2a"/>
+  <line x1="0" y1="20" x2="135" y2="20" stroke="#00ffff" stroke-width="0.8"/>
+  <text x="67" y="13" text-anchor="middle" font-family="monospace" font-size="6" fill="#ff4444">SCREEN LOCKED</text>
+  <rect x="54" y="70" width="27" height="20" rx="3" fill="#1a1a1a" stroke="#ff4444" stroke-width="1"/>
+  <path d="M59 70 Q67 55 75 70" fill="none" stroke="#ff4444" stroke-width="1.5"/>
+  <circle cx="67" cy="81" r="3" fill="#ff4444"/>
+  <text x="67" y="115" text-anchor="middle" font-family="monospace" font-size="5.5" fill="#1a5a5a">Long press T2</text>
+  <text x="67" y="126" text-anchor="middle" font-family="monospace" font-size="5.5" fill="#1a5a5a">to unlock</text>
+  <text x="67" y="255" text-anchor="middle" font-family="monospace" font-size="7" fill="#555">SCREEN LOCK</text>
+</g>
+
+<text x="310" y="295" text-anchor="middle" font-family="monospace" font-size="8" fill="#444">Smart Solar Energy Monitor — TFT UI (135x240 ST7789V) — Tron Cyan Theme</text>
+</svg>
