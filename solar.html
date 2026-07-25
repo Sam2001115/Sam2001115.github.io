@@ -67,6 +67,138 @@ footer{margin-top:2rem;border-top:1px solid var(--border);padding:2rem 0 0;color
 <div class="section-heading">// Demo Video</div>
 <div class="video-wrap">
 <video controls preload="metadata">
+<source src="website%20video%20.mp4" type="video/mp4">
+Your browser does not support the video tag.
+</video>
+</div>
+<div class="photo-caption">// LIVE DEMO - TFT SCREEN NAVIGATION, RELAY SWITCHING, WIFI DASHBOARD</div>
+</div>
+<div class="section">
+<div class="section-heading">// TFT Dashboard UI (ST7789V 135x240)</div>
+<img src="solar_tft_screens.svg" alt="TFT UI Screens" class="img-full" style="background:#000810;padding:1.5rem;">
+<div class="photo-caption" style="margin-bottom:2rem;">// 4-SCREEN UI - MAIN / STATUS / SETTINGS / SCREEN LOCK</div>
+</div>
+<div class="section">
+<div class="section-heading">// PCB Design and Schematic (KiCad)</div>
+<div class="photo-grid">
+<div class="photo-item"><img src="solar_pcb.png" alt="KiCad PCB Layout" style="object-fit:contain;background:#0a0e1a;"><div class="photo-caption">// KICAD PCB LAYOUT</div></div>
+<div class="photo-item"><img src="solar_schematic.png" alt="KiCad Schematic" style="object-fit:contain;background:#f5f0e8;"><div class="photo-caption">// KICAD SCHEMATIC</div></div>
+</div>
+</div>
+<div class="section">
+<div class="section-heading">// Enclosure Design (SolidWorks)</div>
+<div class="photo-grid">
+<div class="photo-item"><img src="solar_3d_top.png" alt="SolidWorks Enclosure top" style="object-fit:contain;background:#d0d4dc;"><div class="photo-caption">// SOLIDWORKS TOP VIEW</div></div>
+<div class="photo-item"><img src="solar_3d_iso.png" alt="SolidWorks Enclosure isometric" style="object-fit:contain;background:#d0d4dc;"><div class="photo-caption">// SOLIDWORKS ISOMETRIC</div></div>
+</div>
+</div>
+<div class="section">
+<div class="section-heading">// Technology Stack</div>
+<table class="spec-table">
+<tr><th>Category</th><th>Details</th></tr>
+<tr><td>Microcontroller</td><td>ESP32-C3 SuperMini - RISC-V, 160MHz, 4MB Flash, WiFi 802.11 b/g/n</td></tr>
+<tr><td>Firmware</td><td>C++ / Arduino Framework, PlatformIO, LovyanGFX, WiFi AP Mode, WebServer</td></tr>
+<tr><td>Display</td><td>ST7789V 1.14 inch TFT (135x240) - 3-screen UI via LovyanGFX over hardware SPI</td></tr>
+<tr><td>Current Sensor</td><td>ACS712-5A Hall-effect on solar input line, calibrated offset 0.661V</td></tr>
+<tr><td>Voltage Monitor</td><td>Resistor voltage divider, battery pack voltage, empirical ratio 23.0</td></tr>
+<tr><td>Env Sensor</td><td>DHT22 temperature and humidity, 2s boot stabilisation required</td></tr>
+<tr><td>Relays</td><td>2x relay modules - Relay 1: load control, Relay 2: charge control</td></tr>
+<tr><td>Power</td><td>5W 12V solar + USB-C 5V, XL4015 boost to 12.6V, 3S 18650 BMS</td></tr>
+<tr><td>Connectivity</td><td>WiFi AP Mode - SSID: SolarMonitor, IP: 192.168.4.1, no router required</td></tr>
+</table>
+</div>
+<div class="section">
+<div class="section-heading">// Engineering Challenges</div>
+<div class="challenge-list">
+<div class="challenge-block"><div class="challenge-title">01 - GPIO9 Strapping Pin Unusable</div><p>GPIO9 is a strapping pin tied to boot mode - cannot be driven LOW as software output.</p><div class="solution">SOLUTION: Physical slide switch on 5V fan power line.</div></div>
+<div class="challenge-block"><div class="challenge-title">02 - ADC1 Pin Shortage</div><p>Only ADC1 channels exposed on ESP32-C3 SuperMini. No free ADC1 pin for solar voltage.</p><div class="solution">SOLUTION: ADS1115 I2C ADC planned for v2.</div></div>
+<div class="challenge-block"><div class="challenge-title">03 - Relay Boot Flicker</div><p>GPIO pins float briefly before Arduino init, causing momentary relay energisation.</p><div class="solution">SOLUTION: ESP-IDF gpio_reset_pin before Arduino pinMode.</div></div>
+<div class="challenge-block"><div class="challenge-title">04 - ACS712 Zero-Current Offset Drift</div><p>Consistent -1.77A reading at zero current due to supply variation.</p><div class="solution">SOLUTION: Midpoint corrected to 0.661V with deadband filter.</div></div>
+<div class="challenge-block"><div class="challenge-title">05 - DHT22 NaN on First Read</div><p>Sensor returns NaN without stabilisation period after power-on.</p><div class="solution">SOLUTION: 2-second delay between Serial.begin and dht.begin.</div></div>
+</div>
+</div>
+<div class="section">
+<div class="section-heading">// Results</div>
+<div class="results-grid">
+<div class="result-item">Real-time monitoring of current, voltage, power, temperature, and humidity.</div>
+<div class="result-item">Web dashboard live at 192.168.4.1 - relay control from any device, no router required.</div>
+<div class="result-item">Relay automation confirmed - load disconnect below 10.5V.</div>
+<div class="result-item">ACS712 stable at 0.00A no-load. Battery voltage accurate to 0.1V.</div>
+<div class="result-item">TFT smooth - no ghosting across 3-screen navigation. All touch gestures functional.</div>
+</div>
+</div>
+<footer>RMIT ENGINEERING // SMART SOLAR ENERGY MONITOR // OPERATIONAL</footer>
+</div>
+</body>
+</html><!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Smart Solar Energy Monitor | Sameer Appasa</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--background:#050505;--foreground:#fafafa;--primary:#4169E1;--card:#0d0d0d;--border:#1f1f1f;--font-mono:'Space Mono',monospace;--font-sans:'Syne',sans-serif;--status-done:#00ffcc;--muted:#888}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background-color:var(--background);color:var(--foreground);font-family:var(--font-sans);line-height:1.7;overflow-x:hidden}
+body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(65,105,225,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(65,105,225,0.03) 1px,transparent 1px);background-size:40px 40px;pointer-events:none;z-index:0}
+.container{max-width:1000px;margin:0 auto;padding:4rem 2rem 6rem;position:relative;z-index:1}
+.back-link{font-family:var(--font-mono);font-size:0.78rem;color:var(--primary);text-decoration:none;letter-spacing:0.08em;display:inline-block;margin-bottom:2.5rem;border-bottom:1px solid transparent;transition:border-color 0.2s}
+.back-link:hover{border-bottom-color:var(--primary)}
+.project-header{margin-bottom:3rem;padding-bottom:2rem;border-bottom:1px solid var(--border)}
+.project-index{font-family:var(--font-mono);font-size:0.68rem;color:var(--muted);letter-spacing:0.14em;text-transform:uppercase;margin-bottom:0.75rem}
+.project-title{font-family:var(--font-mono);font-size:clamp(1.6rem,5vw,2.8rem);font-weight:700;color:var(--primary);letter-spacing:-0.02em;line-height:1.1;margin-bottom:1rem}
+.status-badge{display:inline-block;font-family:var(--font-mono);font-size:0.7rem;color:var(--status-done);border:1px solid var(--status-done);padding:0.25rem 0.75rem;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:1.25rem}
+.tag-row{display:flex;flex-wrap:wrap;gap:0.4rem}
+.tag{font-family:var(--font-mono);font-size:0.68rem;color:var(--primary);border:1px solid var(--border);padding:0.2rem 0.55rem;background:#0f0f0f}
+.section-heading{font-family:var(--font-mono);font-size:0.78rem;color:var(--primary);text-transform:uppercase;letter-spacing:0.14em;margin-bottom:1.25rem;border-left:3px solid var(--primary);padding-left:1rem}
+.section{margin-bottom:3rem}
+.objective-box{background:var(--card);border:1px solid var(--border);border-left:3px solid var(--primary);padding:1.5rem 1.75rem;color:#ccc;font-size:0.96rem;line-height:1.75;margin-bottom:3rem}
+.photo-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1rem;margin-bottom:3rem}
+.photo-grid img{width:100%;height:260px;object-fit:cover;border:1px solid var(--border);display:block;transition:border-color 0.25s}
+.photo-grid img:hover{border-color:var(--primary)}
+.photo-caption{font-family:var(--font-mono);font-size:0.68rem;color:var(--muted);margin-top:0.4rem;letter-spacing:0.05em}
+.photo-item{display:flex;flex-direction:column}
+.img-full{width:100%;border:1px solid var(--border);display:block;margin-bottom:0.5rem}
+.video-wrap{width:100%;border:1px solid var(--border);background:#000;display:block;margin-bottom:0.5rem}
+.video-wrap video{width:100%;display:block;max-height:560px}
+.spec-table{width:100%;border-collapse:collapse;font-family:var(--font-mono);font-size:0.8rem;margin-bottom:2rem}
+.spec-table th{text-align:left;color:var(--primary);border-bottom:1px solid var(--border);padding:0.5rem 1rem 0.5rem 0;font-size:0.7rem;letter-spacing:0.08em;text-transform:uppercase}
+.spec-table td{padding:0.55rem 1rem 0.55rem 0;color:#ccc;border-bottom:1px solid #111;vertical-align:top}
+.spec-table td:first-child{color:var(--muted);white-space:nowrap;padding-right:2rem}
+.challenge-list{display:flex;flex-direction:column;gap:1rem}
+.challenge-block{background:var(--card);border:1px solid var(--border);border-left:3px solid var(--primary);padding:1.25rem 1.5rem}
+.challenge-title{font-family:var(--font-mono);font-size:0.82rem;color:var(--primary);font-weight:700;margin-bottom:0.5rem;letter-spacing:0.05em}
+.challenge-block p{color:#aaa;font-size:0.9rem;line-height:1.65}
+.challenge-block .solution{margin-top:0.5rem;color:var(--status-done);font-size:0.88rem;font-family:var(--font-mono)}
+.results-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem}
+.result-item{background:var(--card);border:1px solid var(--border);border-top:3px solid var(--status-done);padding:1.25rem;font-family:var(--font-mono);font-size:0.82rem;color:#ccc;line-height:1.5}
+footer{margin-top:2rem;border-top:1px solid var(--border);padding:2rem 0 0;color:var(--muted);font-family:var(--font-mono);font-size:0.75rem;letter-spacing:0.06em}
+</style>
+</head>
+<body>
+<div class="container">
+<a href="index.html" class="back-link">BACK TO PORTFOLIO</a>
+<div class="project-header">
+<div class="project-index">PROJECT [04] / PERSONAL BUILD</div>
+<div class="project-title">Smart Solar Energy Monitor</div>
+<div class="status-badge">OPERATIONAL</div>
+<div class="tag-row">
+<span class="tag">ESP32-C3</span><span class="tag">KiCad PCB</span><span class="tag">SolidWorks</span><span class="tag">ACS712</span><span class="tag">DHT22</span><span class="tag">ST7789 TFT</span><span class="tag">Relay Automation</span><span class="tag">WiFi AP</span><span class="tag">Solar</span><span class="tag">3S BMS</span><span class="tag">IoT</span>
+</div>
+</div>
+<div class="objective-box">Design and build a fully functional solar energy monitoring and management system capable of real-time power measurement, automated relay control, environmental sensing, and live data visualisation accessible from any device without a router.</div>
+<div class="section">
+<div class="section-heading">// Build Photos</div>
+<div class="photo-grid">
+<div class="photo-item"><img src="solar_build_1.jpeg" alt="Solar Monitor Build top view"><div class="photo-caption">// PROTOTYPE TOP VIEW</div></div>
+<div class="photo-item"><img src="solar_build_2.jpeg" alt="Solar Monitor Build powered on"><div class="photo-caption">// PROTOTYPE POWERED ON</div></div>
+</div>
+</div>
+<div class="section">
+<div class="section-heading">// Demo Video</div>
+<div class="video-wrap">
+<video controls preload="metadata">
 <source src="solar_demo.mp4" type="video/mp4">
 Your browser does not support the video tag.
 </video>
