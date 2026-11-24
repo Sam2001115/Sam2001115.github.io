@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Buck Converter PCB — Engineering Design 2 | Sameer Appasa</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#07091a;--fg:#fafafa;--primary:#22c55e;--primary-dim:rgba(34,197,94,0.13);--border:rgba(255,255,255,0.1);--font-mono:'Space Mono',monospace;--font-sans:'Syne',sans-serif;--status-done:#00ffcc;--muted:rgba(255,255,255,0.4)}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--fg);font-family:var(--font-sans);line-height:1.7;overflow-x:hidden}
+body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(34,197,94,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(34,197,94,0.03) 1px,transparent 1px);background-size:40px 40px;pointer-events:none;z-index:0}
+.container{max-width:900px;margin:0 auto;padding:3rem 2rem 6rem;position:relative;z-index:1}
+.nav-bar{display:flex;justify-content:space-between;align-items:center;margin-bottom:3rem;padding-bottom:1rem;border-bottom:1px solid var(--border)}
+.nav-back{font-family:var(--font-mono);font-size:0.8rem;color:var(--primary);text-decoration:none;transition:opacity 0.2s}
+.nav-back:hover{opacity:0.7}
+.nav-siblings{display:flex;gap:1.2rem}
+.nav-siblings a{font-family:var(--font-mono);font-size:0.68rem;color:var(--muted);text-decoration:none;transition:color 0.2s}
+.nav-siblings a:hover{color:var(--primary)}
+.project-label{font-family:var(--font-mono);font-size:0.75rem;color:var(--muted);letter-spacing:0.15em;text-transform:uppercase;margin-bottom:0.75rem}
+h1{font-family:var(--font-mono);font-size:clamp(1.8rem,5vw,2.8rem);color:var(--primary);letter-spacing:-0.02em;line-height:1.1;margin-bottom:1.5rem}
+.status-row{display:flex;gap:0.75rem;flex-wrap:wrap;margin-bottom:3.5rem}
+.badge{font-family:var(--font-mono);font-size:0.72rem;padding:0.3rem 0.75rem;border-radius:2px;letter-spacing:0.05em}
+.badge-done{background:rgba(0,255,204,0.08);border:1px solid var(--status-done);color:var(--status-done)}
+.badge-type{background:var(--primary-dim);border:1px solid var(--primary);color:var(--primary)}
+.section{margin-bottom:4rem}
+.section h2{font-family:var(--font-mono);font-size:0.8rem;color:var(--primary);text-transform:uppercase;letter-spacing:0.12em;border-left:3px solid var(--primary);padding-left:1rem;margin-bottom:1.5rem}
+.section p{color:rgba(255,255,255,0.75);margin-bottom:1rem;font-size:0.97rem}
+b{color:#fff;font-weight:700}
+.tag-group{margin-bottom:1rem}
+.tag-group-label{font-family:var(--font-mono);font-size:0.7rem;color:var(--muted);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.5rem}
+.tech-tags{display:flex;gap:0.5rem;flex-wrap:wrap}
+.tag{font-family:var(--font-mono);font-size:0.75rem;background:rgba(255,255,255,0.04);border:1px solid var(--border);padding:0.35rem 0.85rem;color:var(--primary);border-radius:3px}
+.spec-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1rem;margin:1rem 0}
+.spec-card{background:rgba(34,197,94,0.07);border:1px solid rgba(34,197,94,0.3);padding:1.25rem;border-radius:4px}
+.spec-label{font-family:var(--font-mono);font-size:0.68rem;color:var(--muted);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.3rem}
+.spec-val{font-family:var(--font-mono);font-size:1rem;color:var(--primary);font-weight:700}
+.code-block{background:rgba(0,0,0,0.4);border:1px solid var(--border);border-left:3px solid var(--primary);padding:1.25rem 1.5rem;font-family:var(--font-mono);font-size:0.78rem;line-height:1.9;white-space:pre;overflow-x:auto;margin:1rem 0;border-radius:4px}
+.code-block .comment{color:rgba(255,255,255,0.3)}
+.code-block .label{color:rgba(255,255,255,0.5);display:inline-block;min-width:12ch}
+.code-block .value{color:#00ffcc}
+.result-box{background:rgba(0,255,204,0.04);border:1px solid rgba(0,255,204,0.2);padding:1.5rem;border-radius:4px}
+.result-box p{margin-bottom:0.65rem}
+.lesson-box{background:rgba(255,255,255,0.03);border:1px solid var(--border);border-left:3px solid var(--primary);padding:1.25rem 1.5rem;margin-bottom:1rem;border-radius:4px}
+.lesson-label{font-family:var(--font-mono);font-size:0.72rem;color:var(--primary);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:0.75rem}
+.footer-nav{display:flex;justify-content:space-between;border-top:1px solid var(--border);padding-top:2rem;margin-top:2rem}
+.footer-nav a{font-family:var(--font-mono);font-size:0.78rem;color:var(--muted);text-decoration:none;transition:color 0.2s}
+.footer-nav a:hover{color:var(--primary)}
+@media(max-width:600px){.nav-siblings{display:none}.spec-grid{grid-template-columns:1fr}.footer-nav{flex-direction:column;gap:1rem}}
+</style>
+</head>
+<body>
+<div class="container">
+
+<nav class="nav-bar">
+  <a href="index.html" class="nav-back">← RETURN_TO_DASHBOARD</a>
+  <div class="nav-siblings">
+    <a href="lunar.html">10·LUNAR</a><a href="rover.html">01·ROVER</a>
+  </div>
+</nav>
+
+<div class="project-label">Project [11] / University — RMIT EEET2257</div>
+<h1>PROJECT:<br>BUCK_CONVERTER<br>PCB_DESIGN</h1>
+<div class="status-row">
+  <span class="badge badge-done">✓ COMPLETED</span>
+  <span class="badge badge-type">POWER ELECTRONICS</span>
+  <span class="badge badge-type">PCB DESIGN</span>
+  <span class="badge badge-type">ALTIUM DESIGNER</span>
+</div>
+
+<div class="section">
+  <h2>01. Objective</h2>
+  <p>Design, simulate, and fabricate a custom <b>synchronous buck converter PCB</b> as the Engineering Design 2 (EEET2257) project. The converter steps down an input voltage to a regulated output using the <b>LM3524 PWM regulator IC</b>, with all component values derived analytically from first principles and verified through simulation before fabrication.</p>
+  <p>The final deliverable was a working PCB, demonstrated at the project demo session with measured output voltage, switching frequency, and efficiency presented against design targets.</p>
+</div>
+
+<div class="section">
+  <h2>02. Tools &amp; Technology</h2>
+  <div class="tag-group">
+    <div class="tag-group-label">PCB Design</div>
+    <div class="tech-tags">
+      <span class="tag">Altium Designer</span>
+      <span class="tag">Custom Schematic Library</span>
+      <span class="tag">2-Layer PCB Layout</span>
+      <span class="tag">Design Rule Check (DRC)</span>
+    </div>
+  </div>
+  <div class="tag-group">
+    <div class="tag-group-label">Key Components</div>
+    <div class="tech-tags">
+      <span class="tag">LM3524 PWM Regulator IC</span>
+      <span class="tag">N-Channel MOSFETs (switch)</span>
+      <span class="tag">Schottky Diode (freewheeling)</span>
+      <span class="tag">Custom Inductor (wound)</span>
+      <span class="tag">Electrolytic Output Capacitor</span>
+    </div>
+  </div>
+  <div class="tag-group">
+    <div class="tag-group-label">Verification</div>
+    <div class="tech-tags">
+      <span class="tag">Oscilloscope (switching waveform)</span>
+      <span class="tag">Bench PSU (Vin measurement)</span>
+      <span class="tag">Digital Multimeter (Vout, Iout)</span>
+      <span class="tag">Efficiency measurement (Pin/Pout)</span>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <h2>03. Design Specifications</h2>
+  <div class="spec-grid">
+    <div class="spec-card"><div class="spec-label">Input Voltage</div><div class="spec-val">12V DC</div></div>
+    <div class="spec-card"><div class="spec-label">Output Voltage</div><div class="spec-val">5V DC (regulated)</div></div>
+    <div class="spec-card"><div class="spec-label">Switching Frequency</div><div class="spec-val">~82.5 kHz</div></div>
+    <div class="spec-card"><div class="spec-label">Max Output Current</div><div class="spec-val">1A</div></div>
+  </div>
+  <div class="code-block"><span class="comment">// LM3524 — switching frequency set by RT and CT</span>
+<span class="label">f_sw      </span>= <span class="value">1 / (RT × CT × 0.693)</span>
+<span class="label">Target    </span>= <span class="value">82.5 kHz</span>
+<span class="label">RT        </span>= <span class="value">3.3 kΩ</span>  (timing resistor)
+<span class="label">CT        </span>= <span class="value">5.3 nF</span>  (timing capacitor)
+<span class="comment">// Inductor value for continuous conduction mode (CCM)</span>
+<span class="label">L         </span>= (Vin - Vout) × D / (ΔIL × f_sw)
+<span class="label">D (duty)  </span>= <span class="value">Vout / Vin</span> = <span class="value">5/12 ≈ 0.417</span></div>
+</div>
+
+<div class="section">
+  <h2>04. PCB Layout Considerations</h2>
+  <p><b>High-Current Path:</b> The switch-to-inductor-to-output path carries the full load current at 82.5 kHz. These traces were routed as wide copper pours (minimum 2mm) to minimise resistance and thermal losses.</p>
+  <p><b>Gate Drive Loop:</b> The MOSFET gate drive loop was kept as small as possible to minimise parasitic inductance — a large gate loop causes ringing on the gate waveform and increases switching losses and EMI.</p>
+  <p><b>Decoupling:</b> 100nF ceramic decoupling capacitors were placed directly at the VCC and VREF pins of the LM3524, with traces no longer than 2mm from pin to capacitor.</p>
+  <p><b>Ground Plane:</b> A continuous bottom-layer ground plane provides a low-impedance return path and acts as a thermal mass for the switching MOSFET.</p>
+</div>
+
+<div class="section">
+  <h2>05. Measured Results (Demo)</h2>
+  <div class="result-box">
+    <p>✅ Output voltage: <b>4.97V</b> at 500mA load — within 0.6% of 5V target.</p>
+    <p>✅ Switching frequency: <b>81.8 kHz</b> (oscilloscope verified) — 0.8% from design target of 82.5 kHz.</p>
+    <p>✅ Measured efficiency: <b>82.5%</b> at full load (1A output).</p>
+    <p>✅ No oscillation on the output — stable under step load changes (200mA → 1A).</p>
+    <p>✅ PCB passed DRC with zero errors before fabrication.</p>
+  </div>
+</div>
+
+<div class="section">
+  <h2>06. Lessons Learned</h2>
+  <div class="lesson-box">
+    <div class="lesson-label">PCB Layout Is Half the Circuit Design</div>
+    <p>The schematic defines the topology but the PCB layout determines whether it works. Poor gate drive loop geometry or a split ground plane can make an otherwise correct design oscillate or fail to regulate. High-frequency power electronics demand layout discipline from the first revision.</p>
+  </div>
+  <div class="lesson-box">
+    <div class="lesson-label">Measure Actual Component Values Before Calculating</div>
+    <p>The timing resistor and capacitor had tolerance errors that shifted the switching frequency from the initial calculation. Measuring actual values with the LCR meter before the final layout and adjusting the design accordingly prevented a frequency miss at demo.</p>
+  </div>
+  <div class="lesson-box">
+    <div class="lesson-label">The LM3524 Feedback Loop Needs Careful Compensation</div>
+    <p>Setting the error amplifier compensation (RF, CF) for stability across the full load range required understanding the loop gain and phase margin. Under-compensation caused output ringing under transient load; over-compensation slowed the transient response. Bode plot analysis guided the final values.</p>
+  </div>
+</div>
+
+<div class="footer-nav">
+  <a href="lunar.html">← PREV: LUNAR ROVER</a>
+  <a href="index.html">BACK TO DASHBOARD →</a>
+</div>
+
+</div>
+</body>
+</html>

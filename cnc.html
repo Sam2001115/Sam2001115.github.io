@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CNC Plotter | Sameer Appasa</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#07091a;--fg:#fafafa;--primary:#ef4444;--primary-dim:rgba(239,68,68,0.13);--border:rgba(255,255,255,0.1);--font-mono:'Space Mono',monospace;--font-sans:'Syne',sans-serif;--status-done:#00ffcc;--muted:rgba(255,255,255,0.4);--warn:#f59e0b}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--fg);font-family:var(--font-sans);line-height:1.7;overflow-x:hidden}
+body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(239,68,68,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(239,68,68,0.03) 1px,transparent 1px);background-size:40px 40px;pointer-events:none;z-index:0}
+.container{max-width:900px;margin:0 auto;padding:3rem 2rem 6rem;position:relative;z-index:1}
+.nav-bar{display:flex;justify-content:space-between;align-items:center;margin-bottom:3rem;padding-bottom:1rem;border-bottom:1px solid var(--border)}
+.nav-back{font-family:var(--font-mono);font-size:0.8rem;color:var(--primary);text-decoration:none;transition:opacity 0.2s}
+.nav-back:hover{opacity:0.7}
+.nav-siblings{display:flex;gap:1.2rem}
+.nav-siblings a{font-family:var(--font-mono);font-size:0.68rem;color:var(--muted);text-decoration:none;transition:color 0.2s}
+.nav-siblings a:hover{color:var(--primary)}
+.project-label{font-family:var(--font-mono);font-size:0.75rem;color:var(--muted);letter-spacing:0.15em;text-transform:uppercase;margin-bottom:0.75rem}
+h1{font-family:var(--font-mono);font-size:clamp(1.8rem,5vw,2.8rem);color:var(--primary);letter-spacing:-0.02em;line-height:1.1;margin-bottom:1.5rem}
+.status-row{display:flex;gap:0.75rem;flex-wrap:wrap;margin-bottom:3.5rem}
+.badge{font-family:var(--font-mono);font-size:0.72rem;padding:0.3rem 0.75rem;border-radius:2px;letter-spacing:0.05em}
+.badge-done{background:rgba(0,255,204,0.08);border:1px solid var(--status-done);color:var(--status-done)}
+.badge-type{background:var(--primary-dim);border:1px solid var(--primary);color:var(--primary)}
+.section{margin-bottom:4rem}
+.section h2{font-family:var(--font-mono);font-size:0.8rem;color:var(--primary);text-transform:uppercase;letter-spacing:0.12em;border-left:3px solid var(--primary);padding-left:1rem;margin-bottom:1.5rem}
+.section p{color:rgba(255,255,255,0.75);margin-bottom:1rem;font-size:0.97rem}
+b{color:#fff;font-weight:700}
+.tag-group{margin-bottom:1rem}
+.tag-group-label{font-family:var(--font-mono);font-size:0.7rem;color:var(--muted);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.5rem}
+.tech-tags{display:flex;gap:0.5rem;flex-wrap:wrap}
+.tag{font-family:var(--font-mono);font-size:0.75rem;background:rgba(255,255,255,0.04);border:1px solid var(--border);padding:0.35rem 0.85rem;color:var(--primary);border-radius:3px}
+.code-block{background:rgba(0,0,0,0.4);border:1px solid var(--border);border-left:3px solid var(--primary);padding:1.25rem 1.5rem;font-family:var(--font-mono);font-size:0.78rem;line-height:1.9;white-space:pre;overflow-x:auto;margin:1rem 0;border-radius:4px}
+.code-block .comment{color:rgba(255,255,255,0.3)}
+.code-block .label{color:rgba(255,255,255,0.5);display:inline-block;min-width:11ch}
+.code-block .value{color:#00ffcc}
+.result-box{background:rgba(0,255,204,0.04);border:1px solid rgba(0,255,204,0.2);padding:1.5rem;border-radius:4px}
+.result-box p{margin-bottom:0.65rem}
+.lesson-box{background:rgba(255,255,255,0.03);border:1px solid var(--border);border-left:3px solid var(--primary);padding:1.25rem 1.5rem;margin-bottom:1rem;border-radius:4px}
+.lesson-label{font-family:var(--font-mono);font-size:0.72rem;color:var(--primary);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:0.75rem}
+.github-link{display:inline-flex;align-items:center;gap:0.6rem;font-family:var(--font-mono);font-size:0.8rem;color:var(--primary);border:1px solid var(--primary);padding:0.6rem 1.2rem;border-radius:3px;text-decoration:none;margin-top:0.75rem;transition:background 0.2s}
+.github-link:hover{background:var(--primary-dim)}
+.footer-nav{display:flex;justify-content:space-between;border-top:1px solid var(--border);padding-top:2rem;margin-top:2rem}
+.footer-nav a{font-family:var(--font-mono);font-size:0.78rem;color:var(--muted);text-decoration:none;transition:color 0.2s}
+.footer-nav a:hover{color:var(--primary)}
+@media(max-width:600px){.nav-siblings{display:none}.footer-nav{flex-direction:column;gap:1rem}}
+</style>
+</head>
+<body>
+<div class="container">
+
+<nav class="nav-bar">
+  <a href="index.html" class="nav-back">← RETURN_TO_DASHBOARD</a>
+  <div class="nav-siblings">
+    <a href="rover.html">01·ROVER</a><a href="ousb.html">02·OUSB</a><a href="monitoring.html">03·MONITOR</a><a href="solar.html">04·SOLAR</a><a href="vending.html">06·VENDING</a><a href="antenna.html">07·ANTENNA</a><a href="smartgrid.html">08·GRID</a>
+  </div>
+</nav>
+
+<div class="project-label">Project [05] / University — RMIT</div>
+<h1>PROJECT:<br>CNC_PLOTTER</h1>
+<div class="status-row">
+  <span class="badge badge-done">✓ COMPLETED</span>
+  <span class="badge badge-type">MECHATRONICS</span>
+  <span class="badge badge-type">EMBEDDED</span>
+  <span class="badge badge-type">G-CODE</span>
+</div>
+
+<div class="section">
+  <h2>01. Objective</h2>
+  <p>Design and build a functional 2-axis CNC plotter machine capable of drawing vector graphics on paper. The machine was salvaged from decommissioned inkjet printer parts — reusing the stepper motors, guide rails, and belt drive mechanisms to minimise cost while achieving accurate pen positioning.</p>
+  <p>The project required custom firmware, G-code parsing, and a motor control interface, alongside a custom UI built on the ESP32's onboard display.</p>
+</div>
+
+<div class="section">
+  <h2>02. Technology Used</h2>
+  <div class="tag-group">
+    <div class="tag-group-label">Microcontroller & Firmware</div>
+    <div class="tech-tags">
+      <span class="tag">ideaspark ESP32 (Built-in ST7789 Display)</span>
+      <span class="tag">PlatformIO</span>
+      <span class="tag">C++ / Arduino Framework</span>
+      <span class="tag">G-Code Parser (custom)</span>
+    </div>
+  </div>
+  <div class="tag-group">
+    <div class="tag-group-label">Motion System</div>
+    <div class="tech-tags">
+      <span class="tag">Salvaged Printer Stepper Motors (X &amp; Y axis)</span>
+      <span class="tag">A4988 Stepper Drivers</span>
+      <span class="tag">Belt Drive + Guide Rails (printer harvest)</span>
+      <span class="tag">Servo Motor (Z-axis pen lift)</span>
+    </div>
+  </div>
+  <div class="tag-group">
+    <div class="tag-group-label">Interface</div>
+    <div class="tech-tags">
+      <span class="tag">ST7789 TFT Display (built-in)</span>
+      <span class="tag">Custom UI with CNC photo background</span>
+      <span class="tag">Serial G-code input</span>
+    </div>
+  </div>
+  <div class="tag-group">
+    <div class="tag-group-label">Power</div>
+    <div class="tech-tags">
+      <span class="tag">12V DC PSU (steppers)</span>
+      <span class="tag">5V USB (ESP32 logic)</span>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <h2>03. How It Works</h2>
+  <p><b>Frame &amp; Motion:</b> The X-axis uses a salvaged printer carriage rail and belt driven by one stepper. The Y-axis moves the paper bed using the second stepper from the same printer. This keeps the build cost near zero for mechanical parts while maintaining genuine linear motion accuracy.</p>
+  <p><b>Pen Control:</b> A small servo attached to the pen mount lifts and lowers the pen (Z-axis), allowing the plotter to move between strokes without marking the paper.</p>
+  <p><b>G-Code Parsing:</b> The ESP32 firmware reads G-code commands over serial (G0/G1 moves, M3/M5 pen up/down). Each command is parsed and translated into stepper pulses via the A4988 drivers with configurable steps/mm.</p>
+  <div class="code-block"><span class="comment">// G-code execution loop (simplified)</span>
+<span class="label">G0 X__ Y__</span>  <span class="value">Rapid move</span>  → pen up, fast traverse
+<span class="label">G1 X__ Y__</span>  <span class="value">Draw move</span>   → pen down, controlled feed rate
+<span class="label">M3        </span>  <span class="value">Pen DOWN</span>    → servo lowers pen to paper
+<span class="label">M5        </span>  <span class="value">Pen UP</span>      → servo raises pen (travel)</div>
+  <p><b>Display UI:</b> The built-in ST7789 TFT shows a CNC machine background image with a live status overlay — displaying current coordinates, job progress, and feed rate. This was implemented using custom sprite rendering on the ESP32.</p>
+</div>
+
+<div class="section">
+  <h2>04. Results</h2>
+  <div class="result-box">
+    <p>✅ Successfully plotted vector designs including geometric patterns and text at approximately ±1mm accuracy.</p>
+    <p>✅ Full G-code compatibility with standard CAM tools (Inkscape G-code extension).</p>
+    <p>✅ Custom TFT UI operational — live position and status display during plotting.</p>
+    <p>✅ Build cost kept minimal by salvaging all mechanical components from discarded printers.</p>
+  </div>
+</div>
+
+<div class="section">
+  <h2>05. Lessons Learned</h2>
+  <div class="lesson-box">
+    <div class="lesson-label">Salvaged Parts Require Reverse Engineering</div>
+    <p>Printer steppers have no published datasheet for that specific unit — coil resistance measurement and trial step voltages were needed to identify safe operating current limits for the A4988 drivers.</p>
+  </div>
+  <div class="lesson-box">
+    <div class="lesson-label">Steps-Per-MM Calibration Is Critical</div>
+    <p>Incorrect microstepping or belt pitch assumptions cause scaling errors in every plot. Calibrating with a known-dimension test square before any real job is essential.</p>
+  </div>
+  <div class="lesson-box">
+    <div class="lesson-label">Pen Pressure Matters</div>
+    <p>Too much servo force on Z caused paper distortion; too little caused skipped strokes. A spring-loaded pen mount was added to absorb surface variation and maintain consistent contact force.</p>
+  </div>
+</div>
+
+<div class="footer-nav">
+  <a href="solar.html">← PREV: SOLAR MONITOR</a>
+  <a href="vending.html">NEXT: VENDING MACHINE →</a>
+</div>
+
+</div>
+</body>
+</html>

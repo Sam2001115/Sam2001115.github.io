@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Smart Grid Network Modelling | Sameer Appasa</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#07091a;--fg:#fafafa;--primary:#14b8a6;--primary-dim:rgba(20,184,166,0.13);--border:rgba(255,255,255,0.1);--font-mono:'Space Mono',monospace;--font-sans:'Syne',sans-serif;--status-done:#00ffcc;--muted:rgba(255,255,255,0.4)}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--fg);font-family:var(--font-sans);line-height:1.7;overflow-x:hidden}
+body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(20,184,166,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(20,184,166,0.03) 1px,transparent 1px);background-size:40px 40px;pointer-events:none;z-index:0}
+.container{max-width:900px;margin:0 auto;padding:3rem 2rem 6rem;position:relative;z-index:1}
+.nav-bar{display:flex;justify-content:space-between;align-items:center;margin-bottom:3rem;padding-bottom:1rem;border-bottom:1px solid var(--border)}
+.nav-back{font-family:var(--font-mono);font-size:0.8rem;color:var(--primary);text-decoration:none;transition:opacity 0.2s}
+.nav-back:hover{opacity:0.7}
+.nav-siblings{display:flex;gap:1.2rem}
+.nav-siblings a{font-family:var(--font-mono);font-size:0.68rem;color:var(--muted);text-decoration:none;transition:color 0.2s}
+.nav-siblings a:hover{color:var(--primary)}
+.project-label{font-family:var(--font-mono);font-size:0.75rem;color:var(--muted);letter-spacing:0.15em;text-transform:uppercase;margin-bottom:0.75rem}
+h1{font-family:var(--font-mono);font-size:clamp(1.8rem,5vw,2.8rem);color:var(--primary);letter-spacing:-0.02em;line-height:1.1;margin-bottom:1.5rem}
+.status-row{display:flex;gap:0.75rem;flex-wrap:wrap;margin-bottom:3.5rem}
+.badge{font-family:var(--font-mono);font-size:0.72rem;padding:0.3rem 0.75rem;border-radius:2px;letter-spacing:0.05em}
+.badge-done{background:rgba(0,255,204,0.08);border:1px solid var(--status-done);color:var(--status-done)}
+.badge-type{background:var(--primary-dim);border:1px solid var(--primary);color:var(--primary)}
+.section{margin-bottom:4rem}
+.section h2{font-family:var(--font-mono);font-size:0.8rem;color:var(--primary);text-transform:uppercase;letter-spacing:0.12em;border-left:3px solid var(--primary);padding-left:1rem;margin-bottom:1.5rem}
+.section p{color:rgba(255,255,255,0.75);margin-bottom:1rem;font-size:0.97rem}
+b{color:#fff;font-weight:700}
+.tag-group{margin-bottom:1rem}
+.tag-group-label{font-family:var(--font-mono);font-size:0.7rem;color:var(--muted);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.5rem}
+.tech-tags{display:flex;gap:0.5rem;flex-wrap:wrap}
+.tag{font-family:var(--font-mono);font-size:0.75rem;background:rgba(255,255,255,0.04);border:1px solid var(--border);padding:0.35rem 0.85rem;color:var(--primary);border-radius:3px}
+.stat-row{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin:1.5rem 0}
+.stat-card{background:rgba(20,184,166,0.07);border:1px solid rgba(20,184,166,0.3);padding:1.25rem;border-radius:4px;text-align:center}
+.stat-num{font-family:var(--font-mono);font-size:1.6rem;font-weight:700;color:var(--primary);line-height:1}
+.stat-label{font-family:var(--font-mono);font-size:0.65rem;color:var(--muted);letter-spacing:0.1em;text-transform:uppercase;margin-top:0.5rem}
+.result-box{background:rgba(0,255,204,0.04);border:1px solid rgba(0,255,204,0.2);padding:1.5rem;border-radius:4px}
+.result-box p{margin-bottom:0.65rem}
+.lesson-box{background:rgba(255,255,255,0.03);border:1px solid var(--border);border-left:3px solid var(--primary);padding:1.25rem 1.5rem;margin-bottom:1rem;border-radius:4px}
+.lesson-label{font-family:var(--font-mono);font-size:0.72rem;color:var(--primary);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:0.75rem}
+.footer-nav{display:flex;justify-content:space-between;border-top:1px solid var(--border);padding-top:2rem;margin-top:2rem}
+.footer-nav a{font-family:var(--font-mono);font-size:0.78rem;color:var(--muted);text-decoration:none;transition:color 0.2s}
+.footer-nav a:hover{color:var(--primary)}
+@media(max-width:600px){.nav-siblings{display:none}.stat-row{grid-template-columns:1fr}.footer-nav{flex-direction:column;gap:1rem}}
+</style>
+</head>
+<body>
+<div class="container">
+
+<nav class="nav-bar">
+  <a href="index.html" class="nav-back">← RETURN_TO_DASHBOARD</a>
+  <div class="nav-siblings">
+    <a href="antenna.html">07·ANTENNA</a><a href="nem.html">09·NEM</a><a href="lunar.html">10·LUNAR</a><a href="buck.html">11·BUCK</a>
+  </div>
+</nav>
+
+<div class="project-label">Project [08] / University — RMIT EEET2613</div>
+<h1>PROJECT:<br>SMART_GRID<br>NETWORK_MODELLING</h1>
+<div class="status-row">
+  <span class="badge badge-done">✓ COMPLETED</span>
+  <span class="badge badge-type">POWER SYSTEMS</span>
+  <span class="badge badge-type">DIgSILENT</span>
+  <span class="badge badge-type">LOAD FLOW</span>
+</div>
+
+<div class="section">
+  <h2>01. Objective</h2>
+  <p>Model, simulate, and analyse a multi-bus power distribution network using <b>DIgSILENT PowerFactory</b> as part of the EEET2613 Smart Grids course. The project involved building a realistic network topology with generation, transmission, load, and renewable energy elements, then running steady-state load flow and contingency analyses to evaluate system stability and efficiency.</p>
+</div>
+
+<div class="section">
+  <h2>02. Tools &amp; Methods</h2>
+  <div class="tag-group">
+    <div class="tag-group-label">Simulation Software</div>
+    <div class="tech-tags">
+      <span class="tag">DIgSILENT PowerFactory</span>
+      <span class="tag">Newton-Raphson Load Flow</span>
+      <span class="tag">N-1 Contingency Analysis</span>
+    </div>
+  </div>
+  <div class="tag-group">
+    <div class="tag-group-label">Network Elements Modelled</div>
+    <div class="tech-tags">
+      <span class="tag">Synchronous Generators</span>
+      <span class="tag">Transformers (HV/MV)</span>
+      <span class="tag">Transmission Lines (overhead)</span>
+      <span class="tag">Distributed Loads</span>
+      <span class="tag">PV Solar Generation</span>
+      <span class="tag">Reactive Power Compensation</span>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <h2>03. What Was Analysed</h2>
+  <p><b>Steady-State Load Flow:</b> Newton-Raphson load flow was used to solve bus voltages, line currents, and power flows across the network under normal operating conditions. Bus voltage profiles were checked against ±5% nominal limits.</p>
+  <p><b>N-1 Contingency:</b> Each critical line and transformer was removed in turn to simulate a single-element outage. The simulation identified which contingencies caused overloads or voltage violations, and reactive compensation points were added to restore compliance.</p>
+  <p><b>Renewable Integration:</b> A PV solar farm was added to a suitable bus. The load flow was re-run at different solar output levels (0%, 50%, 100%) to observe voltage rise and reverse power flow effects on the feeder.</p>
+</div>
+
+<div class="section">
+  <h2>04. Key Results</h2>
+  <div class="stat-row">
+    <div class="stat-card">
+      <div class="stat-num">12</div>
+      <div class="stat-label">Bus Network</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">N-1</div>
+      <div class="stat-label">Contingency Tested</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">100%</div>
+      <div class="stat-label">Voltage Compliance</div>
+    </div>
+  </div>
+  <div class="result-box">
+    <p>✅ All bus voltages maintained within ±5% of nominal under base case and post-contingency.</p>
+    <p>✅ Critical contingency (main transformer outage) identified — load shedding protocol documented.</p>
+    <p>✅ PV integration at 100% output caused 2.1% voltage rise at the injection bus — mitigated with shunt capacitor bank.</p>
+    <p>✅ System losses reduced by 8% with reactive compensation applied at two identified weak buses.</p>
+  </div>
+</div>
+
+<div class="section">
+  <h2>05. Lessons Learned</h2>
+  <div class="lesson-box">
+    <div class="lesson-label">Voltage Rise Is the Key Challenge for High PV Penetration</div>
+    <p>As solar generation increased, reverse power flow caused voltage rise beyond acceptable limits on the feeder. This is a real constraint on how much distributed solar a network can absorb without active voltage management.</p>
+  </div>
+  <div class="lesson-box">
+    <div class="lesson-label">N-1 Is the Minimum Reliability Standard</div>
+    <p>Utilities design to N-1 — any single element can fail without affecting customers. Running the full contingency matrix revealed unexpected weak points that weren't obvious from the base case load flow alone.</p>
+  </div>
+  <div class="lesson-box">
+    <div class="lesson-label">Reactive Power Location Matters</div>
+    <p>Adding reactive compensation at the wrong bus (high impedance path from the problem bus) had almost no effect. Placing it directly at the low-voltage bus gave immediate compliance — location is as important as magnitude.</p>
+  </div>
+</div>
+
+<div class="footer-nav">
+  <a href="antenna.html">← PREV: ANTENNA TRACKER</a>
+  <a href="nem.html">NEXT: NEM ANALYSIS →</a>
+</div>
+
+</div>
+</body>
+</html>

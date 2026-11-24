@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vending Machine Controller | Sameer Appasa</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#07091a;--fg:#fafafa;--primary:#3b82f6;--primary-dim:rgba(59,130,246,0.13);--border:rgba(255,255,255,0.1);--font-mono:'Space Mono',monospace;--font-sans:'Syne',sans-serif;--status-done:#00ffcc;--muted:rgba(255,255,255,0.4)}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--fg);font-family:var(--font-sans);line-height:1.7;overflow-x:hidden}
+body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(59,130,246,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(59,130,246,0.03) 1px,transparent 1px);background-size:40px 40px;pointer-events:none;z-index:0}
+.container{max-width:900px;margin:0 auto;padding:3rem 2rem 6rem;position:relative;z-index:1}
+.nav-bar{display:flex;justify-content:space-between;align-items:center;margin-bottom:3rem;padding-bottom:1rem;border-bottom:1px solid var(--border)}
+.nav-back{font-family:var(--font-mono);font-size:0.8rem;color:var(--primary);text-decoration:none;transition:opacity 0.2s}
+.nav-back:hover{opacity:0.7}
+.nav-siblings{display:flex;gap:1.2rem}
+.nav-siblings a{font-family:var(--font-mono);font-size:0.68rem;color:var(--muted);text-decoration:none;transition:color 0.2s}
+.nav-siblings a:hover{color:var(--primary)}
+.project-label{font-family:var(--font-mono);font-size:0.75rem;color:var(--muted);letter-spacing:0.15em;text-transform:uppercase;margin-bottom:0.75rem}
+h1{font-family:var(--font-mono);font-size:clamp(1.8rem,5vw,2.8rem);color:var(--primary);letter-spacing:-0.02em;line-height:1.1;margin-bottom:1.5rem}
+.status-row{display:flex;gap:0.75rem;flex-wrap:wrap;margin-bottom:3.5rem}
+.badge{font-family:var(--font-mono);font-size:0.72rem;padding:0.3rem 0.75rem;border-radius:2px;letter-spacing:0.05em}
+.badge-done{background:rgba(0,255,204,0.08);border:1px solid var(--status-done);color:var(--status-done)}
+.badge-type{background:var(--primary-dim);border:1px solid var(--primary);color:var(--primary)}
+.section{margin-bottom:4rem}
+.section h2{font-family:var(--font-mono);font-size:0.8rem;color:var(--primary);text-transform:uppercase;letter-spacing:0.12em;border-left:3px solid var(--primary);padding-left:1rem;margin-bottom:1.5rem}
+.section p{color:rgba(255,255,255,0.75);margin-bottom:1rem;font-size:0.97rem}
+b{color:#fff;font-weight:700}
+.tag-group{margin-bottom:1rem}
+.tag-group-label{font-family:var(--font-mono);font-size:0.7rem;color:var(--muted);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.5rem}
+.tech-tags{display:flex;gap:0.5rem;flex-wrap:wrap}
+.tag{font-family:var(--font-mono);font-size:0.75rem;background:rgba(255,255,255,0.04);border:1px solid var(--border);padding:0.35rem 0.85rem;color:var(--primary);border-radius:3px}
+.code-block{background:rgba(0,0,0,0.4);border:1px solid var(--border);border-left:3px solid var(--primary);padding:1.25rem 1.5rem;font-family:var(--font-mono);font-size:0.78rem;line-height:1.9;white-space:pre;overflow-x:auto;margin:1rem 0;border-radius:4px}
+.code-block .comment{color:rgba(255,255,255,0.3)}
+.code-block .label{color:rgba(255,255,255,0.5);display:inline-block;min-width:14ch}
+.code-block .value{color:#00ffcc}
+.result-box{background:rgba(0,255,204,0.04);border:1px solid rgba(0,255,204,0.2);padding:1.5rem;border-radius:4px}
+.result-box p{margin-bottom:0.65rem}
+.lesson-box{background:rgba(255,255,255,0.03);border:1px solid var(--border);border-left:3px solid var(--primary);padding:1.25rem 1.5rem;margin-bottom:1rem;border-radius:4px}
+.lesson-label{font-family:var(--font-mono);font-size:0.72rem;color:var(--primary);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:0.75rem}
+.state-table{width:100%;border-collapse:collapse;font-family:var(--font-mono);font-size:0.78rem;margin:1rem 0}
+.state-table th{background:rgba(59,130,246,0.15);color:var(--primary);padding:0.6rem 1rem;text-align:left;border-bottom:1px solid var(--border)}
+.state-table td{padding:0.55rem 1rem;border-bottom:1px solid rgba(255,255,255,0.05);color:rgba(255,255,255,0.72)}
+.state-table td:first-child{color:#00ffcc;font-weight:700}
+.footer-nav{display:flex;justify-content:space-between;border-top:1px solid var(--border);padding-top:2rem;margin-top:2rem}
+.footer-nav a{font-family:var(--font-mono);font-size:0.78rem;color:var(--muted);text-decoration:none;transition:color 0.2s}
+.footer-nav a:hover{color:var(--primary)}
+@media(max-width:600px){.nav-siblings{display:none}.footer-nav{flex-direction:column;gap:1rem}}
+</style>
+</head>
+<body>
+<div class="container">
+
+<nav class="nav-bar">
+  <a href="index.html" class="nav-back">← RETURN_TO_DASHBOARD</a>
+  <div class="nav-siblings">
+    <a href="rover.html">01·ROVER</a><a href="ousb.html">02·OUSB</a><a href="monitoring.html">03·MONITOR</a><a href="solar.html">04·SOLAR</a><a href="cnc.html">05·CNC</a><a href="antenna.html">07·ANTENNA</a><a href="smartgrid.html">08·GRID</a>
+  </div>
+</nav>
+
+<div class="project-label">Project [06] / University — RMIT EEET2256</div>
+<h1>PROJECT:<br>VENDING_MACHINE<br>CONTROLLER</h1>
+<div class="status-row">
+  <span class="badge badge-done">✓ COMPLETED</span>
+  <span class="badge badge-type">AVR / C</span>
+  <span class="badge badge-type">STATE MACHINE</span>
+  <span class="badge badge-type">EMBEDDED SYSTEMS</span>
+</div>
+
+<div class="section">
+  <h2>01. Objective</h2>
+  <p>Implement a fully functional vending machine controller in bare-metal C on an AVR microcontroller as the EEET2256 major project. The system manages a complete purchase cycle — item selection via keypad, coin accumulation, item dispensing, and change calculation — using a finite state machine (FSM) architecture with LED and 7-segment display feedback.</p>
+  <p>No RTOS, no libraries beyond the AVR standard — all peripheral control (GPIO, timers, interrupts) written from register level.</p>
+</div>
+
+<div class="section">
+  <h2>02. Technology Used</h2>
+  <div class="tag-group">
+    <div class="tag-group-label">Hardware</div>
+    <div class="tech-tags">
+      <span class="tag">ATmega328P (AVR)</span>
+      <span class="tag">4×4 Matrix Keypad</span>
+      <span class="tag">7-Segment Display (multiplexed)</span>
+      <span class="tag">LED Array (status indicators)</span>
+      <span class="tag">OUSB Development Board</span>
+    </div>
+  </div>
+  <div class="tag-group">
+    <div class="tag-group-label">Software</div>
+    <div class="tech-tags">
+      <span class="tag">Bare-metal C</span>
+      <span class="tag">AVR-GCC</span>
+      <span class="tag">Finite State Machine (FSM)</span>
+      <span class="tag">Timer1 (keypad debounce &amp; display mux)</span>
+      <span class="tag">INT0 Interrupt (coin insert)</span>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <h2>03. State Machine Design</h2>
+  <p>The controller is implemented as a <b>7-state FSM</b>. Each state has defined entry actions, active behaviours, and transition triggers:</p>
+  <table class="state-table">
+    <thead><tr><th>State</th><th>Description</th><th>Transition Trigger</th></tr></thead>
+    <tbody>
+      <tr><td>IDLE</td><td>Display welcome, all LEDs off</td><td>Any keypad press</td></tr>
+      <tr><td>SELECT</td><td>Show item menu, await selection</td><td>Valid item key pressed</td></tr>
+      <tr><td>PRICE_SHOW</td><td>Display selected item price</td><td>Auto (1s timeout)</td></tr>
+      <tr><td>INSERT_COIN</td><td>Accumulate coins, show balance</td><td>Balance ≥ price</td></tr>
+      <tr><td>DISPENSE</td><td>Trigger dispense motor, LED flash</td><td>Auto (dispense delay)</td></tr>
+      <tr><td>CHANGE</td><td>Calculate &amp; display change owed</td><td>Auto (change paid out)</td></tr>
+      <tr><td>ERROR</td><td>Flash error LED, buzzer pulse</td><td>Reset key or timeout</td></tr>
+    </tbody>
+  </table>
+  <div class="code-block"><span class="comment">// FSM core (C, AVR)</span>
+<span class="label">typedef enum </span>{ IDLE, SELECT, PRICE_SHOW, INSERT_COIN,
+               DISPENSE, CHANGE, ERROR } <span class="value">State_t</span>;
+
+<span class="label">void fsm_tick</span>() {
+  switch (current_state) {
+    case IDLE:       handle_idle();       break;
+    case SELECT:     handle_select();     break;
+    case INSERT_COIN:handle_insert();     break;
+    case DISPENSE:   handle_dispense();   break;
+    case CHANGE:     handle_change();     break;
+    <span class="comment">// ...</span>
+  }
+}</div>
+</div>
+
+<div class="section">
+  <h2>04. Key Implementation Details</h2>
+  <p><b>Keypad Scanning:</b> The 4×4 matrix is scanned column-by-column using Timer1 ISR at 1 ms intervals. Row lines are read after each column is driven low, with 10 ms debounce logic in software to suppress contact bounce.</p>
+  <p><b>Display Multiplexing:</b> The 7-segment display is multiplexed across four digits using the same Timer1 ISR — each digit is active for one scan period in turn, achieving flicker-free display at ~250Hz effective refresh.</p>
+  <p><b>Coin Detection:</b> Each coin insertion triggers an INT0 external interrupt. The ISR adds the coin denomination to the balance register and updates the display immediately.</p>
+  <p><b>Change Calculation:</b> Uses a greedy algorithm — dispenses the largest denomination coin first, iterating down until change balance reaches zero. Coin counts stored in EEPROM to survive power cycles.</p>
+</div>
+
+<div class="section">
+  <h2>05. Results</h2>
+  <div class="result-box">
+    <p>✅ Full purchase cycle working end-to-end — select, insert coins, dispense, return change.</p>
+    <p>✅ FSM correctly handles all edge cases: overpayment, out-of-stock, insufficient change reserve.</p>
+    <p>✅ Keypad debounce reliable across all 16 keys with no false triggers.</p>
+    <p>✅ 7-segment multiplexing stable at 250Hz with no visible flicker.</p>
+    <p>✅ Received high distinction — marked on correctness, state design clarity, and code quality.</p>
+  </div>
+</div>
+
+<div class="section">
+  <h2>06. Lessons Learned</h2>
+  <div class="lesson-box">
+    <div class="lesson-label">FSMs Scale Cleanly With Discipline</div>
+    <p>Structuring the controller as a proper FSM — no nested if-else spaghetti — made debugging and extending states straightforward. Every new feature is just a new state with defined transitions.</p>
+  </div>
+  <div class="lesson-box">
+    <div class="lesson-label">ISR Code Must Be Minimal</div>
+    <p>Putting too much logic in the coin ISR caused timing conflicts with the display multiplexer. The fix was to set a flag in the ISR and process the coin in the main loop — a critical embedded pattern.</p>
+  </div>
+  <div class="lesson-box">
+    <div class="lesson-label">Register-Level Peripheral Control Builds Real Understanding</div>
+    <p>Writing directly to TCCR1B, OCR1A, and EIMSK instead of using Arduino wrappers forced a thorough understanding of how timers, interrupts, and GPIO actually work on AVR silicon.</p>
+  </div>
+</div>
+
+<div class="footer-nav">
+  <a href="cnc.html">← PREV: CNC PLOTTER</a>
+  <a href="antenna.html">NEXT: ANTENNA TRACKER →</a>
+</div>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Antenna Tracking System | Sameer Appasa</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#07091a;--fg:#fafafa;--primary:#a855f7;--primary-dim:rgba(168,85,247,0.13);--border:rgba(255,255,255,0.1);--font-mono:'Space Mono',monospace;--font-sans:'Syne',sans-serif;--status-done:#00ffcc;--muted:rgba(255,255,255,0.4);--warn:#f59e0b}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--fg);font-family:var(--font-sans);line-height:1.7;overflow-x:hidden}
+body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(168,85,247,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(168,85,247,0.03) 1px,transparent 1px);background-size:40px 40px;pointer-events:none;z-index:0}
+.container{max-width:900px;margin:0 auto;padding:3rem 2rem 6rem;position:relative;z-index:1}
+.nav-bar{display:flex;justify-content:space-between;align-items:center;margin-bottom:3rem;padding-bottom:1rem;border-bottom:1px solid var(--border)}
+.nav-back{font-family:var(--font-mono);font-size:0.8rem;color:var(--primary);text-decoration:none;transition:opacity 0.2s}
+.nav-back:hover{opacity:0.7}
+.nav-siblings{display:flex;gap:1.2rem}
+.nav-siblings a{font-family:var(--font-mono);font-size:0.68rem;color:var(--muted);text-decoration:none;transition:color 0.2s}
+.nav-siblings a:hover{color:var(--primary)}
+.project-label{font-family:var(--font-mono);font-size:0.75rem;color:var(--muted);letter-spacing:0.15em;text-transform:uppercase;margin-bottom:0.75rem}
+h1{font-family:var(--font-mono);font-size:clamp(1.8rem,5vw,2.8rem);color:var(--primary);letter-spacing:-0.02em;line-height:1.1;margin-bottom:1.5rem}
+.status-row{display:flex;gap:0.75rem;flex-wrap:wrap;margin-bottom:3.5rem}
+.badge{font-family:var(--font-mono);font-size:0.72rem;padding:0.3rem 0.75rem;border-radius:2px;letter-spacing:0.05em}
+.badge-done{background:rgba(0,255,204,0.08);border:1px solid var(--status-done);color:var(--status-done)}
+.badge-wip{background:rgba(245,158,11,0.1);border:1px solid var(--warn);color:var(--warn)}
+.badge-type{background:var(--primary-dim);border:1px solid var(--primary);color:var(--primary)}
+.section{margin-bottom:4rem}
+.section h2{font-family:var(--font-mono);font-size:0.8rem;color:var(--primary);text-transform:uppercase;letter-spacing:0.12em;border-left:3px solid var(--primary);padding-left:1rem;margin-bottom:1.5rem}
+.section p{color:rgba(255,255,255,0.75);margin-bottom:1rem;font-size:0.97rem}
+b{color:#fff;font-weight:700}
+.tag-group{margin-bottom:1rem}
+.tag-group-label{font-family:var(--font-mono);font-size:0.7rem;color:var(--muted);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.5rem}
+.tech-tags{display:flex;gap:0.5rem;flex-wrap:wrap}
+.tag{font-family:var(--font-mono);font-size:0.75rem;background:rgba(255,255,255,0.04);border:1px solid var(--border);padding:0.35rem 0.85rem;color:var(--primary);border-radius:3px}
+.code-block{background:rgba(0,0,0,0.4);border:1px solid var(--border);border-left:3px solid var(--primary);padding:1.25rem 1.5rem;font-family:var(--font-mono);font-size:0.78rem;line-height:1.9;white-space:pre;overflow-x:auto;margin:1rem 0;border-radius:4px}
+.code-block .comment{color:rgba(255,255,255,0.3)}
+.code-block .label{color:rgba(255,255,255,0.5);display:inline-block;min-width:12ch}
+.code-block .value{color:#00ffcc}
+.mvp-box{background:rgba(168,85,247,0.06);border:1px solid rgba(168,85,247,0.3);padding:1.5rem;border-radius:4px;margin:1rem 0}
+.mvp-box h3{font-family:var(--font-mono);font-size:0.75rem;color:var(--primary);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.75rem}
+.lesson-box{background:rgba(255,255,255,0.03);border:1px solid var(--border);border-left:3px solid var(--primary);padding:1.25rem 1.5rem;margin-bottom:1rem;border-radius:4px}
+.lesson-label{font-family:var(--font-mono);font-size:0.72rem;color:var(--primary);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:0.75rem}
+.footer-nav{display:flex;justify-content:space-between;border-top:1px solid var(--border);padding-top:2rem;margin-top:2rem}
+.footer-nav a{font-family:var(--font-mono);font-size:0.78rem;color:var(--muted);text-decoration:none;transition:color 0.2s}
+.footer-nav a:hover{color:var(--primary)}
+@media(max-width:600px){.nav-siblings{display:none}.footer-nav{flex-direction:column;gap:1rem}}
+</style>
+</head>
+<body>
+<div class="container">
+
+<nav class="nav-bar">
+  <a href="index.html" class="nav-back">← RETURN_TO_DASHBOARD</a>
+  <div class="nav-siblings">
+    <a href="cnc.html">05·CNC</a><a href="vending.html">06·VENDING</a><a href="smartgrid.html">08·GRID</a><a href="nem.html">09·NEM</a><a href="lunar.html">10·LUNAR</a><a href="buck.html">11·BUCK</a>
+  </div>
+</nav>
+
+<div class="project-label">Project [07] / RMIT HIVE Rocketry</div>
+<h1>PROJECT:<br>ANTENNA_TRACKING<br>SYSTEM</h1>
+<div class="status-row">
+  <span class="badge badge-wip">⟳ IN PROGRESS</span>
+  <span class="badge badge-type">EMBEDDED SYSTEMS</span>
+  <span class="badge badge-type">TELEMETRY</span>
+  <span class="badge badge-type">CONTROL SYSTEMS</span>
+</div>
+
+<div class="section">
+  <h2>01. Objective</h2>
+  <p>Design and build a two-axis auto-tracking antenna mount for the <b>RMIT HIVE Rocketry</b> team. During rocket launches, the system must automatically point a directional antenna toward the rocket in real time — maintaining line-of-sight for telemetry reception across the full flight envelope.</p>
+  <p>The system receives GPS telemetry from the rocket's onboard flight computer, calculates the required azimuth and elevation angles using the ground station's known GPS coordinates, and drives servo or stepper motors to continuously re-point the antenna.</p>
+</div>
+
+<div class="section">
+  <h2>02. Technology Used</h2>
+  <div class="tag-group">
+    <div class="tag-group-label">Computing & Control</div>
+    <div class="tech-tags">
+      <span class="tag">ESP32 (main controller)</span>
+      <span class="tag">PlatformIO / C++</span>
+      <span class="tag">PID Control Loop</span>
+    </div>
+  </div>
+  <div class="tag-group">
+    <div class="tag-group-label">Sensors & GPS</div>
+    <div class="tech-tags">
+      <span class="tag">NEO-M8N GPS Module (ground station)</span>
+      <span class="tag">LoRa RFM95W (telemetry receive)</span>
+      <span class="tag">IMU / Magnetometer (mount heading reference)</span>
+    </div>
+  </div>
+  <div class="tag-group">
+    <div class="tag-group-label">Actuation</div>
+    <div class="tech-tags">
+      <span class="tag">Azimuth: Stepper Motor + Belt Drive</span>
+      <span class="tag">Elevation: High-Torque Servo</span>
+      <span class="tag">Custom Pan-Tilt Mount (3D Printed)</span>
+    </div>
+  </div>
+  <div class="tag-group">
+    <div class="tag-group-label">Comms</div>
+    <div class="tech-tags">
+      <span class="tag">LoRa 915MHz (rocket telemetry link)</span>
+      <span class="tag">UART (GPS NMEA stream)</span>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <h2>03. How It Works</h2>
+  <p><b>Telemetry Receive:</b> The rocket broadcasts GPS coordinates and altitude via LoRa at regular intervals. The ground station's RFM95W module receives each packet and decodes the rocket's position.</p>
+  <div class="code-block"><span class="comment">// Angle calculation from GPS coordinates</span>
+<span class="label">Δlat     </span> = rocket_lat - ground_lat
+<span class="label">Δlon     </span> = rocket_lon - ground_lon
+<span class="label">Δalt     </span> = rocket_alt - ground_alt
+<span class="label">azimuth  </span> = <span class="value">atan2(Δlon, Δlat)</span>  → compass bearing (°)
+<span class="label">elevation</span> = <span class="value">atan2(Δalt, horiz_dist)</span> → look-up angle (°)</div>
+  <p><b>Pointing Control:</b> Computed azimuth and elevation angles are fed into a PID control loop that drives the azimuth stepper and elevation servo to minimise the angular error. The magnetometer provides the mount's current heading so the azimuth reference is absolute (not relative to startup orientation).</p>
+  <p><b>MVP Scope:</b> The current build targets the minimum viable system for a launch campaign — reliable tracking within ±5° during flight, with manual override capability.</p>
+</div>
+
+<div class="section">
+  <h2>04. MVP Build Status</h2>
+  <div class="mvp-box">
+    <h3>Current Progress</h3>
+    <p style="color:rgba(255,255,255,0.75);font-size:0.9rem;margin-bottom:0.5rem">✅ GPS telemetry receive and decode working (LoRa + NEO-M8N)</p>
+    <p style="color:rgba(255,255,255,0.75);font-size:0.9rem;margin-bottom:0.5rem">✅ Azimuth / elevation angle calculation verified against known test vectors</p>
+    <p style="color:rgba(255,255,255,0.75);font-size:0.9rem;margin-bottom:0.5rem">✅ Stepper and servo actuation working independently</p>
+    <p style="color:rgba(255,255,255,0.75);font-size:0.9rem;margin-bottom:0.5rem">⟳ PID tuning in progress — overshoot on azimuth axis under fast movement</p>
+    <p style="color:rgba(255,255,255,0.75);font-size:0.9rem;margin-bottom:0.5rem">⟳ 3D-printed pan-tilt mount — final revision in CAD</p>
+    <p style="color:rgba(255,255,255,0.75);font-size:0.9rem">◻ Field test at next HIVE launch campaign</p>
+  </div>
+</div>
+
+<div class="section">
+  <h2>05. Challenges</h2>
+  <div class="lesson-box">
+    <div class="lesson-label">Magnetometer Interference Near Motors</div>
+    <p>The stepper motor's magnetic field corrupts the magnetometer heading reading when mounted nearby. Physical separation and magnetic shielding are being evaluated — alternatively, a compass-calibration routine that runs before motor power is applied.</p>
+  </div>
+  <div class="lesson-box">
+    <div class="lesson-label">LoRa Packet Loss at High Elevation Angles</div>
+    <p>At very high elevation (rocket directly overhead), the directional antenna gain drops — the system needs to handle momentary packet loss gracefully with dead-reckoning from the last known trajectory.</p>
+  </div>
+  <div class="lesson-box">
+    <div class="lesson-label">Coordinate Frame Conventions</div>
+    <p>Mixing up NED vs ENU coordinate frames caused the azimuth calculation to point 90° off on the first test. Explicitly documenting and enforcing one coordinate convention throughout the codebase fixed this permanently.</p>
+  </div>
+</div>
+
+<div class="footer-nav">
+  <a href="vending.html">← PREV: VENDING MACHINE</a>
+  <a href="smartgrid.html">NEXT: SMART GRID →</a>
+</div>
+
+</div>
+</body>
+</html>

@@ -1,126 +1,775 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sameer Appasa | Engineering Portfolio</title>
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2220%22 fill=%22%2300008B%22/><text y=%22.7em%22 x=%2250%22 font-family=%22monospace%22 font-weight=%22bold%22 font-size=%2260%22 text-anchor=%22middle%22 fill=%22white%22>SA</text></svg>">
-    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
-    <style>
-        :root{--background:#050505;--foreground:#fafafa;--primary:#4169E1;--primary-dim:rgba(65,105,225,0.10);--card:#0d0d0d;--border:#1f1f1f;--font-mono:'Space Mono',monospace;--font-sans:'Syne',sans-serif;--status-done:#00ffcc;--status-progress:#ffd700;--muted:#888}
-        *{box-sizing:border-box;margin:0;padding:0}
-        body{background-color:var(--background);color:var(--foreground);font-family:var(--font-sans);line-height:1.7;overflow-x:hidden}
-        body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(65,105,225,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(65,105,225,0.03) 1px,transparent 1px);background-size:40px 40px;pointer-events:none;z-index:0}
-        .container{max-width:1000px;margin:0 auto;padding:4rem 2rem 6rem;position:relative;z-index:1}
-        .header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:2rem;padding-bottom:2rem;border-bottom:1px solid var(--border)}
-        h1{font-family:var(--font-mono);font-size:clamp(2rem,7vw,3.8rem);font-weight:700;letter-spacing:-0.03em;line-height:1.05;margin-bottom:0.6rem}
-        .cursor{display:inline-block;width:10px;height:0.9em;background:var(--primary);margin-left:4px;animation:blink 1s step-end infinite;vertical-align:middle}
-        @keyframes blink{0%,50%{opacity:1}51%,100%{opacity:0}}
-        .degree{font-family:var(--font-mono);color:var(--primary);font-size:0.85rem;letter-spacing:0.04em;margin-bottom:0.3rem}
-        .ea-id{font-family:var(--font-mono);font-size:0.72rem;color:var(--muted);letter-spacing:0.06em}
-        .rmit-logo{width:140px;height:auto;margin-top:8px;filter:brightness(0) invert(1);opacity:0.8;transition:opacity 0.3s}
-        .rmit-logo:hover{opacity:1}
-        .statement-box{margin-bottom:1.5rem;padding:1.5rem 1.75rem;border:1px solid var(--border);border-left:3px solid var(--primary);background:var(--primary-dim);color:#ccc;font-size:0.96rem;line-height:1.75}
-        .contact-row{font-family:var(--font-mono);font-size:0.78rem;color:var(--muted);display:flex;flex-wrap:wrap;gap:0.4rem 1.2rem;margin-bottom:1rem;align-items:center}
-        .contact-row a{color:var(--primary);text-decoration:none;border-bottom:1px solid transparent;transition:border-color 0.2s}
-        .contact-row a:hover{border-bottom-color:var(--primary)}
-        .contact-divider{color:var(--border)}
-        .section-heading{font-family:var(--font-mono);font-size:0.78rem;color:var(--primary);text-transform:uppercase;letter-spacing:0.14em;margin-bottom:1.25rem;border-left:3px solid var(--primary);padding-left:1rem}
-        .skills-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1rem;margin-bottom:4rem}
-        .skill-item{background:var(--card);border:1px solid var(--border);padding:1rem 1.25rem;position:relative;height:52px;overflow:visible;transition:border-color 0.2s}
-        .skill-item:hover,.skill-item[open]{border-color:var(--primary);z-index:100}
-        .skill-item summary{list-style:none;outline:none;font-family:var(--font-mono);font-size:0.78rem;font-weight:700;color:var(--primary);display:flex;justify-content:space-between;align-items:center;cursor:pointer;letter-spacing:0.08em}
-        .skill-item summary::after{content:'+';font-size:1.1rem;transition:transform 0.25s}
-        .skill-item[open] summary::after{transform:rotate(45deg)}
-        .skill-content{position:absolute;top:100%;left:-1px;width:calc(100% + 2px);background:#0d0d0d;border:1px solid var(--primary);border-top:none;padding:0.75rem 1.25rem;list-style:none;z-index:1000;opacity:0;transform:translateY(-4px);transition:opacity 0.2s,transform 0.2s;pointer-events:none}
-        .skill-item[open] .skill-content{opacity:1;transform:translateY(0);pointer-events:auto}
-        .skill-content li{font-family:var(--font-mono);font-size:0.78rem;color:#ccc;padding:7px 0;border-bottom:1px solid #1a1a1a;display:flex;justify-content:space-between;align-items:center}
-        .skill-content li:last-child{border-bottom:none}
-        .status-tag{font-size:0.62rem;font-weight:700;padding:2px 7px;text-transform:uppercase;letter-spacing:0.05em}
-        .done{color:var(--status-done);border:1px solid var(--status-done)}
-        .progress{color:var(--status-progress);border:1px solid var(--status-progress)}
-        .projects-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:1.25rem;margin-bottom:4rem}
-        .card{background:var(--card);border:1px solid var(--border);padding:2rem;display:flex;flex-direction:column;transition:border-color 0.25s,transform 0.25s,box-shadow 0.25s}
-        .card:hover{border-color:var(--primary);transform:translateY(-4px);box-shadow:0 0 28px rgba(65,105,225,0.15)}
-        .card-index{font-family:var(--font-mono);font-size:0.68rem;color:var(--muted);letter-spacing:0.12em;margin-bottom:0.5rem}
-        .card h3{font-family:var(--font-mono);color:var(--primary);font-size:1.15rem;margin-bottom:1rem}
-        .card p{color:var(--muted);font-size:0.9rem;flex-grow:1;margin-bottom:1.5rem;line-height:1.65}
-        .card-tags{display:flex;flex-wrap:wrap;gap:0.4rem;margin-bottom:1.25rem}
-        .card-tag{font-family:var(--font-mono);font-size:0.68rem;color:var(--primary);border:1px solid var(--border);padding:0.2rem 0.55rem;background:#0f0f0f}
-        .btn{display:inline-block;font-family:var(--font-mono);font-size:0.75rem;color:var(--primary);border:1px solid var(--primary);padding:0.55rem 1.1rem;text-decoration:none;text-align:center;transition:background 0.2s,color 0.2s;letter-spacing:0.05em}
-        .btn:hover{background:var(--primary);color:white}
-        footer{margin-top:2rem;border-top:1px solid var(--border);padding:2rem 0 0;color:var(--muted);font-family:var(--font-mono);font-size:0.75rem;letter-spacing:0.06em}
-        @media(max-width:600px){.header{flex-direction:column;gap:1.5rem}.rmit-logo{width:110px}.contact-row{flex-direction:column;gap:0.3rem}.contact-divider{display:none}}
-        .course-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1rem;margin-bottom:4rem}
-        .year-item{background:var(--card);border:1px solid var(--border);transition:border-color 0.2s;position:relative;height:52px;overflow:visible;z-index:10}
-        .year-item[open]{border-color:var(--primary);z-index:100}
-        .year-item>summary{list-style:none;outline:none;font-family:var(--font-mono);font-size:0.78rem;font-weight:700;color:var(--primary);letter-spacing:0.08em;padding:1rem 1.25rem;display:flex;justify-content:space-between;align-items:center;cursor:pointer}
-        .year-item>summary::after{content:'+';font-size:1.1rem;transition:transform 0.25s}
-        .year-item[open]>summary::after{transform:rotate(45deg)}
-        .sem-list{position:absolute;top:100%;left:-1px;width:calc(100% + 2px);background:#0d0d0d;border:1px solid var(--primary);border-top:none;padding:0.75rem;display:flex;flex-direction:column;gap:0.5rem;z-index:1000;opacity:0;transform:translateY(-4px);transition:opacity 0.2s,transform 0.2s;pointer-events:none}
-        .year-item[open] .sem-list{opacity:1;transform:translateY(0);pointer-events:auto}
-        .sem-item{background:#0a0a0a;border:1px solid var(--border);transition:border-color 0.2s;position:relative;height:38px;overflow:visible}
-        .sem-item[open]{border-color:rgba(65,105,225,0.5);z-index:200}
-        .sem-item>summary{list-style:none;outline:none;font-family:var(--font-mono);font-size:0.72rem;font-weight:700;color:#aaa;letter-spacing:0.06em;padding:0.6rem 1rem;display:flex;justify-content:space-between;align-items:center;cursor:pointer}
-        .sem-item[open]>summary{color:var(--primary)}
-        .sem-item>summary::after{content:'+';font-size:1rem;transition:transform 0.25s}
-        .sem-item[open]>summary::after{transform:rotate(45deg)}
-        .sem-subjects{position:absolute;top:100%;left:-1px;width:calc(100% + 2px);background:#080808;border:1px solid rgba(65,105,225,0.5);border-top:none;list-style:none;padding:0 1rem 0.5rem;margin:0;z-index:2000;opacity:0;transform:translateY(-4px);transition:opacity 0.2s,transform 0.2s;pointer-events:none}
-        .sem-item[open] .sem-subjects{opacity:1;transform:translateY(0);pointer-events:auto}
-        .sem-subjects li{font-family:var(--font-mono);font-size:0.74rem;color:#ccc;padding:6px 0;border-bottom:1px solid #1a1a1a;display:flex;justify-content:space-between;align-items:center;gap:0.5rem}
-        .sem-subjects li:last-child{border-bottom:none}
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sameer Appasa | Electrical Engineering Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',sans-serif;background:#fff;color:#111;overflow-x:hidden}
+
+/* ══ TOP BAR ══ */
+.topbar{
+  background:#111;padding:.55rem 0;
+}
+.topbar-inner{
+  max-width:1200px;margin:0 auto;padding:0 2rem;
+  display:flex;align-items:center;justify-content:space-between;
+}
+.topbar-left{display:flex;gap:2rem;align-items:center}
+.topbar-item{
+  display:flex;align-items:center;gap:.45rem;
+  font-size:.72rem;color:rgba(255,255,255,.65);letter-spacing:.02em;
+}
+.topbar-item a{color:rgba(255,255,255,.65);text-decoration:none;transition:color .2s}
+.topbar-item a:hover{color:#fff}
+.topbar-icon{color:#2563eb;font-size:.85rem}
+.topbar-right{display:flex;gap:.6rem}
+.social{
+  width:26px;height:26px;border-radius:50%;
+  background:rgba(255,255,255,.1);
+  display:flex;align-items:center;justify-content:center;
+  color:#fff;font-size:.65rem;text-decoration:none;font-weight:700;
+  transition:background .2s;
+}
+.social:hover{background:#2563eb}
+
+/* ══ NAVBAR ══ */
+.navbar{
+  background:#1a1f36;position:sticky;top:0;z-index:100;
+  box-shadow:0 2px 16px rgba(0,0,0,.35);
+}
+.navbar-inner{
+  max-width:1200px;margin:0 auto;padding:0 2rem;
+  display:flex;align-items:center;gap:2rem;height:60px;
+}
+.nav-logo{
+  display:flex;align-items:center;gap:.7rem;margin-right:1rem;text-decoration:none;flex-shrink:0;
+}
+.nav-logo img{height:28px;filter:brightness(0) invert(1);opacity:.85;flex-shrink:0}
+.nav-logo img[data-broken]{display:none}
+.nav-logo-monogram{
+  width:32px;height:32px;border-radius:6px;background:#2563eb;
+  display:none;align-items:center;justify-content:center;
+  font-size:.8rem;font-weight:900;color:#fff;flex-shrink:0;letter-spacing:-.02em;
+}
+.nav-logo-monogram.show{display:flex}
+.nav-logo-text{font-size:.85rem;font-weight:700;color:#fff;letter-spacing:.01em;white-space:nowrap}
+.nav-logo-sub{font-size:.6rem;color:rgba(255,255,255,.45);font-weight:400;letter-spacing:.03em;white-space:nowrap}
+.nav-links{display:flex;gap:0;flex:1}
+.nav-links a{
+  font-size:.78rem;font-weight:500;color:rgba(255,255,255,.65);
+  text-decoration:none;padding:.4rem 1rem;letter-spacing:.03em;
+  transition:color .2s,background .2s;border-radius:4px;
+}
+.nav-links a:hover,.nav-links a.active{color:#fff;background:rgba(255,255,255,.08)}
+.nav-links a.active{color:#60a5fa}
+.nav-cta{
+  margin-left:auto;
+  display:flex;align-items:center;gap:.45rem;
+  font-size:.75rem;font-weight:600;color:#fff;
+  background:#2563eb;padding:.45rem 1.1rem;border-radius:5px;
+  text-decoration:none;letter-spacing:.03em;white-space:nowrap;
+  transition:background .2s;
+}
+.nav-cta:hover{background:#1d4ed8}
+.nav-phone{
+  display:flex;align-items:center;gap:.4rem;
+  font-size:.78rem;font-weight:600;color:#60a5fa;
+  margin-left:1rem;white-space:nowrap;
+}
+
+/* ══ HERO ══ */
+.hero{
+  position:relative;min-height:100vh;
+  display:flex;align-items:center;justify-content:center;
+  text-align:center;overflow:hidden;
+}
+/* Circuit board background - SVG inline */
+.hero-bg{
+  position:absolute;inset:0;
+  background:#0a0e1a;
+}
+/* Animated circuit lines */
+.hero-bg::before{
+  content:'';position:absolute;inset:0;
+  background-image:
+    linear-gradient(rgba(37,99,235,.12) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(37,99,235,.12) 1px,transparent 1px);
+  background-size:60px 60px;
+}
+.hero-bg::after{
+  content:'';position:absolute;inset:0;
+  background:
+    radial-gradient(ellipse 100% 60% at 50% 50%,rgba(37,99,235,.22),transparent 70%),
+    radial-gradient(ellipse 60% 80% at 80% 20%,rgba(16,185,129,.1),transparent 60%),
+    radial-gradient(ellipse 50% 50% at 20% 80%,rgba(37,99,235,.12),transparent 60%);
+}
+/* Power line SVG overlay */
+.hero-powerlines{
+  position:absolute;inset:0;opacity:.18;
+}
+/* Gradient overlay for text legibility */
+.hero-overlay{
+  position:absolute;inset:0;
+  background:linear-gradient(to bottom,rgba(10,14,26,.5) 0%,rgba(10,14,26,.65) 100%);
+}
+.hero-content{position:relative;z-index:2;padding:0 1.5rem;max-width:900px}
+.hero-badge{
+  display:inline-flex;align-items:center;gap:.45rem;
+  background:rgba(37,99,235,.2);border:1px solid rgba(37,99,235,.4);
+  color:#93c5fd;font-size:.72rem;font-weight:600;letter-spacing:.08em;
+  padding:.35rem .9rem;border-radius:999px;margin-bottom:1.5rem;text-transform:uppercase;
+}
+.hero-badge-dot{width:6px;height:6px;border-radius:50%;background:#3b82f6;animation:pulse 2s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+h1.hero-title{
+  font-size:clamp(2.4rem,7vw,5.5rem);
+  font-weight:900;color:#fff;letter-spacing:-.03em;line-height:1.1;
+  margin-bottom:1.25rem;
+}
+h1.hero-title span{color:#60a5fa}
+.hero-sub{
+  font-size:clamp(.9rem,2vw,1.15rem);
+  color:rgba(255,255,255,.6);font-weight:300;
+  line-height:1.9;max-width:580px;margin:0 auto 2.5rem;
+  letter-spacing:.01em;
+}
+.hero-buttons{display:flex;gap:.85rem;justify-content:center;flex-wrap:wrap}
+.btn-blue{
+  display:inline-flex;align-items:center;gap:.45rem;
+  background:#2563eb;color:#fff;font-size:.85rem;font-weight:600;
+  padding:.8rem 1.75rem;border-radius:6px;text-decoration:none;
+  transition:background .2s,transform .15s;letter-spacing:.02em;
+}
+.btn-blue:hover{background:#1d4ed8;transform:translateY(-2px)}
+.btn-ghost{
+  display:inline-flex;align-items:center;gap:.45rem;
+  background:transparent;color:#fff;font-size:.85rem;font-weight:500;
+  padding:.8rem 1.75rem;border-radius:6px;text-decoration:none;
+  border:1px solid rgba(255,255,255,.25);transition:border-color .2s,background .2s;
+}
+.btn-ghost:hover{border-color:rgba(255,255,255,.5);background:rgba(255,255,255,.07)}
+.hero-scroll{
+  position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);
+  display:flex;flex-direction:column;align-items:center;gap:.4rem;z-index:2;
+}
+.scroll-label{font-size:.62rem;color:rgba(255,255,255,.35);letter-spacing:.12em;text-transform:uppercase}
+.scroll-arrow{color:rgba(255,255,255,.35);font-size:.85rem;animation:bounce .9s ease-in-out infinite alternate}
+@keyframes bounce{from{transform:translateY(0)}to{transform:translateY(5px)}}
+
+/* ══ STATS BAR ══ */
+.stats-bar{
+  background:#1a1f36;padding:1.5rem 0;
+}
+.stats-inner{
+  max-width:1200px;margin:0 auto;padding:0 2rem;
+  display:flex;justify-content:space-around;flex-wrap:wrap;gap:1rem;
+}
+.stat{text-align:center}
+.stat-n{font-size:2rem;font-weight:900;color:#60a5fa;line-height:1}
+.stat-l{font-size:.7rem;color:rgba(255,255,255,.45);letter-spacing:.06em;text-transform:uppercase;margin-top:.25rem}
+
+/* ══ SECTIONS ══ */
+section{padding:5rem 0}
+.wrap{max-width:1200px;margin:0 auto;padding:0 2rem}
+
+.sec-eyebrow{
+  font-size:.7rem;font-weight:700;color:#2563eb;
+  letter-spacing:.16em;text-transform:uppercase;margin-bottom:.5rem;
+}
+.sec-title{
+  font-size:2.2rem;font-weight:800;letter-spacing:-.03em;
+  margin-bottom:1rem;line-height:1.2;color:#fff;
+}
+.sec-line{
+  width:48px;height:3px;background:#2563eb;border-radius:2px;margin-bottom:2rem;
+}
+.sec-desc{font-size:.95rem;color:rgba(255,255,255,.55);max-width:520px;line-height:1.8;margin-bottom:3rem}
+
+/* ══ ABOUT ══ */
+#about{background:#07091a}
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center}
+.about-bio p{font-size:.95rem;color:rgba(255,255,255,.72);line-height:1.9;margin-bottom:1rem}
+.about-info{display:flex;flex-direction:column;gap:.5rem;margin-top:1.5rem}
+.info-row{
+  display:flex;gap:1rem;padding:.8rem 1rem;
+  background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:8px;
+  font-size:.83rem;align-items:center;
+}
+.info-label{color:rgba(255,255,255,.4);font-weight:500;min-width:90px}
+.info-val{color:#fff;font-weight:600}
+.about-right{display:flex;flex-direction:column;gap:1rem}
+.achievement{
+  background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:12px;
+  padding:1.5rem;border-left:4px solid #2563eb;
+  transition:box-shadow .2s;
+}
+.achievement:hover{box-shadow:0 4px 20px rgba(37,99,235,.2)}
+.ach-year{font-size:.65rem;font-weight:700;color:#60a5fa;letter-spacing:.1em;text-transform:uppercase;margin-bottom:.35rem}
+.ach-title{font-size:.95rem;font-weight:700;margin-bottom:.4rem;color:#fff}
+.ach-desc{font-size:.82rem;color:rgba(255,255,255,.58);line-height:1.65}
+
+/* ══ SKILLS ══ */
+#skills{background:#07091a}
+.skills-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
+.skill-card{
+  background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:12px;
+  padding:1.75rem;transition:border-color .2s,box-shadow .2s,transform .2s;
+}
+.skill-card:hover{border-color:#3b82f6;box-shadow:0 4px 24px rgba(37,99,235,.2);transform:translateY(-3px)}
+.skill-icon{font-size:1.6rem;margin-bottom:.75rem}
+.skill-card-title{font-size:.85rem;font-weight:700;margin-bottom:1rem;color:#fff}
+.skill-tags{display:flex;flex-wrap:wrap;gap:.35rem}
+.stag{
+  font-size:.7rem;font-weight:500;color:#93c5fd;
+  background:rgba(37,99,235,.2);border:1px solid rgba(37,99,235,.3);border-radius:4px;padding:.22rem .55rem;
+}
+
+/* ══ EDUCATION ══ */
+#education{background:#07091a}
+.edu-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem}
+.edu-year-card{
+  background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:12px;overflow:hidden;
+}
+.edu-year-hdr{
+  background:rgba(255,255,255,.08);color:#fff;padding:1rem 1.5rem;
+  display:flex;justify-content:space-between;align-items:center;
+  border-bottom:1px solid rgba(255,255,255,.1);
+}
+.edu-year-label{font-size:.78rem;font-weight:700;letter-spacing:.06em}
+.edu-year-num{font-size:1.5rem;font-weight:900;color:#60a5fa}
+.edu-sems{padding:1rem}
+.sem-block{margin-bottom:1rem}
+.sem-block:last-child{margin-bottom:0}
+.sem-name{font-size:.62rem;font-weight:700;color:rgba(255,255,255,.35);letter-spacing:.1em;text-transform:uppercase;margin-bottom:.5rem}
+.subject{
+  display:flex;align-items:center;
+  font-size:.74rem;color:rgba(255,255,255,.75);padding:.35rem 0;
+  border-bottom:1px solid rgba(255,255,255,.07);gap:.35rem;
+}
+.subject:last-child{border-bottom:none}
+.subject>span:first-child{flex:1}
+.subject-code{font-weight:600;font-size:.65rem;color:rgba(255,255,255,.4);width:66px;text-align:center;flex-shrink:0}
+.badge{flex-shrink:0}
+.badge{
+  font-size:.58rem;font-weight:700;padding:.18rem .45rem;border-radius:3px;
+  white-space:nowrap;flex-shrink:0;text-transform:uppercase;letter-spacing:.04em;
+}
+.badge.done{color:#15803d;background:#dcfce7;border:1px solid #bbf7d0}
+.badge.prog{color:#b45309;background:#fef3c7;border:1px solid #fde68a}
+
+/* ══ PROJECTS ══ */
+#projects{background:#07091a}
+.proj-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1.1rem}
+.proj{
+  position:relative;overflow:hidden;border-radius:14px;
+  min-height:270px;display:flex;flex-direction:column;justify-content:flex-end;
+  transition:transform .28s cubic-bezier(.22,1,.36,1),box-shadow .28s;
+}
+.proj:hover{transform:translateY(-6px);box-shadow:0 20px 56px rgba(0,0,0,.55)}
+.proj::before{
+  content:'';position:absolute;inset:0;
+  background-size:cover;background-position:center;
+  filter:blur(4px) brightness(.42) saturate(1.4);
+  transform:scale(1.1);
+  transition:filter .35s,transform .35s;
+}
+.proj:hover::before{filter:blur(2px) brightness(.52) saturate(1.5);transform:scale(1.13)}
+.proj-c1::before{background:radial-gradient(ellipse at 30% 70%,#f97316 0%,#b45309 45%,#120600 100%),radial-gradient(ellipse at 80% 20%,#fbbf24 0%,transparent 55%)}
+.proj-c2::before{background:radial-gradient(ellipse at 65% 35%,#3b82f6 0%,#1e40af 45%,#000b1f 100%),radial-gradient(ellipse at 20% 80%,#60a5fa 0%,transparent 50%)}
+.proj-c3::before{background:radial-gradient(ellipse at 45% 60%,#06b6d4 0%,#0e7490 45%,#001318 100%),radial-gradient(ellipse at 75% 25%,#22d3ee 0%,transparent 50%)}
+.proj-c4::before{background:radial-gradient(ellipse at 35% 55%,#22c55e 0%,#166534 45%,#001a0a 100%),radial-gradient(ellipse at 70% 30%,#4ade80 0%,transparent 50%)}
+.proj-c5::before{background:radial-gradient(ellipse at 55% 65%,#a855f7 0%,#6b21a8 45%,#0d0018 100%),radial-gradient(ellipse at 25% 25%,#c084fc 0%,transparent 50%)}
+.proj-c6::before{background:radial-gradient(ellipse at 40% 60%,#f43f5e 0%,#9f1239 45%,#1a0010 100%),radial-gradient(ellipse at 75% 25%,#fb7185 0%,transparent 50%)}
+.proj-c7::before{background:radial-gradient(ellipse at 50% 50%,#14b8a6 0%,#0f766e 45%,#001310 100%),radial-gradient(ellipse at 25% 75%,#2dd4bf 0%,transparent 50%)}
+.proj-overlay{
+  position:relative;z-index:1;padding:1.4rem 1.4rem 1.3rem;
+  background:linear-gradient(to top,rgba(0,0,0,.88) 0%,rgba(0,0,0,.55) 55%,rgba(0,0,0,.08) 100%);
+  flex:1;display:flex;flex-direction:column;justify-content:flex-end;
+}
+.proj-num{font-size:.57rem;font-weight:800;color:rgba(255,255,255,.4);letter-spacing:.14em;margin-bottom:.5rem}
+.proj-title{font-size:.98rem;font-weight:800;color:#fff;margin-bottom:.4rem;line-height:1.3}
+.proj-desc{font-size:.75rem;color:rgba(255,255,255,.68);line-height:1.65;margin-bottom:.85rem}
+.proj-tags{display:flex;flex-wrap:wrap;gap:.3rem;margin-bottom:.9rem}
+.ptag{font-size:.6rem;font-weight:600;color:rgba(255,255,255,.88);background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);border-radius:4px;padding:.18rem .52rem}
+.proj-footer{display:flex;justify-content:space-between;align-items:center}
+.proj-type-badge{font-size:.58rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;background:rgba(37,99,235,.45);color:#93c5fd;border:1px solid rgba(37,99,235,.5);padding:.2rem .6rem;border-radius:4px}
+.proj-type-badge.pb-personal{background:rgba(234,88,12,.4);color:#fdba74;border-color:rgba(234,88,12,.45)}
+.proj-type-badge.pb-hive{background:rgba(168,85,247,.4);color:#d8b4fe;border-color:rgba(168,85,247,.45)}
+.proj-link{
+  font-size:.7rem;font-weight:700;color:#fff;text-decoration:none;
+  background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.28);
+  padding:.35rem .85rem;border-radius:5px;
+  transition:background .2s;white-space:nowrap;
+}
+.proj-link:hover{background:rgba(255,255,255,.26)}
+
+/* ══ FOOTER ══ */
+footer{background:#0f1221;padding:3rem 0 1.5rem}
+.footer-inner{max-width:1200px;margin:0 auto;padding:0 2rem}
+.footer-top{
+  display:flex;justify-content:space-between;align-items:flex-start;
+  flex-wrap:wrap;gap:2rem;padding-bottom:2rem;
+  border-bottom:1px solid rgba(255,255,255,.08);margin-bottom:1.5rem;
+}
+.footer-brand{}
+.footer-brand-name{font-size:1.1rem;font-weight:800;color:#fff;margin-bottom:.35rem}
+.footer-brand-sub{font-size:.75rem;color:rgba(255,255,255,.4)}
+.footer-links{display:flex;flex-direction:column;gap:.5rem}
+.footer-links a{font-size:.8rem;color:rgba(255,255,255,.45);text-decoration:none;transition:color .2s}
+.footer-links a:hover{color:#60a5fa}
+.footer-contact{display:flex;flex-direction:column;gap:.5rem}
+.footer-contact span{font-size:.8rem;color:rgba(255,255,255,.45)}
+.footer-bottom{display:flex;justify-content:space-between;flex-wrap:wrap;gap:.5rem}
+.footer-copy{font-size:.72rem;color:rgba(255,255,255,.25)}
+.footer-status{display:flex;align-items:center;gap:.4rem;font-size:.7rem;color:#4ade80}
+.f-dot{width:6px;height:6px;border-radius:50%;background:#4ade80;animation:pulse 2s ease-in-out infinite}
+
+/* ══ RESPONSIVE ══ */
+@media(max-width:900px){
+  .about-grid,.edu-grid,.skills-grid{grid-template-columns:1fr}
+  h1.hero-title{font-size:2.5rem}
+  .stats-inner{gap:1.5rem}
+  .footer-top{flex-direction:column}
+}
+@media(max-width:600px){
+  .topbar-left{flex-direction:column;gap:.35rem;align-items:flex-start}
+  .navbar-inner{gap:1rem}
+  .nav-links{display:none}
+  .nav-phone{display:none}
+}
+
+/* scroll reveal */
+.reveal{opacity:0;transform:translateY(20px);transition:opacity .6s,transform .6s}
+.reveal.on{opacity:1;transform:none}
+</style>
 </head>
 <body>
-<div class="container">
-    <div class="header">
-        <div>
-            <h1>Sameer Appasa<span class="cursor"></span></h1>
-            <div class="degree">Bachelor of Electrical Engineering (Honours)</div>
-            <div class="ea-id">Engineering Australia ID: 10791344</div>
-        </div>
-        <img src="image_0.png" alt="RMIT Logo" class="rmit-logo">
+
+<!-- TOP BAR -->
+<div class="topbar">
+  <div class="topbar-inner">
+    <div class="topbar-left">
+      <div class="topbar-item"><span class="topbar-icon">◎</span> Melbourne, Victoria, Australia</div>
+      <div class="topbar-item"><span class="topbar-icon">✉</span> <a href="mailto:sameer.appasa20@gmail.com">sameer.appasa20@gmail.com</a></div>
+      <div class="topbar-item"><span class="topbar-icon">◷</span> Engineering Australia · ID 10791344</div>
     </div>
-    <div class="contact-row">
-        <span>Melbourne, AU</span><span class="contact-divider">|</span>
-        <span>0422 759 942</span><span class="contact-divider">|</span>
-        <a href="mailto:sameer.appasa20@gmail.com">sameer.appasa20@gmail.com</a><span class="contact-divider">|</span>
-        <a href="https://www.linkedin.com/in/sameer-appasa-ba033931a/" target="_blank">LinkedIn</a><span class="contact-divider">|</span>
-        <a href="https://github.com/Sam2001115" target="_blank">GitHub</a>
+    <div class="topbar-right">
+      <a href="https://www.linkedin.com/in/sameer-appasa-ba033931a/" target="_blank" class="social">in</a>
+      <a href="https://github.com/Sam2001115" target="_blank" class="social">gh</a>
     </div>
-    <div class="statement-box">
-        EE student at RMIT University. Originally from Iraq &#8212; arrived in Australia as a refugee in 2022. Completed high school in Sydney while working at Fairfield City Open Library, then moved to Melbourne to study Engineering at RMIT. Passionate about electricity and embedded systems since childhood. Outside of study I build hardware projects, write firmware, and design circuits to stay work-ready.
-    </div>
-    <div class="section-heading">&#9881;  Technical Toolkit</div>
-    <div class="skills-grid">
-        <details class="skill-item"><summary>SOFTWARE</summary><ul class="skill-content"><li>Altium Designer</li><li>SolidWorks</li><li>Multisim</li><li>MATLAB</li><li>PowerFactory DIgSILENT</li><li>PlatformIO</li><li>VS Code</li><li>GitHub</li><li>KiCad</li></ul></details>
-        <details class="skill-item"><summary>PROGRAMMING</summary><ul class="skill-content"><li>C++ (Embedded)</li><li>Python</li><li>Java</li><li>HTML / CSS</li></ul></details>
-        <details class="skill-item"><summary>HARDWARE</summary><ul class="skill-content"><li>ESP32</li><li>Raspberry Pi</li><li>DRV8833 Motor Driver</li><li>ACS712 Current Sensor</li><li>Soldering &amp; PCB Assembly</li><li>Oscilloscope Operation</li><li>Circuit Troubleshooting</li><li>3D Printing (FDM / PLA)</li></ul></details>
-    </div>
-    <div class="section-heading">&#128218; Core Coursework</div>
-    <div class="course-grid">
-        <details class="year-item"><summary>YEAR 1</summary><div class="sem-list"><details class="sem-item"><summary>SEMESTER 1</summary><ul class="sem-subjects"><li>OENG1206 Digital Fundamentals <span class="status-tag done">DONE</span></li><li>OENG1166 Prof Eng Prac <span class="status-tag done">DONE</span></li><li>OENG1208 Engineering Science <span class="status-tag done">DONE</span></li><li>MATH2393 Engineering Mathematics <span class="status-tag done">DONE</span></li></ul></details><details class="sem-item"><summary>SEMESTER 2</summary><ul class="sem-subjects"><li>OENG1250 Intro to Engineering Design <span class="status-tag done">DONE</span></li><li>CIVE1186 Intro to Env &amp; Sustain <span class="status-tag done">DONE</span></li><li>EEET2246 Engineering Computing 1 <span class="status-tag done">DONE</span></li><li>EEET2249 Intro to Elec &amp; Electronic <span class="status-tag done">DONE</span></li></ul></details></div></details>
-        <details class="year-item"><summary>YEAR 2</summary><div class="sem-list"><details class="sem-item"><summary>SEMESTER 1</summary><ul class="sem-subjects"><li>MATH2161 Mathematics for ECE <span class="status-tag done">DONE</span></li><li>EEET2255 Electronics <span class="status-tag done">DONE</span></li><li>EEET2369 Signals and Systems 1 <span class="status-tag done">DONE</span></li><li>EEET2613 Smart Grids <span class="status-tag done">DONE</span></li></ul></details><details class="sem-item"><summary>SEMESTER 2</summary><ul class="sem-subjects"><li>EEET1316 Electrical Engineering 1 <span class="status-tag progress">IN PROGRESS</span></li><li>MIET2385 Systems Engineering Principles <span class="status-tag progress">IN PROGRESS</span></li><li>EEET2556 Introduction to Embedded Systems <span class="status-tag progress">IN PROGRESS</span></li><li>EEET2257 Engineering Design 2 <span class="status-tag progress">IN PROGRESS</span></li></ul></details></div></details>
-    </div>
-    <div class="section-heading">&#127942; Achievements</div>
-    <div class="skills-grid" style="margin-bottom:4rem">
-        <div style="background:var(--card);border:1px solid var(--border);border-left:3px solid var(--status-done);padding:1.25rem 1.5rem"><div style="font-family:var(--font-mono);font-size:0.68rem;color:var(--status-done);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:0.5rem">2025 &amp; 2026</div><div style="font-family:var(--font-mono);font-size:0.9rem;color:var(--foreground);font-weight:700;margin-bottom:0.5rem">Friends of Zainab Tertiary Scholarship</div><div style="font-size:0.88rem;color:#aaa;line-height:1.6">Awarded by the Public Education Foundation &#8212; a scholarship recognising academic achievement and resilience for students from refugee and migrant backgrounds pursuing tertiary education.</div></div>
-        <div style="background:var(--card);border:1px solid var(--border);border-left:3px solid var(--status-done);padding:1.25rem 1.5rem"><div style="font-family:var(--font-mono);font-size:0.68rem;color:var(--status-done);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:0.5rem">2025 &#8212; 1st Place</div><div style="font-family:var(--font-mono);font-size:0.9rem;color:var(--foreground);font-weight:700;margin-bottom:0.5rem">RMIT BESS Med-Tech Hackathon</div><div style="font-size:0.88rem;color:#aaa;line-height:1.6">Placed first in the RMIT Biomedical Engineering Student Society Med-Tech Hackathon 2025 &#8212; competing against engineering teams to design innovative medical technology solutions.</div></div>
-    </div>
-    <div class="section-heading">&#128295; Featured Projects</div>
-    <div class="projects-grid">
-        <div class="card"><div class="card-index">PROJECT [01] / PERSONAL BUILD</div><h3>Cleaning Rover</h3><p>Autonomous floor cleaning robot built on ESP32-WROOM-32. Features 4&#215; HC-SR04 ultrasonic sensors, dual DRV8833 motor drivers, 3S2P Li-ion power system with BMS, and a WiFi Access Point dashboard with radar display, manual controls, and live battery monitoring.</p><div class="card-tags"><span class="card-tag">ESP32</span><span class="card-tag">C++</span><span class="card-tag">SolidWorks</span><span class="card-tag">3D Print</span><span class="card-tag">DRV8833</span><span class="card-tag">IoT</span></div><a href="rover.html" class="btn">VIEW_TECHNICAL_LOGS &#8594;</a></div>
-        <div class="card"><div class="card-index">PROJECT [02] / UNIVERSITY BUILD</div><h3>OUSB Simulator</h3><p>High-fidelity C++ hardware simulator emulating the AVR register architecture of an OUSB board. Implements bitwise port manipulation, a strict error-precedence validation engine, and a custom file I/O command parser &#8212; achieving 100% accuracy against hardware specification.</p><div class="card-tags"><span class="card-tag">C++</span><span class="card-tag">AVR Architecture</span><span class="card-tag">Bitwise Ops</span><span class="card-tag">File I/O</span></div><a href="ousb.html" class="btn">VIEW_TECHNICAL_LOGS &#8594;</a></div>
-        <div class="card"><div class="card-index">PROJECT [03] / PERSONAL BUILD</div><h3>Room Monitor &amp; Security System</h3><p>Always-on IoT security monitor running on ESP32. Delivers Telegram intrusion alerts in under 2 seconds, with a multi-ping false-trigger filter, NTP real-time clock on OLED, HTTP Basic Auth web dashboard, and Healthchecks.io heartbeat for silent-failure detection. 3+ months uptime at 99.9%.</p><div class="card-tags"><span class="card-tag">ESP32</span><span class="card-tag">Telegram API</span><span class="card-tag">NTP</span><span class="card-tag">IoT</span><span class="card-tag">OLED</span></div><a href="monitoring.html" class="btn">VIEW_TECHNICAL_LOGS &#8594;</a></div>
-        <div class="card"><div class="card-index">PROJECT [04] / PERSONAL BUILD</div><h3>Smart Solar Energy Monitor</h3><p>Fully operational solar energy monitoring system on ESP32-C3. Real-time current, voltage, power, temperature, and humidity measurement. Dual relay automation, 3-screen ST7789 TFT dashboard, KiCad PCB design, SolidWorks enclosure, and WiFi web dashboard &#8212; no router required.</p><div class="card-tags"><span class="card-tag">ESP32-C3</span><span class="card-tag">ACS712</span><span class="card-tag">Solar</span><span class="card-tag">Relay</span><span class="card-tag">3S BMS</span><span class="card-tag">KiCad PCB</span><span class="card-tag">SolidWorks</span><span class="card-tag">DHT22</span><span class="card-tag">IoT</span></div><a href="solar.html" class="btn">VIEW_TECHNICAL_LOGS &#8594;</a></div>
-    </div>
-    <footer>RMIT_ENGINEERING // 2026 // ALL_SYSTEMS_OPERATIONAL</footer>
+  </div>
 </div>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+  <div class="navbar-inner">
+    <a href="#" class="nav-logo">
+      <img src="image_0.png" alt="RMIT" onerror="this.setAttribute('data-broken','1');this.style.display='none';this.nextElementSibling.classList.add('show')">
+      <div class="nav-logo-monogram">SA</div>
+      <div>
+        <div class="nav-logo-text">Sameer Appasa</div>
+        <div class="nav-logo-sub">BEng Electrical (Hons) · RMIT</div>
+      </div>
+    </a>
+    <div class="nav-links">
+      <a href="#about" class="active">About</a>
+      <a href="#skills">Skills</a>
+      <a href="#education">Education</a>
+      <a href="#projects">Projects</a>
+      <a href="#footer">Contact</a>
+    </div>
+    <div class="nav-phone">☎ 0422 759 942</div>
+    <a href="mailto:sameer.appasa20@gmail.com" class="nav-cta">Get in Touch</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-bg">
+    <!-- Power line SVG background -->
+    <svg class="hero-powerlines" viewBox="0 0 1440 800" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+      <!-- Towers -->
+      <line x1="200" y1="800" x2="200" y2="300" stroke="#3b82f6" stroke-width="3" opacity=".6"/>
+      <line x1="185" y1="440" x2="215" y2="440" stroke="#3b82f6" stroke-width="2" opacity=".6"/>
+      <line x1="175" y1="380" x2="225" y2="380" stroke="#3b82f6" stroke-width="2" opacity=".6"/>
+      <line x1="165" y1="330" x2="235" y2="330" stroke="#3b82f6" stroke-width="2" opacity=".6"/>
+      <line x1="200" y1="320" x2="200" y2="300" stroke="#3b82f6" stroke-width="2" opacity=".6"/>
+
+      <line x1="600" y1="800" x2="600" y2="250" stroke="#3b82f6" stroke-width="3" opacity=".5"/>
+      <line x1="583" y1="390" x2="617" y2="390" stroke="#3b82f6" stroke-width="2" opacity=".5"/>
+      <line x1="572" y1="330" x2="628" y2="330" stroke="#3b82f6" stroke-width="2" opacity=".5"/>
+      <line x1="560" y1="275" x2="640" y2="275" stroke="#3b82f6" stroke-width="2" opacity=".5"/>
+
+      <line x1="1000" y1="800" x2="1000" y2="280" stroke="#3b82f6" stroke-width="3" opacity=".45"/>
+      <line x1="983" y1="410" x2="1017" y2="410" stroke="#3b82f6" stroke-width="2" opacity=".45"/>
+      <line x1="972" y1="350" x2="1028" y2="350" stroke="#3b82f6" stroke-width="2" opacity=".45"/>
+      <line x1="960" y1="300" x2="1040" y2="300" stroke="#3b82f6" stroke-width="2" opacity=".45"/>
+
+      <line x1="1350" y1="800" x2="1350" y2="260" stroke="#3b82f6" stroke-width="3" opacity=".4"/>
+      <line x1="1333" y1="390" x2="1367" y2="390" stroke="#3b82f6" stroke-width="2" opacity=".4"/>
+      <line x1="1322" y1="330" x2="1378" y2="330" stroke="#3b82f6" stroke-width="2" opacity=".4"/>
+      <line x1="1310" y1="280" x2="1390" y2="280" stroke="#3b82f6" stroke-width="2" opacity=".4"/>
+
+      <!-- Power lines (cables) -->
+      <path d="M165 330 Q382 420 560 275" stroke="#60a5fa" stroke-width="1.5" fill="none" opacity=".5"/>
+      <path d="M175 380 Q388 460 572 330" stroke="#60a5fa" stroke-width="1.5" fill="none" opacity=".5"/>
+      <path d="M560 275 Q780 380 960 300" stroke="#60a5fa" stroke-width="1.5" fill="none" opacity=".45"/>
+      <path d="M572 330 Q786 420 972 350" stroke="#60a5fa" stroke-width="1.5" fill="none" opacity=".45"/>
+      <path d="M960 300 Q1180 350 1310 280" stroke="#60a5fa" stroke-width="1.5" fill="none" opacity=".4"/>
+      <path d="M972 350 Q1192 400 1322 330" stroke="#60a5fa" stroke-width="1.5" fill="none" opacity=".4"/>
+
+      <!-- Ground/horizon -->
+      <rect x="0" y="680" width="1440" height="120" fill="rgba(10,14,26,0.6)"/>
+      <!-- Silhouette hills -->
+      <path d="M0 680 Q200 600 400 650 Q600 700 800 620 Q1000 540 1200 600 Q1350 650 1440 630 L1440 800 L0 800Z" fill="rgba(5,8,20,.7)"/>
+    </svg>
+  </div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <div class="hero-badge"><span class="hero-badge-dot"></span> RMIT University · Melbourne, AU</div>
+    <h1 class="hero-title">Electrical Engineering<br><span>Built from the Ground Up</span></h1>
+    <p class="hero-sub">Bachelor of Electrical Engineering (Honours) student, embedded systems builder, and hardware maker. I design circuits, write firmware, and build real things.</p>
+    <div class="hero-buttons">
+      <a href="#projects" class="btn-blue">View My Projects</a>
+      <a href="mailto:sameer.appasa20@gmail.com" class="btn-ghost">Get In Touch</a>
+    </div>
+  </div>
+  <div class="hero-scroll">
+    <span class="scroll-label">Scroll</span>
+    <span class="scroll-arrow">↓</span>
+  </div>
+</div>
+
+<!-- STATS -->
+<div class="stats-bar">
+  <div class="stats-inner">
+    <div class="stat"><div class="stat-n">11</div><div class="stat-l">Projects Built</div></div>
+    <div class="stat"><div class="stat-n">3</div><div class="stat-l">Years at RMIT</div></div>
+    <div class="stat"><div class="stat-n">2×</div><div class="stat-l">Scholarship Recipient</div></div>
+    <div class="stat"><div class="stat-n">1st</div><div class="stat-l">BESS Hackathon</div></div>
+    <div class="stat"><div class="stat-n">99.9%</div><div class="stat-l">IoT Uptime</div></div>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section id="about">
+<div class="wrap">
+  <div class="about-grid reveal">
+    <div>
+      <div class="sec-eyebrow">About Me</div>
+      <h2 class="sec-title">Sameer Appasa</h2>
+      <div class="sec-line"></div>
+      <div class="about-bio">
+        <p>Electrical engineering student at RMIT University, graduating in 2027. I specialise in embedded systems, power electronics, and hardware design — with a hands-on approach to everything I build.</p>
+        <p>My passion for electronics started early. From autonomous robots and solar monitors to CNC machines and antenna trackers, I turn ideas into real, working hardware — not just simulations.</p>
+        <p>Outside the classroom, I'm an active member of the <strong>RMIT HIVE Rocketry team</strong>, developing a two-axis antenna tracking system that follows high-altitude rockets in real-time using GPS and LoRa RF telemetry.</p>
+      </div>
+      <div class="about-info">
+        <div class="info-row"><span class="info-label">Degree</span><span class="info-val">BEng Electrical Engineering (Hons)</span></div>
+        <div class="info-row"><span class="info-label">University</span><span class="info-val">RMIT University, Melbourne</span></div>
+        <div class="info-row"><span class="info-label">Year</span><span class="info-val">Year 3 · Semester 1 (2026)</span></div>
+        <div class="info-row"><span class="info-label">Phone</span><span class="info-val">0422 759 942</span></div>
+        <div class="info-row"><span class="info-label">ID</span><span class="info-val">Engineering Australia · 10791344</span></div>
+      </div>
+    </div>
+    <div class="about-right">
+      <div class="achievement">
+        <div class="ach-year">2025 &amp; 2026 · Scholarship</div>
+        <div class="ach-title">Friends of Zainab Tertiary Scholarship</div>
+        <div class="ach-desc">Awarded by the Public Education Foundation — recognising academic achievement and resilience for students from refugee and migrant backgrounds pursuing tertiary education.</div>
+      </div>
+      <div class="achievement">
+        <div class="ach-year">2025 · 1st Place</div>
+        <div class="ach-title">RMIT BESS Med-Tech Hackathon</div>
+        <div class="ach-desc">Placed first in the RMIT Biomedical Engineering Student Society Med-Tech Hackathon 2025, competing against engineering teams to design innovative medical technology solutions.</div>
+      </div>
+      <div class="achievement">
+        <div class="ach-year">2026 · Team Member</div>
+        <div class="ach-title">RMIT HIVE Rocketry Club</div>
+        <div class="ach-desc">Active member of RMIT HIVE Rocketry, building a two-axis antenna tracking system to follow high-altitude rockets in real-time using GPS and LoRa RF telemetry.</div>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+<div class="wrap">
+  <div class="sec-eyebrow">Technical Toolkit</div>
+  <h2 class="sec-title">Skills &amp; Technologies</h2>
+  <div class="sec-line"></div>
+  <div class="skills-grid reveal">
+    <div class="skill-card">
+      <div class="skill-icon">⚙️</div>
+      <div class="skill-card-title">Software &amp; Design Tools</div>
+      <div class="skill-tags">
+        <span class="stag">Altium Designer</span><span class="stag">KiCad</span><span class="stag">SolidWorks</span>
+        <span class="stag">MATLAB</span><span class="stag">Multisim</span><span class="stag">PowerFactory</span>
+        <span class="stag">PlatformIO</span><span class="stag">VS Code</span><span class="stag">Git / GitHub</span>
+      </div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">💻</div>
+      <div class="skill-card-title">Programming Languages</div>
+      <div class="skill-tags">
+        <span class="stag">C++ (Embedded)</span><span class="stag">AVR C</span><span class="stag">Python</span>
+        <span class="stag">Java</span><span class="stag">HTML / CSS</span>
+      </div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">🔧</div>
+      <div class="skill-card-title">Hardware &amp; Electronics</div>
+      <div class="skill-tags">
+        <span class="stag">ESP32</span><span class="stag">Raspberry Pi</span><span class="stag">PCB Design</span>
+        <span class="stag">Stepper Motors</span><span class="stag">BMS / Li-ion</span><span class="stag">Oscilloscope</span>
+        <span class="stag">3D Printing</span><span class="stag">Soldering</span>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- EDUCATION -->
+<section id="education">
+<div class="wrap">
+  <div class="sec-eyebrow">Academic Journey</div>
+  <h2 class="sec-title">Core Coursework</h2>
+  <div class="sec-line"></div>
+  <div class="edu-grid reveal">
+    <div class="edu-year-card">
+      <div class="edu-year-hdr">
+        <div class="edu-year-label">YEAR ONE · 2024</div>
+        <div class="edu-year-num">Y1</div>
+      </div>
+      <div class="edu-sems">
+        <div class="sem-block">
+          <div class="sem-name">Semester 1</div>
+          <div class="subject"><span>Digital Fundamentals</span><span class="subject-code">OENG1206</span><span class="badge done">Done</span></div>
+          <div class="subject"><span>Prof Eng Prac</span><span class="subject-code">OENG1166</span><span class="badge done">Done</span></div>
+          <div class="subject"><span>Engineering Science</span><span class="subject-code">OENG1208</span><span class="badge done">Done</span></div>
+          <div class="subject"><span>Eng Mathematics</span><span class="subject-code">MATH2393</span><span class="badge done">Done</span></div>
+        </div>
+        <div class="sem-block">
+          <div class="sem-name">Semester 2</div>
+          <div class="subject"><span>Intro Eng Design</span><span class="subject-code">OENG1250</span><span class="badge done">Done</span></div>
+          <div class="subject"><span>Env &amp; Sustain</span><span class="subject-code">CIVE1186</span><span class="badge done">Done</span></div>
+          <div class="subject"><span>Engineering Computing</span><span class="subject-code">EEET2246</span><span class="badge done">Done</span></div>
+          <div class="subject"><span>Intro Elec &amp; Electronic</span><span class="subject-code">EEET2249</span><span class="badge done">Done</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="edu-year-card">
+      <div class="edu-year-hdr">
+        <div class="edu-year-label">YEAR TWO · 2025</div>
+        <div class="edu-year-num">Y2</div>
+      </div>
+      <div class="edu-sems">
+        <div class="sem-block">
+          <div class="sem-name">Semester 1</div>
+          <div class="subject"><span>Maths for ECE</span><span class="subject-code">MATH2161</span><span class="badge done">Done</span></div>
+          <div class="subject"><span>Electronics</span><span class="subject-code">EEET2255</span><span class="badge done">Done</span></div>
+          <div class="subject"><span>Signals &amp; Systems</span><span class="subject-code">EEET2369</span><span class="badge done">Done</span></div>
+          <div class="subject"><span>Smart Grids</span><span class="subject-code">EEET2613</span><span class="badge done">Done</span></div>
+        </div>
+        <div class="sem-block">
+          <div class="sem-name">Semester 2</div>
+          <div class="subject"><span>Electrical Eng 1</span><span class="subject-code">EEET1316</span><span class="badge done">Done</span></div>
+          <div class="subject"><span>Systems Engineering</span><span class="subject-code">MIET2385</span><span class="badge done">Done</span></div>
+          <div class="subject"><span>Embedded Systems</span><span class="subject-code">EEET2556</span><span class="badge done">Done</span></div>
+          <div class="subject"><span>Engineering Design 2</span><span class="subject-code">EEET2257</span><span class="badge done">Done</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="edu-year-card">
+      <div class="edu-year-hdr" style="background:#1e3a5f">
+        <div class="edu-year-label">YEAR THREE · 2026</div>
+        <div class="edu-year-num" style="color:#fbbf24">Y3</div>
+      </div>
+      <div class="edu-sems">
+        <div class="sem-block">
+          <div class="sem-name">Semester 1 · Current</div>
+          <div class="subject"><span>Power Systems 1</span><span class="subject-code">EEET2106</span><span class="badge prog">In Progress</span></div>
+          <div class="subject"><span>Digital Signal Processing</span><span class="subject-code">EEET2263</span><span class="badge prog">In Progress</span></div>
+          <div class="subject"><span>Power Electronics</span><span class="subject-code">EEET2274</span><span class="badge prog">In Progress</span></div>
+          <div class="subject"><span>Control Systems</span><span class="subject-code">EEET2273</span><span class="badge prog">In Progress</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+<div class="wrap">
+  <div class="sec-eyebrow" style="color:#60a5fa">Featured Work</div>
+  <h2 class="sec-title">Projects</h2>
+  <div class="sec-line"></div>
+  <div class="proj-grid reveal">
+
+    <div class="proj proj-c1">
+      <div class="proj-overlay">
+        <div class="proj-num">PROJECT 01</div>
+        <div class="proj-title">Cleaning Rover</div>
+        <div class="proj-desc">Autonomous floor cleaning robot on ESP32-WROOM-32. 4× HC-SR04 ultrasonic sensors, dual DRV8833 motor drivers, 3S2P Li-ion with BMS. WiFi dashboard with radar, manual controls, live battery monitoring.</div>
+        <div class="proj-tags"><span class="ptag">ESP32</span><span class="ptag">C++</span><span class="ptag">SolidWorks</span><span class="ptag">3D Print</span><span class="ptag">IoT</span></div>
+        <div class="proj-footer"><span class="proj-type-badge pb-personal">Personal</span><a href="rover.html" class="proj-link">View Build →</a></div>
+      </div>
+    </div>
+
+    <div class="proj proj-c2">
+      <div class="proj-overlay">
+        <div class="proj-num">PROJECT 02</div>
+        <div class="proj-title">OUSB Simulator</div>
+        <div class="proj-desc">High-fidelity C++ simulator emulating AVR register architecture. Bitwise port manipulation, error-precedence validation, file I/O command parser — 100% spec accuracy.</div>
+        <div class="proj-tags"><span class="ptag">C++</span><span class="ptag">AVR</span><span class="ptag">Bitwise</span><span class="ptag">File I/O</span></div>
+        <div class="proj-footer"><span class="proj-type-badge">University</span><a href="ousb.html" class="proj-link">View Build →</a></div>
+      </div>
+    </div>
+
+    <div class="proj proj-c3">
+      <div class="proj-overlay">
+        <div class="proj-num">PROJECT 03</div>
+        <div class="proj-title">Room Monitor &amp; Security</div>
+        <div class="proj-desc">Always-on IoT security monitor on ESP32. Telegram alerts in under 2 seconds, multi-ping filter, NTP clock on OLED, HTTP Basic Auth dashboard, Healthchecks.io heartbeat. 99.9% uptime over 3+ months.</div>
+        <div class="proj-tags"><span class="ptag">ESP32</span><span class="ptag">Telegram API</span><span class="ptag">NTP</span><span class="ptag">OLED</span><span class="ptag">IoT</span></div>
+        <div class="proj-footer"><span class="proj-type-badge pb-personal">Personal</span><a href="monitoring.html" class="proj-link">View Build →</a></div>
+      </div>
+    </div>
+
+    <div class="proj proj-c4">
+      <div class="proj-overlay">
+        <div class="proj-num">PROJECT 04</div>
+        <div class="proj-title">Smart Solar Monitor</div>
+        <div class="proj-desc">Solar energy monitoring on ESP32-C3. Real-time V, I, power, temp, humidity. Dual relay automation, 3-screen ST7789 dashboard, KiCad PCB, SolidWorks enclosure, WiFi web dashboard.</div>
+        <div class="proj-tags"><span class="ptag">ESP32-C3</span><span class="ptag">ACS712</span><span class="ptag">KiCad</span><span class="ptag">Solar</span><span class="ptag">BMS</span></div>
+        <div class="proj-footer"><span class="proj-type-badge pb-personal">Personal</span><a href="solar.html" class="proj-link">View Build →</a></div>
+      </div>
+    </div>
+
+    <div class="proj proj-c6">
+      <div class="proj-overlay">
+        <div class="proj-num">PROJECT 05</div>
+        <div class="proj-title">CNC Plotter Machine</div>
+        <div class="proj-desc">Two-axis CNC pen plotter from salvaged printer parts. ESP32 with integrated ST7789, custom G-code parser, touchscreen UI. A4988 stepper drivers with adjustable microstepping.</div>
+        <div class="proj-tags"><span class="ptag">ESP32</span><span class="ptag">CNC</span><span class="ptag">A4988</span><span class="ptag">G-code</span><span class="ptag">ST7789</span></div>
+        <div class="proj-footer"><span class="proj-type-badge">University</span><a href="cnc.html" class="proj-link">View Build →</a></div>
+      </div>
+    </div>
+
+    <div class="proj proj-c2">
+      <div class="proj-overlay">
+        <div class="proj-num">PROJECT 06</div>
+        <div class="proj-title">Vending Machine Controller</div>
+        <div class="proj-desc">AVR C firmware implementing a full vending machine state machine for EEET2256. Keypad input, LED indicators, product selection, coin handling, change dispensing. Strict hardware register control.</div>
+        <div class="proj-tags"><span class="ptag">AVR C</span><span class="ptag">State Machine</span><span class="ptag">Keypad</span><span class="ptag">LED</span></div>
+        <div class="proj-footer"><span class="proj-type-badge">University</span><a href="vending.html" class="proj-link">View Build →</a></div>
+      </div>
+    </div>
+
+    <div class="proj proj-c5">
+      <div class="proj-overlay">
+        <div class="proj-num">PROJECT 07</div>
+        <div class="proj-title">Antenna Tracking System</div>
+        <div class="proj-desc">Two-axis antenna tracker for RMIT HIVE Rocketry. Real-time rocket tracking via GPS + LoRa RF link, automatic az/el pointing, manual override. Designed for field deployment at rocket launches.</div>
+        <div class="proj-tags"><span class="ptag">ESP32</span><span class="ptag">LoRa</span><span class="ptag">GPS</span><span class="ptag">Servo</span><span class="ptag">RF</span></div>
+        <div class="proj-footer"><span class="proj-type-badge pb-hive">RMIT HIVE</span><a href="antenna.html" class="proj-link">View Build →</a></div>
+      </div>
+    </div>
+
+    <div class="proj proj-c7">
+      <div class="proj-overlay">
+        <div class="proj-num">PROJECT 08</div>
+        <div class="proj-title">Smart Grid Network Modelling</div>
+        <div class="proj-desc">DIgSILENT PowerFactory — load flow, fault studies, N-1 contingency analysis, and VPP dispatch. Lab 4: coordinated price-signal VPP control cut peak network load from ~232 kW to ~178 kW and reduced external grid import across the afternoon peak window.</div>
+        <div class="proj-tags"><span class="ptag">DIgSILENT</span><span class="ptag">VPP</span><span class="ptag">Load Flow</span><span class="ptag">DER</span><span class="ptag">BESS</span></div>
+        <div class="proj-footer"><span class="proj-type-badge">University</span><a href="smartgrid.html" class="proj-link">View Build →</a></div>
+      </div>
+    </div>
+
+    <div class="proj proj-c2">
+      <div class="proj-overlay">
+        <div class="proj-num">PROJECT 09</div>
+        <div class="proj-title">Victorian NEM Market Analysis</div>
+        <div class="proj-desc">MATLAB pipeline on 17,520 real AEMO records. Seasonal/intraday demand and price visualisations, distribution fitting, Pearson correlation. Load-shifting simulation: 25% shift saves $50.4M against $2,649M annual baseline.</div>
+        <div class="proj-tags"><span class="ptag">MATLAB</span><span class="ptag">NEM</span><span class="ptag">Data Analysis</span><span class="ptag">Demand Response</span></div>
+        <div class="proj-footer"><span class="proj-type-badge">University</span><a href="nem.html" class="proj-link">View Build →</a></div>
+      </div>
+    </div>
+
+    <div class="proj proj-c1">
+      <div class="proj-overlay">
+        <div class="proj-num">PROJECT 10</div>
+        <div class="proj-title">Lunar Rover — Engineering Design 1</div>
+        <div class="proj-desc">Group CAD design project for OENG1250. Full SolidWorks assembly — chassis, shade mechanism, solar panel mounting, and drive components. Detailed engineering drawings and sub-assembly models to spec.</div>
+        <div class="proj-tags"><span class="ptag">SolidWorks</span><span class="ptag">CAD</span><span class="ptag">Mechanical Design</span><span class="ptag">Group</span></div>
+        <div class="proj-footer"><span class="proj-type-badge">University</span><a href="lunar.html" class="proj-link">View Build →</a></div>
+      </div>
+    </div>
+
+    <div class="proj proj-c4">
+      <div class="proj-overlay">
+        <div class="proj-num">PROJECT 11</div>
+        <div class="proj-title">Buck Converter PCB</div>
+        <div class="proj-desc">LM3524 PWM buck converter in Altium Designer at ~82.5 kHz. GND polygon pour, widened high-current traces, thermal placement of Q1. DRC: 0 warnings, 0 violations. Self-analysis identified switching-loop geometry as root cause of ripple — specific fix identified.</div>
+        <div class="proj-tags"><span class="ptag">Altium Designer</span><span class="ptag">PCB</span><span class="ptag">LM3524</span><span class="ptag">Power Electronics</span></div>
+        <div class="proj-footer"><span class="proj-type-badge">University</span><a href="buck.html" class="proj-link">View Build →</a></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+</section>
+
+<!-- FOOTER -->
+<footer id="footer">
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="footer-brand-name">Sameer Appasa</div>
+        <div class="footer-brand-sub">BEng Electrical Engineering (Hons) · RMIT University</div>
+      </div>
+      <div class="footer-links">
+        <a href="#about">About</a>
+        <a href="#skills">Skills</a>
+        <a href="#education">Education</a>
+        <a href="#projects">Projects</a>
+      </div>
+      <div class="footer-contact">
+        <span>sameer.appasa20@gmail.com</span>
+        <span>0422 759 942</span>
+        <span>Melbourne, Victoria</span>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span class="footer-copy">© 2026 Sameer Appasa · All rights reserved</span>
+      <span class="footer-status"><span class="f-dot"></span> Available for Internship 2027</span>
+    </div>
+  </div>
+</footer>
+
 <script>
-    document.querySelectorAll('.skill-item').forEach((el)=>{el.addEventListener('mouseenter',()=>el.setAttribute('open',true));el.addEventListener('mouseleave',()=>el.removeAttribute('open'))});
-    document.querySelectorAll('.year-item').forEach((el)=>{el.addEventListener('mouseenter',()=>el.setAttribute('open',true));el.addEventListener('mouseleave',()=>el.removeAttribute('open'))});
-    document.querySelectorAll('.sem-item').forEach((el)=>{el.addEventListener('mouseenter',()=>el.setAttribute('open',true));el.addEventListener('mouseleave',()=>el.removeAttribute('open'))});
+const obs = new IntersectionObserver(e => {
+  e.forEach(x => { if(x.isIntersecting){x.target.classList.add('on');obs.unobserve(x.target)} });
+}, {threshold:.12});
+document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+// Nav active on scroll
+const sections = document.querySelectorAll('section[id],div[id="footer"]');
+const links = document.querySelectorAll('.nav-links a');
+window.addEventListener('scroll', () => {
+  let cur = '';
+  sections.forEach(s => { if(window.scrollY >= s.offsetTop - 80) cur = s.id; });
+  links.forEach(a => {
+    const href = a.getAttribute('href').replace('#','');
+    a.className = href === cur ? 'active' : '';
+  });
+}, {passive:true});
 </script>
 </body>
-</html>                <span class="card-tag">Relay</span>                <span class="card-tag">3S BMS</span>                <span class="card-tag">KiCad PCB</span>                <span class="card-tag">SolidWorks</span>                <span class="card-tag">DHT22</span>                <span class="card-tag">IoT</span>            </div>            <a href="solar.html" class="btn">VIEW_TECHNICAL_LOGS â</a>        </div>    </div>    <footer>RMIT_ENGINEERING // 2026 // ALL_SYSTEMS_OPERATIONAL</footer></div><script>    // Hover for toolkit skills    document.querySelectorAll('.skill-item').forEach((el) => {        el.addEventListener('mouseenter', () => el.setAttribute('open', true));        el.addEventListener('mouseleave', () => el.removeAttribute('open'));    });    // Hover for year dropdowns    document.querySelectorAll('.year-item').forEach((el) => {        el.addEventListener('mouseenter', () => el.setAttribute('open', true));        el.addEventListener('mouseleave', () => el.removeAttribute('open'));    });    // Hover for semester dropdowns    document.querySelectorAll('.sem-item').forEach((el) => {        el.addEventListener('mouseenter', () => el.setAttribute('open', true));        el.addEventListener('mouseleave', () => el.removeAttribute('open'));    });</script></body></html>
-<!-- vercel -->
+</html>
