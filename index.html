@@ -285,6 +285,8 @@ section{padding:5rem 0}
 .proj-c5::before{background:radial-gradient(ellipse at 55% 65%,#a855f7 0%,#6b21a8 45%,#0d0018 100%),radial-gradient(ellipse at 25% 25%,#c084fc 0%,transparent 50%)}
 .proj-c6::before{background:radial-gradient(ellipse at 40% 60%,#f43f5e 0%,#9f1239 45%,#1a0010 100%),radial-gradient(ellipse at 75% 25%,#fb7185 0%,transparent 50%)}
 .proj-c7::before{background:radial-gradient(ellipse at 50% 50%,#14b8a6 0%,#0f766e 45%,#001310 100%),radial-gradient(ellipse at 25% 75%,#2dd4bf 0%,transparent 50%)}
+/* Real photo override — set --ph on the card div */
+.proj[style*="--ph"]::before{background:var(--ph) center/cover no-repeat}
 .proj-overlay{
   position:relative;z-index:1;padding:1.4rem 1.4rem 1.3rem;
   background:linear-gradient(to top,rgba(0,0,0,.88) 0%,rgba(0,0,0,.55) 55%,rgba(0,0,0,.08) 100%);
@@ -299,6 +301,7 @@ section{padding:5rem 0}
 .proj-type-badge{font-size:.58rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;background:rgba(37,99,235,.45);color:#93c5fd;border:1px solid rgba(37,99,235,.5);padding:.2rem .6rem;border-radius:4px}
 .proj-type-badge.pb-personal{background:rgba(234,88,12,.4);color:#fdba74;border-color:rgba(234,88,12,.45)}
 .proj-type-badge.pb-hive{background:rgba(168,85,247,.4);color:#d8b4fe;border-color:rgba(168,85,247,.45)}
+.proj-dev-badge{font-size:.55rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;background:rgba(251,191,36,.15);color:#fbbf24;border:1px solid rgba(251,191,36,.4);padding:.2rem .6rem;border-radius:4px;margin-left:.4rem}
 .proj-link{
   font-size:.7rem;font-weight:700;color:#fff;text-decoration:none;
   background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.28);
@@ -612,13 +615,13 @@ footer{background:#0f1221;padding:3rem 0 1.5rem}
   <div class="sec-line"></div>
   <div class="proj-grid reveal">
 
-    <div class="proj proj-c1">
+    <div class="proj proj-c1" style="--ph:url('Robot front view.jpeg')">
       <div class="proj-overlay">
         <div class="proj-num">PROJECT 01</div>
         <div class="proj-title">Cleaning Rover</div>
         <div class="proj-desc">Autonomous floor cleaning robot on ESP32-WROOM-32. 4× HC-SR04 ultrasonic sensors, dual DRV8833 motor drivers, 3S2P Li-ion with BMS. WiFi dashboard with radar, manual controls, live battery monitoring.</div>
         <div class="proj-tags"><span class="ptag">ESP32</span><span class="ptag">C++</span><span class="ptag">SolidWorks</span><span class="ptag">3D Print</span><span class="ptag">IoT</span></div>
-        <div class="proj-footer"><span class="proj-type-badge pb-personal">Personal</span><a href="rover.html" class="proj-link">View Build →</a></div>
+        <div class="proj-footer"><span class="proj-type-badge pb-personal">Personal</span><span class="proj-dev-badge">⚙ In Development</span><a href="rover.html" class="proj-link">View Build →</a></div>
       </div>
     </div>
 
@@ -632,7 +635,7 @@ footer{background:#0f1221;padding:3rem 0 1.5rem}
       </div>
     </div>
 
-    <div class="proj proj-c3">
+    <div class="proj proj-c3" style="--ph:url('room monitor3.jpeg')">
       <div class="proj-overlay">
         <div class="proj-num">PROJECT 03</div>
         <div class="proj-title">Room Monitor &amp; Security</div>
@@ -642,13 +645,13 @@ footer{background:#0f1221;padding:3rem 0 1.5rem}
       </div>
     </div>
 
-    <div class="proj proj-c4">
+    <div class="proj proj-c4" style="--ph:url('solar_build_1.jpeg')">
       <div class="proj-overlay">
         <div class="proj-num">PROJECT 04</div>
         <div class="proj-title">Smart Solar Monitor</div>
         <div class="proj-desc">Solar energy monitoring on ESP32-C3. Real-time V, I, power, temp, humidity. Dual relay automation, 3-screen ST7789 dashboard, KiCad PCB, SolidWorks enclosure, WiFi web dashboard.</div>
         <div class="proj-tags"><span class="ptag">ESP32-C3</span><span class="ptag">ACS712</span><span class="ptag">KiCad</span><span class="ptag">Solar</span><span class="ptag">BMS</span></div>
-        <div class="proj-footer"><span class="proj-type-badge pb-personal">Personal</span><a href="solar.html" class="proj-link">View Build →</a></div>
+        <div class="proj-footer"><span class="proj-type-badge pb-personal">Personal</span><span class="proj-dev-badge">⚙ In Development</span><a href="solar.html" class="proj-link">View Build →</a></div>
       </div>
     </div>
 
