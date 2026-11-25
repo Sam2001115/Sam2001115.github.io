@@ -125,19 +125,25 @@ b{color:#fff;font-weight:700}
 
 <div class="section">
   <h2>04. PCB Layout Considerations</h2>
-  <p><b>High-Current Path:</b> The switch-to-inductor-to-output path carries the full load current at 82.5 kHz. These traces were routed as wide copper pours (minimum 2mm) to minimise resistance and thermal losses.</p>
-  <p><b>Gate Drive Loop:</b> The MOSFET gate drive loop was kept as small as possible to minimise parasitic inductance — a large gate loop causes ringing on the gate waveform and increases switching losses and EMI.</p>
-  <p><b>Decoupling:</b> 100nF ceramic decoupling capacitors were placed directly at the VCC and VREF pins of the LM3524, with traces no longer than 2mm from pin to capacitor.</p>
-  <p><b>Ground Plane:</b> A continuous bottom-layer ground plane provides a low-impedance return path and acts as a thermal mass for the switching MOSFET.</p>
+  <p><b>Component Placement Strategy:</b> The LM3524 was placed centrally to keep both the feedback and gate-drive control traces short. L1 was positioned top-right close to output capacitors C3/C4 to keep the LC output filter tight. Q1 (the MOSFET) was placed on the board edge to allow heatsink attachment if needed — a thermal decision that created a layout trade-off.</p>
+  <p><b>Switching Loop Trade-off:</b> Placing Q1 on the edge for thermal management resulted in the switching loop (Q1→D3→L1→C3/C4) spanning most of the board height, increasing parasitic inductance in the high-frequency switching path. At 82.5 kHz this contributed to output ripple slightly exceeding the 66 mV spec. In a revision, Q1 would be shifted upward toward D3 and L1 to tighten the loop while keeping the edge position for heat dissipation.</p>
+  <p><b>Ground Plane:</b> A GND polygon pour on the top layer provides a low-impedance ground return across the board. Power traces on the high-current path (Q1, L1, output) were widened compared to signal traces around the LM3524 feedback network to reduce noise coupling into the sensitive feedback loop.</p>
 </div>
 
 <div class="section">
   <h2>05. Measured Results (Demo)</h2>
+  <div class="spec-grid" style="margin-bottom:1rem">
+    <div class="spec-card"><div class="spec-label">Output Ripple Spec</div><div class="spec-val">≤ 66 mV</div></div>
+    <div class="spec-card"><div class="spec-label">Efficiency Target</div><div class="spec-val">&gt; 80%</div></div>
+    <div class="spec-card"><div class="spec-label">Vout Target</div><div class="spec-val">5.00V ±2%</div></div>
+    <div class="spec-card"><div class="spec-label">f_sw Target</div><div class="spec-val">82.5 kHz</div></div>
+  </div>
   <div class="result-box">
     <p>✅ Output voltage: <b>4.97V</b> at 500mA load — within 0.6% of 5V target.</p>
     <p>✅ Switching frequency: <b>81.8 kHz</b> (oscilloscope verified) — 0.8% from design target of 82.5 kHz.</p>
-    <p>✅ Measured efficiency: <b>82.5%</b> at full load (1A output).</p>
-    <p>✅ No oscillation on the output — stable under step load changes (200mA → 1A).</p>
+    <p>✅ Measured efficiency: <b>82.5%</b> at full load (1A output) — above the 80% threshold.</p>
+    <p>✅ Output ripple slightly above the 66 mV spec — attributable to the extended switching loop (Q1→D3→L1→C3/C4) spanning most of the board height, increasing parasitic inductance at 82.5 kHz.</p>
+    <p>✅ No oscillation on the output — stable regulation under step load changes (200mA → 1A).</p>
     <p>✅ PCB passed DRC with zero errors before fabrication.</p>
   </div>
 </div>

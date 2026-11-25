@@ -132,17 +132,25 @@ b{color:#fff;font-weight:700}
     <div class="hl-num">$50.4M</div>
     <div class="hl-label">Annual savings from 25% peak demand load shift (Victorian NEM, 2013)</div>
   </div>
-  <p>Shifting 25% of Victorian peak demand to off-peak periods would have saved <b>$50.4 million</b> in energy costs across 2013. The simulation found that price spikes above $300/MWh occur in only <b>3.2% of intervals</b> but account for a disproportionate share of annual energy spend — making demand response highly cost-effective even with modest flexibility.</p>
+  <div class="code-block"><span class="comment">% Load-shift simulation results (baseline annual cost: $2,649.22M)</span>
+<span class="label">Shift  </span> <span class="label">Peak ↓</span>  <span class="value">Annual Cost</span>  <span class="value">Savings</span>
+<span class="comment">─────────────────────────────────────────────────</span>
+<span class="label">  5%  </span> <span class="value">305.7 MW</span>   $2,639.14M   $10.08M (0.38%)
+<span class="label"> 10%  </span> <span class="value">611.4 MW</span>   $2,629.06M   $20.16M (0.76%)
+<span class="label"> 15%  </span> <span class="value">917.1 MW</span>   $2,618.98M   $30.24M (1.14%)
+<span class="label"> 20%  </span> <span class="value">1222.8 MW</span>  $2,608.90M   $40.32M (1.52%)
+<span class="label"> 25%  </span> <span class="value">1528.4 MW</span>  $2,598.82M   $50.40M (1.90%)</span></div>
+  <p>Shifting 25% of Victorian peak demand to off-peak periods would have saved <b>$50.4 million</b> in energy costs across 2013 — with each additional 5% of load shifted delivering a proportional <b>$10.08M</b> in annual savings. The NEM's scarcity pricing mechanism means a small number of high-stress intervals drive the majority of annual cost, making demand response highly cost-effective even with modest flexibility.</p>
 </div>
 
 <div class="section">
   <h2>06. Results Summary</h2>
   <div class="result-box">
     <p>✅ 17,520 intervals processed — no missing data after cleaning (zero gaps in the AEMO dataset).</p>
-    <p>✅ Weekend demand 18% lower than weekday average — consistent with commercial/industrial load dominance.</p>
-    <p>✅ 3.2% of intervals had prices above $300/MWh — concentrated in weekday afternoon and evening peaks.</p>
-    <p>✅ 25% load shift simulation: <b>$50.4M annual cost reduction</b> across the Victorian region.</p>
-    <p>✅ Seasonal analysis confirmed summer evenings as the highest-risk period for price spikes.</p>
+    <p>✅ Weekend demand 14.7% lower than weekday average (4,989 MW vs 5,720 MW) — consistent with commercial/industrial load dominance.</p>
+    <p>✅ Afternoon peak 15:00–19:30 identified as highest-price window — mean price $71.9/MWh at 16:00, with extreme NEM scarcity spikes reaching $4,282/MWh.</p>
+    <p>✅ 25% load shift simulation: <b>$50.4M annual cost reduction</b> (1.90%) across the Victorian region.</p>
+    <p>✅ Seasonal analysis confirmed summer (Jan–Feb) and winter (Jun–Jul) as highest-risk periods for price spikes — matching the demand bimodal pattern.</p>
   </div>
 </div>
 
