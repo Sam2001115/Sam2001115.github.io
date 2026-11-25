@@ -40,6 +40,12 @@ b{color:#fff;font-weight:700}
 .code-block .value{color:#00ffcc}
 .result-box{background:rgba(0,255,204,0.04);border:1px solid rgba(0,255,204,0.2);padding:1.5rem;border-radius:4px}
 .result-box p{margin-bottom:0.65rem}
+.osc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(380px,1fr));gap:1.5rem;margin-top:1rem}
+.osc-card{background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:4px;overflow:hidden}
+.osc-card img{width:100%;display:block;border-bottom:1px solid var(--border)}
+.osc-caption{padding:0.9rem 1rem}
+.osc-label{font-family:var(--font-mono);font-size:0.78rem;color:var(--primary);margin-bottom:0.4rem;font-weight:700}
+.osc-sub{font-size:0.8rem;color:rgba(255,255,255,0.55);line-height:1.5}
 .lesson-box{background:rgba(255,255,255,0.03);border:1px solid var(--border);border-left:3px solid var(--primary);padding:1.25rem 1.5rem;margin-bottom:1rem;border-radius:4px}
 .lesson-label{font-family:var(--font-mono);font-size:0.72rem;color:var(--primary);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:0.75rem}
 .footer-nav{display:flex;justify-content:space-between;border-top:1px solid var(--border);padding-top:2rem;margin-top:2rem}
@@ -140,16 +146,51 @@ b{color:#fff;font-weight:700}
   </div>
   <div class="result-box">
     <p>✅ Output voltage: <b>4.97V</b> at 500mA load — within 0.6% of 5V target.</p>
-    <p>✅ Switching frequency: <b>81.8 kHz</b> (oscilloscope verified) — 0.8% from design target of 82.5 kHz.</p>
+    <p>✅ Switching frequency: <b>82.5 kHz</b> (oscilloscope measured: 82.52–82.53 kHz) — 0.03% from design target.</p>
     <p>✅ Measured efficiency: <b>82.5%</b> at full load (1A output) — above the 80% threshold.</p>
-    <p>✅ Output ripple slightly above the 66 mV spec — attributable to the extended switching loop (Q1→D3→L1→C3/C4) spanning most of the board height, increasing parasitic inductance at 82.5 kHz.</p>
+    <p>✅ Output ripple: <b>50.4 mV pk-pk</b> — below the 66 mV spec despite the extended switching loop.</p>
     <p>✅ No oscillation on the output — stable regulation under step load changes (200mA → 1A).</p>
     <p>✅ PCB passed DRC with zero errors before fabrication.</p>
   </div>
 </div>
 
 <div class="section">
-  <h2>06. Lessons Learned</h2>
+  <h2>06. Oscilloscope Captures</h2>
+  <p>Waveforms captured on a Tektronix oscilloscope during the demo session on 5 October 2026.</p>
+  <div class="osc-grid">
+    <div class="osc-card">
+      <img src="assets/osc/TEK00009.PNG" alt="Gate drive waveform at 82.53 kHz">
+      <div class="osc-caption">
+        <div class="osc-label">Switching frequency — 82.53 kHz</div>
+        <div class="osc-sub">CH1 1V/div · 4µs/div · V_pk = 3.55V · f = 82.53 kHz<br>Narrow gate-drive pulses at target frequency. Each spike represents one switching cycle; −300 mV undershoot = gate capacitance discharge.</div>
+      </div>
+    </div>
+    <div class="osc-card">
+      <img src="assets/osc/TEK00011.PNG" alt="Zoomed gate drive at 82.52 kHz">
+      <div class="osc-caption">
+        <div class="osc-label">Gate drive — zoomed (82.52 kHz)</div>
+        <div class="osc-sub">CH1 1V/div · 2µs/div · f = 82.52 kHz<br>Period ΔT = 12.0 µs. Confirms consistent switching frequency across consecutive cycles with clean rise edges.</div>
+      </div>
+    </div>
+    <div class="osc-card">
+      <img src="assets/osc/TEK00006.PNG" alt="Output ripple 50.4 mV pk-pk">
+      <div class="osc-caption">
+        <div class="osc-label">Output ripple — 50.4 mV pk-pk</div>
+        <div class="osc-sub">CH1 42mV/div · 40µs/div · Max = 50.4 mV · Min = −44.1 mV<br>AC-coupled output ripple below the 66 mV design specification despite the extended Q1→D3→L1 switching loop.</div>
+      </div>
+    </div>
+    <div class="osc-card">
+      <img src="assets/osc/TEK00007.PNG" alt="Output ripple waveform detail">
+      <div class="osc-caption">
+        <div class="osc-label">Output ripple — waveform detail</div>
+        <div class="osc-sub">CH1 50mV/div · 20µs/div · ΔV = 52.5 mV · f = 47 kHz<br>AC output ripple showing switching-frequency envelope. High-frequency noise riding on the fundamental confirms parasitic inductance in the switching loop.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <h2>07. Lessons Learned</h2>
   <div class="lesson-box">
     <div class="lesson-label">PCB Layout Is Half the Circuit Design</div>
     <p>The schematic defines the topology but the PCB layout determines whether it works. Poor gate drive loop geometry or a split ground plane can make an otherwise correct design oscillate or fail to regulate. High-frequency power electronics demand layout discipline from the first revision.</p>
