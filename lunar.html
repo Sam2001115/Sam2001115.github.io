@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Lunar Rover — Engineering Design 1 | Sameer Appasa</title>
+<title>Lunar Rover Power System — OENG1250 | Sameer Appasa</title>
 <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
 <style>
 :root{--bg:#07091a;--fg:#fafafa;--primary:#f97316;--primary-dim:rgba(249,115,22,0.13);--border:rgba(255,255,255,0.1);--font-mono:'Space Mono',monospace;--font-sans:'Syne',sans-serif;--status-done:#00ffcc;--muted:rgba(255,255,255,0.4)}
@@ -30,18 +30,57 @@ b{color:#fff;font-weight:700}
 .tag-group-label{font-family:var(--font-mono);font-size:0.7rem;color:var(--muted);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.5rem}
 .tech-tags{display:flex;gap:0.5rem;flex-wrap:wrap}
 .tag{font-family:var(--font-mono);font-size:0.75rem;background:rgba(255,255,255,0.04);border:1px solid var(--border);padding:0.35rem 0.85rem;color:var(--primary);border-radius:3px}
-.spec-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin:1rem 0}
+
+/* spec grid */
+.spec-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin:1.25rem 0}
 .spec-card{background:rgba(249,115,22,0.07);border:1px solid rgba(249,115,22,0.3);padding:1.25rem;border-radius:4px}
 .spec-label{font-family:var(--font-mono);font-size:0.68rem;color:var(--muted);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.3rem}
 .spec-val{font-family:var(--font-mono);font-size:1rem;color:var(--primary);font-weight:700}
-.result-box{background:rgba(0,255,204,0.04);border:1px solid rgba(0,255,204,0.2);padding:1.5rem;border-radius:4px}
+
+/* design iteration timeline */
+.timeline{display:flex;flex-direction:column;gap:0;position:relative;padding-left:2rem;margin:1.5rem 0}
+.timeline::before{content:'';position:absolute;left:0.6rem;top:0.5rem;bottom:0.5rem;width:2px;background:rgba(249,115,22,0.3)}
+.tl-item{position:relative;padding:1rem 1.25rem;background:rgba(249,115,22,0.05);border:1px solid rgba(249,115,22,0.2);border-radius:4px;margin-bottom:0.75rem}
+.tl-item::before{content:'';position:absolute;left:-1.6rem;top:1.1rem;width:10px;height:10px;border-radius:50%;background:var(--primary);border:2px solid var(--bg)}
+.tl-week{font-family:var(--font-mono);font-size:0.68rem;color:var(--primary);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.3rem}
+.tl-title{font-family:var(--font-mono);font-size:0.9rem;color:#fff;font-weight:700;margin-bottom:0.4rem}
+.tl-desc{color:rgba(255,255,255,0.7);font-size:0.9rem}
+
+/* drawing gallery */
+.drawing-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin:1.5rem 0}
+.drawing-card{background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:4px;overflow:hidden}
+.drawing-card img{width:100%;display:block;background:#fff}
+.drawing-caption{font-family:var(--font-mono);font-size:0.72rem;color:var(--muted);padding:0.6rem 0.9rem;letter-spacing:0.05em}
+.drawing-card-full{background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:4px;overflow:hidden;margin-bottom:1rem}
+.drawing-card-full img{width:100%;display:block;background:#fff}
+
+/* deliverables table */
+.del-table{width:100%;border-collapse:collapse;font-family:var(--font-mono);font-size:0.78rem;margin:1rem 0}
+.del-table th{color:var(--muted);text-transform:uppercase;letter-spacing:0.1em;padding:0.5rem 0.75rem;border-bottom:1px solid var(--border);text-align:left;font-weight:400}
+.del-table td{padding:0.55rem 0.75rem;border-bottom:1px solid rgba(255,255,255,0.05);color:rgba(255,255,255,0.75)}
+.del-table td:first-child{color:var(--primary);font-weight:700}
+
+/* result / lesson boxes */
+.result-box{background:rgba(0,255,204,0.04);border:1px solid rgba(0,255,204,0.2);padding:1.5rem;border-radius:4px;margin-bottom:1rem}
 .result-box p{margin-bottom:0.65rem}
+.result-box p:last-child{margin-bottom:0}
 .lesson-box{background:rgba(255,255,255,0.03);border:1px solid var(--border);border-left:3px solid var(--primary);padding:1.25rem 1.5rem;margin-bottom:1rem;border-radius:4px}
 .lesson-label{font-family:var(--font-mono);font-size:0.72rem;color:var(--primary);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:0.75rem}
+
+.context-block{background:rgba(249,115,22,0.05);border:1px solid rgba(249,115,22,0.25);padding:1.25rem 1.5rem;border-radius:4px;margin-bottom:1.5rem}
+.context-block p{margin-bottom:0.5rem;font-size:0.93rem}
+.context-block p:last-child{margin-bottom:0}
+
 .footer-nav{display:flex;justify-content:space-between;border-top:1px solid var(--border);padding-top:2rem;margin-top:2rem}
 .footer-nav a{font-family:var(--font-mono);font-size:0.78rem;color:var(--muted);text-decoration:none;transition:color 0.2s}
 .footer-nav a:hover{color:var(--primary)}
-@media(max-width:600px){.nav-siblings{display:none}.spec-grid{grid-template-columns:1fr}.footer-nav{flex-direction:column;gap:1rem}}
+
+@media(max-width:600px){
+  .nav-siblings{display:none}
+  .spec-grid{grid-template-columns:1fr}
+  .drawing-grid{grid-template-columns:1fr}
+  .footer-nav{flex-direction:column;gap:1rem}
+}
 </style>
 </head>
 <body>
@@ -54,93 +93,212 @@ b{color:#fff;font-weight:700}
   </div>
 </nav>
 
-<div class="project-label">Project [10] / University — RMIT OENG1250 (Group)</div>
-<h1>PROJECT:<br>LUNAR_ROVER<br>DESIGN</h1>
+<div class="project-label">Project [10] / University — RMIT OENG1250 · Group 13 · Sem 2 Year 1</div>
+<h1>PROJECT:<br>LUNAR_ROVER<br>POWER SYSTEM</h1>
 <div class="status-row">
   <span class="badge badge-done">✓ COMPLETED</span>
-  <span class="badge badge-type">CAD / SOLIDWORKS</span>
-  <span class="badge badge-type">MECHANICAL DESIGN</span>
+  <span class="badge badge-type">SOLIDWORKS CAD</span>
+  <span class="badge badge-type">POWER SYSTEM DESIGN</span>
   <span class="badge badge-type">GROUP PROJECT</span>
 </div>
 
+<!-- 01. OBJECTIVE -->
 <div class="section">
   <h2>01. Objective</h2>
-  <p>Design a lunar surface exploration rover as the Assessment 2 group project for OENG1250 (Engineering Design 1). The brief required the team to produce a fully detailed mechanical design — 3D CAD model, assembly drawings, bill of materials, and design justification — suitable for prototype fabrication.</p>
-  <p>The rover had to satisfy defined mission requirements: traverse rough lunar terrain, carry a scientific payload, survive thermal extremes, and be deployable from a lander without astronaut intervention.</p>
+  <p>Assessment Task 2 (50% of course mark) for <b>OENG1250 — Introduction to Engineering Design</b> at RMIT University. The brief placed students in the context of Australia's $150M Moon to Mars initiative: design a rover capable of supporting a NASA In-Situ Resource Utilisation (ISRU) facility on the lunar surface.</p>
+  <p>Group 13 (6 members) divided the rover into subsystems — chassis/body, wheels, suspension, payload compartment, and power system. <b>My assigned component was the power system: the solar panel and 18650 lithium-ion battery pack.</b></p>
+  <p>I was responsible for all design stages of the power system — from initial hand-drawn concept sketches through SolidWorks preliminary models, detailed part drawings, and the final integrated sub-assembly — producing 9 technical drawings as individual deliverables.</p>
 </div>
 
+<!-- 02. TOOLS & TEAM -->
 <div class="section">
-  <h2>02. Tools Used</h2>
+  <h2>02. Tools &amp; Team</h2>
   <div class="tag-group">
-    <div class="tag-group-label">Design &amp; CAD</div>
+    <div class="tag-group-label">CAD &amp; Design</div>
     <div class="tech-tags">
-      <span class="tag">SolidWorks (3D Modelling)</span>
-      <span class="tag">SolidWorks Assembly (full rover assembly)</span>
-      <span class="tag">Engineering Drawings (2D detailing)</span>
-      <span class="tag">Bill of Materials (BOM)</span>
+      <span class="tag">SolidWorks (Part Modelling)</span>
+      <span class="tag">SolidWorks Assembly</span>
+      <span class="tag">SolidWorks Drawing (2D)</span>
+      <span class="tag">STEP Export</span>
     </div>
   </div>
   <div class="tag-group">
-    <div class="tag-group-label">Analysis</div>
+    <div class="tag-group-label">Documentation</div>
     <div class="tech-tags">
-      <span class="tag">Mass Properties (SolidWorks)</span>
-      <span class="tag">Centre of Mass Analysis</span>
-      <span class="tag">Terrain Obstacle Clearance Check</span>
+      <span class="tag">Engineering Drawings (A3)</span>
+      <span class="tag">Bill of Materials</span>
+      <span class="tag">Design Journal</span>
+      <span class="tag">Hand Calculations</span>
+    </div>
+  </div>
+  <div class="tag-group">
+    <div class="tag-group-label">Group</div>
+    <div class="tech-tags">
+      <span class="tag">Group 13 · 6 Members</span>
+      <span class="tag">5 / 5 Meetings Attended</span>
+      <span class="tag">Weeks 3 – 7</span>
     </div>
   </div>
 </div>
 
+<!-- 03. ROVER REQUIREMENTS -->
 <div class="section">
-  <h2>03. Design Overview</h2>
-  <p><b>Chassis:</b> A central monocoque aluminium chassis houses the battery pack, electronics bay, and payload compartment. Aluminium was selected for its high strength-to-weight ratio and known behaviour in vacuum and thermal cycling environments.</p>
-  <p><b>Suspension:</b> A rocker-bogie suspension system — the same architecture used on NASA's Mars rovers — was designed to allow any two wheels to remain in contact with the surface while the rover traverses obstacles up to 1.5× wheel diameter. This was modelled as a full articulating assembly in SolidWorks.</p>
-  <p><b>Wheels:</b> Six 200mm diameter wheels with radial cleats, designed for loose regolith (fine lunar soil). Hollow aluminium construction minimises mass while maintaining structural integrity under lunar gravity loading.</p>
+  <h2>03. Rover Requirements (Design Brief)</h2>
+  <p>The assessment brief defined hard constraints the entire team's design had to satisfy. These requirements drove every decision in the power system design.</p>
   <div class="spec-grid">
-    <div class="spec-card"><div class="spec-label">Wheel Config</div><div class="spec-val">6-Wheel Rocker-Bogie</div></div>
-    <div class="spec-card"><div class="spec-label">Wheel Diameter</div><div class="spec-val">200 mm</div></div>
-    <div class="spec-card"><div class="spec-label">Max Obstacle</div><div class="spec-val">300 mm (1.5× dia.)</div></div>
-    <div class="spec-card"><div class="spec-label">Primary Material</div><div class="spec-val">6061-T6 Aluminium</div></div>
+    <div class="spec-card"><div class="spec-label">Max Total Mass</div><div class="spec-val">≤ 20 kg</div></div>
+    <div class="spec-card"><div class="spec-label">Envelope (L×W×H)</div><div class="spec-val">300 × 500 × 500 mm</div></div>
+    <div class="spec-card"><div class="spec-label">Min Operation Duration</div><div class="spec-val">≥ 354 hours</div></div>
+    <div class="spec-card"><div class="spec-label">Suspension</div><div class="spec-val">6-Wheel Rocker-Bogie</div></div>
+    <div class="spec-card"><div class="spec-label">Payload Capacity</div><div class="spec-val">1 kg / trip</div></div>
+    <div class="spec-card"><div class="spec-label">Environment</div><div class="spec-val">Lunar surface, vacuum, thermal extremes</div></div>
   </div>
-  <p><b>Thermal Management:</b> Multi-layer insulation (MLI) blankets wrap the electronics bay. A passive heat rejection louver on the chassis top opens at high temperatures to radiate excess heat — no active cooling required within the design operating envelope.</p>
-  <p><b>Deployment:</b> The rover folds into a compact stowed configuration for lander integration — fold-down wheel arms reduce the footprint by 60%. A spring-loaded deployment sequence releases all six arms simultaneously on a single command signal.</p>
+  <p>The 354-hour operational requirement was particularly demanding — the lunar day lasts approximately 29.5 Earth days, so the rover needed to sustain operations through extended periods of reduced solar input. This directly shaped the battery capacity calculation.</p>
 </div>
 
+<!-- 04. POWER SYSTEM DESIGN -->
 <div class="section">
-  <h2>04. My Contributions</h2>
-  <p>Within the group, I was responsible for:</p>
-  <ul style="color:rgba(255,255,255,0.75);padding-left:1.5rem;line-height:2">
-    <li>SolidWorks modelling of the rocker-bogie suspension assembly</li>
-    <li>Wheel design and parametric modelling (all six wheels + cleat geometry)</li>
-    <li>Centre-of-mass analysis for the loaded and unloaded rover configurations</li>
-    <li>Engineering drawings for the wheel and suspension subassemblies</li>
-    <li>Contributing to the final design report — terrain traversal section</li>
-  </ul>
+  <h2>04. Power System Design</h2>
+
+  <p>The power system consists of two integrated components: a <b>12V lithium-ion battery pack</b> (32× 18650 cells) and a <b>20W solar panel</b> mounted on the rover's top surface. The design went through two formal iteration stages — preliminary and detailed — with geometry and calculations refined at each stage.</p>
+
+  <div class="context-block">
+    <p><b>Battery Selection:</b> 18650-format lithium-ion cells were chosen for their established spaceflight heritage (used in Tesla packs, power tools, and research rover prototypes), high energy density, cylindrical form factor enabling dense packing, and compatibility with the 12V system voltage when arranged in series/parallel configuration.</p>
+    <p><b>Configuration:</b> 32 cells arranged in a 4S8P configuration (4 cells in series × 8 parallel strings) — producing 12V nominal with 2400 Wh total usable capacity at a safety factor of 1.2 applied to operation time calculations.</p>
+  </div>
+
+  <div class="spec-grid">
+    <div class="spec-card"><div class="spec-label">Cell Format</div><div class="spec-val">18650 Li-Ion</div></div>
+    <div class="spec-card"><div class="spec-label">Cell Dimensions</div><div class="spec-val">Ø18.2 × 65.1 mm</div></div>
+    <div class="spec-card"><div class="spec-label">Number of Cells</div><div class="spec-val">32 (4S8P)</div></div>
+    <div class="spec-card"><div class="spec-label">System Voltage</div><div class="spec-val">12 V</div></div>
+    <div class="spec-card"><div class="spec-label">Total Pack Capacity</div><div class="spec-val">2400 Wh</div></div>
+    <div class="spec-card"><div class="spec-label">Safety Factor</div><div class="spec-val">1.2×</div></div>
+    <div class="spec-card"><div class="spec-label">Op. Time (no recharge)</div><div class="spec-val">20 hours</div></div>
+    <div class="spec-card"><div class="spec-label">Rover Speed</div><div class="spec-val">0.245 km/h</div></div>
+  </div>
+
+  <div class="spec-grid">
+    <div class="spec-card"><div class="spec-label">Solar Panel Power</div><div class="spec-val">20 W</div></div>
+    <div class="spec-card"><div class="spec-label">Panel Dimensions</div><div class="spec-val">300 × 200 × 20 mm</div></div>
+    <div class="spec-card"><div class="spec-label">Panel Voltage</div><div class="spec-val">12 V</div></div>
+    <div class="spec-card"><div class="spec-label">Panel Mass (CAD)</div><div class="spec-val">2157.68 g</div></div>
+    <div class="spec-card"><div class="spec-label">Battery Array Mass (CAD)</div><div class="spec-val">1440 g</div></div>
+    <div class="spec-card"><div class="spec-label">Mounting</div><div class="spec-val">4× Ø8 mm corner bolts</div></div>
+  </div>
+
+  <!-- SolidWorks render -->
+  <div class="drawing-card-full" style="margin-top:1.5rem">
+    <img src="assets/lunar/cells-render.png" alt="SolidWorks render of 32× 18650 cell battery array — 4 rows × 8 columns">
+    <div class="drawing-caption">SolidWorks render · 32× 18650 cylindrical cells · 4 rows × 8 columns · sub-assembly model</div>
+  </div>
+
+  <!-- Concept sketch -->
+  <div class="drawing-card-full">
+    <img src="assets/lunar/sketch-concept.png" alt="Preliminary concept sketch — 20cm panel width, 2cm solar panel + 13.02cm battery storage">
+    <div class="drawing-caption">Preliminary concept sketch · 20cm total width · 2cm solar panel layer + 13.02cm lithium-ion battery storage</div>
+  </div>
 </div>
 
+<!-- 05. DESIGN ITERATION -->
 <div class="section">
-  <h2>05. Results</h2>
+  <h2>05. Design Iteration</h2>
+  <p>The assessment required two formal design stages. Each stage produced SolidWorks part files, drawing files (.SLDDRW), and PDF technical drawings exported to A3 format.</p>
+
+  <div class="timeline">
+    <div class="tl-item">
+      <div class="tl-week">Week 3–4 · Preliminary Design</div>
+      <div class="tl-title">Initial Geometry + Layout Concept</div>
+      <div class="tl-desc">Hand-drawn concept sketches established the stacked layout — solar panel sits on top of a rectangular battery storage compartment. SolidWorks parts created for the single 18650 cell (B00-1), the preliminary battery pack housing (PP-001), and the preliminary solar panel (SP-001). Key decision: cells arranged horizontally in 4 rows with thermal spacing gaps between each cell to allow passive heat dissipation in the vacuum environment.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-week">Week 5–6 · Detailed Design</div>
+      <div class="tl-title">Refined Models + Full Pack Geometry</div>
+      <div class="tl-desc">Detailed 18650 cell model (B00-2) introduced asymmetric terminal fillet geometry — matching the actual physical cell's positive and negative terminal profiles, with Ø0.5mm pin detail and 2mm cap thickness. Battery pack detailed design (PP-002) added hanging mounting brackets so the pack suspends from the rover body frame rather than resting on the floor — accommodating wiring harnesses underneath. Solar panel (SP-002) refined with corner bracket mounting tabs (Ø8mm bolt pattern) and 5mm frame rail detail.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-week">Week 7 · Sub-Assembly</div>
+      <div class="tl-title">Integrated Power System Assembly (AS-002)</div>
+      <div class="tl-desc">The solar panel (SP-001) and battery pack assembly (AS-001) were integrated with the rover body preliminary part into a complete power sub-assembly (AS-002). The drawing produced a full A3 sheet with two isometric views and orthographic projections with key dimensions. This sub-assembly was then referenced in the full rover assembly produced by the team.</div>
+    </div>
+  </div>
+</div>
+
+<!-- 06. TECHNICAL DRAWINGS -->
+<div class="section">
+  <h2>06. Technical Drawings</h2>
+  <p>All drawings produced to A3 format in SolidWorks, exported as PDF. Drawn by Sameer Appasa, Week 7 date stamp.</p>
+
+  <div class="drawing-grid">
+    <div class="drawing-card">
+      <img src="assets/lunar/b002-battery.jpg" alt="B00-2 Detailed Battery Design drawing">
+      <div class="drawing-caption">B00-2 — Detailed Battery Design · 18650 cell · Ø18.20 × 65.10mm · 1440g</div>
+    </div>
+    <div class="drawing-card">
+      <img src="assets/lunar/sp002-solar.jpg" alt="SP-002 Solar Panel Detailed Design drawing">
+      <div class="drawing-caption">SP-002 — Solar Panel Detailed Design · 300×200×20mm · 2157.68g</div>
+    </div>
+  </div>
+
+  <div class="drawing-card-full">
+    <img src="assets/lunar/as002-subassembly.jpg" alt="AS-002 Rover Power Sub-Assembly drawing — solar panel + battery pack + body">
+    <div class="drawing-caption">AS-002 — Rover Power Sub-Assembly · Body Preliminary + AS-001 (battery pack) + SP-001 (solar panel) · Scale 1:5 · A3</div>
+  </div>
+
+  <table class="del-table">
+    <thead>
+      <tr>
+        <th>Drawing No.</th>
+        <th>Title</th>
+        <th>Stage</th>
+        <th>Format</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>B00-1</td><td>Preliminary Battery Cell Design</td><td>Preliminary</td><td>SLDPRT + PDF</td></tr>
+      <tr><td>PP-001</td><td>Preliminary Battery Pack</td><td>Preliminary</td><td>SLDPRT + PDF</td></tr>
+      <tr><td>SP-001</td><td>Preliminary Solar Panel</td><td>Preliminary</td><td>SLDPRT + PDF</td></tr>
+      <tr><td>B00-2</td><td>Detailed Battery Cell Design</td><td>Detailed</td><td>SLDPRT + PDF</td></tr>
+      <tr><td>PP-002</td><td>Detailed Battery Pack</td><td>Detailed</td><td>SLDPRT + PDF</td></tr>
+      <tr><td>SP-002</td><td>Solar Panel Detailed Design</td><td>Detailed</td><td>SLDASM + PDF</td></tr>
+      <tr><td>SP-003</td><td>Solar Panel Part Detail</td><td>Detailed</td><td>SLDPRT + PDF</td></tr>
+      <tr><td>AS-001</td><td>Battery Sub-Assembly</td><td>Sub-Assembly</td><td>SLDASM + PDF</td></tr>
+      <tr><td>AS-002</td><td>Rover Power Sub-Assembly</td><td>Sub-Assembly</td><td>SLDASM + PDF</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- 07. RESULTS -->
+<div class="section">
+  <h2>07. Results</h2>
   <div class="result-box">
-    <p>✅ Full SolidWorks assembly completed with all components parametrically modelled.</p>
-    <p>✅ Rocker-bogie suspension verified to maintain 6-wheel contact across a 300mm step obstacle.</p>
-    <p>✅ Centre of mass within design envelope — rover stable at 20° side-slope on lunar terrain.</p>
-    <p>✅ Deployment mechanism modelled with collision-free fold sequence.</p>
-    <p>✅ Project received high marks for design rigour and documentation quality.</p>
+    <p>✅ All 9 technical drawings produced across preliminary, detailed, and sub-assembly stages.</p>
+    <p>✅ 32-cell 18650 battery pack modelled with accurate terminal geometry — Ø18.2mm × 65.1mm per cell, full 4-row array in SolidWorks.</p>
+    <p>✅ Solar panel (SP-002) modelled to 300×200×20mm with corner bracket mounting detail for integration with rover body.</p>
+    <p>✅ Full integrated power sub-assembly (AS-002) referenced into the team's rover assembly — panel, battery pack, and body all mating correctly.</p>
+    <p>✅ 20-hour autonomous operation verified by hand calculation — 2400 Wh capacity ÷ power draw, safety factor 1.2 applied.</p>
+    <p>✅ 5 out of 5 group meetings attended; team contribution table confirmed full participation across all weeks.</p>
   </div>
 </div>
 
+<!-- 08. LESSONS LEARNED -->
 <div class="section">
-  <h2>06. Lessons Learned</h2>
+  <h2>08. Lessons Learned</h2>
   <div class="lesson-box">
-    <div class="lesson-label">Group CAD Requires Strict File Management</div>
-    <p>Multiple people modelling in one SolidWorks assembly caused reference errors when parts were renamed or moved between sessions. Establishing a shared file naming convention and folder structure at the start would have saved significant rework time.</p>
+    <div class="lesson-label">Thermal Spacing Matters Even in Vacuum</div>
+    <p>The initial preliminary model packed cells with zero gap — maximising energy density. After reviewing thermal management requirements for the lunar environment, gaps were added between cell rows in the detailed design to allow passive conductive heat paths to the housing walls. In a vacuum, convection is impossible; the cells need a direct conductive path to any radiating surface. This iteration wasn't intuitive at first but became obvious once the heat transfer physics were considered.</p>
   </div>
   <div class="lesson-box">
-    <div class="lesson-label">The Rocker-Bogie Geometry Has Specific Constraints</div>
-    <p>The rocker arm lengths and pivot positions aren't arbitrary — they're geometrically derived to ensure equal normal force distribution across all six wheels. Getting this wrong produces a mechanically sound-looking assembly that fails the terrain traversal requirement.</p>
+    <div class="lesson-label">Mounting Method Determines Assembly Order</div>
+    <p>The preliminary battery pack sat on the rover floor — straightforward in CAD. When the detailed design added hanging brackets (the pack suspends from the frame top), the assembly sequence changed completely. The pack had to be installed before the side panels were closed. This showed that manufacturing and assembly order must be considered at the detail design stage, not at integration.</p>
   </div>
   <div class="lesson-box">
-    <div class="lesson-label">Mass Properties Drive Everything</div>
-    <p>Every design decision — wheel diameter, chassis dimensions, payload placement — feeds back into the mass properties and centre-of-mass position. Running this analysis early and iterating on it throughout the design process, rather than checking it at the end, would have avoided late-stage rework.</p>
+    <div class="lesson-label">SolidWorks Mate Conflicts Are Caught Early or Expensively</div>
+    <p>Integrating the sub-assembly into the team's rover assembly triggered a number of mate conflicts — coordinate system origins that didn't align between my models and teammates' body components. The fix was straightforward (re-defining the reference geometry), but it took time at integration that could have been avoided if the team had agreed on a shared origin convention at Week 3.</p>
+  </div>
+  <div class="lesson-box">
+    <div class="lesson-label">Weight Budget Is a Team-Level Constraint</div>
+    <p>The ≤20 kg rover mass limit is shared across all subsystems. My power system came in at ~3.6 kg (battery 1440g + solar panel 2157g + housing), which consumed roughly 18% of the total mass budget. Without a team-level weight spreadsheet tracked from the start, it's easy for individual components to creep in mass without anyone noticing until the assembly is too heavy.</p>
   </div>
 </div>
 
