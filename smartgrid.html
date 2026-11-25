@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Smart Grid Network Modelling | Sameer Appasa</title>
+<title>Smart Grid Modelling | Sameer Appasa</title>
 <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
 <style>
 :root{--bg:#07091a;--fg:#fafafa;--primary:#14b8a6;--primary-dim:rgba(20,184,166,0.13);--border:rgba(255,255,255,0.1);--font-mono:'Space Mono',monospace;--font-sans:'Syne',sans-serif;--status-done:#00ffcc;--muted:rgba(255,255,255,0.4)}
@@ -24,6 +24,7 @@ h1{font-family:var(--font-mono);font-size:clamp(1.8rem,5vw,2.8rem);color:var(--p
 .badge-type{background:var(--primary-dim);border:1px solid var(--primary);color:var(--primary)}
 .section{margin-bottom:4rem}
 .section h2{font-family:var(--font-mono);font-size:0.8rem;color:var(--primary);text-transform:uppercase;letter-spacing:0.12em;border-left:3px solid var(--primary);padding-left:1rem;margin-bottom:1.5rem}
+.section h3{font-family:var(--font-mono);font-size:0.72rem;color:rgba(20,184,166,0.8);text-transform:uppercase;letter-spacing:0.1em;margin:2rem 0 0.75rem}
 .section p{color:rgba(255,255,255,0.75);margin-bottom:1rem;font-size:0.97rem}
 b{color:#fff;font-weight:700}
 .tag-group{margin-bottom:1rem}
@@ -31,17 +32,38 @@ b{color:#fff;font-weight:700}
 .tech-tags{display:flex;gap:0.5rem;flex-wrap:wrap}
 .tag{font-family:var(--font-mono);font-size:0.75rem;background:rgba(255,255,255,0.04);border:1px solid var(--border);padding:0.35rem 0.85rem;color:var(--primary);border-radius:3px}
 .stat-row{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin:1.5rem 0}
+.stat-row-4{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin:1.5rem 0}
 .stat-card{background:rgba(20,184,166,0.07);border:1px solid rgba(20,184,166,0.3);padding:1.25rem;border-radius:4px;text-align:center}
 .stat-num{font-family:var(--font-mono);font-size:1.6rem;font-weight:700;color:var(--primary);line-height:1}
+.stat-num-sm{font-family:var(--font-mono);font-size:1.1rem;font-weight:700;color:var(--primary);line-height:1}
 .stat-label{font-family:var(--font-mono);font-size:0.65rem;color:var(--muted);letter-spacing:0.1em;text-transform:uppercase;margin-top:0.5rem}
 .result-box{background:rgba(0,255,204,0.04);border:1px solid rgba(0,255,204,0.2);padding:1.5rem;border-radius:4px}
 .result-box p{margin-bottom:0.65rem}
+.highlight-box{background:rgba(20,184,166,0.08);border:1px solid rgba(20,184,166,0.3);padding:1.5rem;border-radius:4px;margin:1rem 0}
+.highlight-box .hl-num{font-family:var(--font-mono);font-size:2rem;font-weight:700;color:var(--primary)}
+.highlight-box .hl-label{font-family:var(--font-mono);font-size:0.72rem;color:var(--muted);letter-spacing:0.1em;text-transform:uppercase;margin-top:0.25rem}
 .lesson-box{background:rgba(255,255,255,0.03);border:1px solid var(--border);border-left:3px solid var(--primary);padding:1.25rem 1.5rem;margin-bottom:1rem;border-radius:4px}
 .lesson-label{font-family:var(--font-mono);font-size:0.72rem;color:var(--primary);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:0.75rem}
+/* Data table */
+.data-table{width:100%;border-collapse:collapse;font-family:var(--font-mono);font-size:0.76rem;margin:1rem 0}
+.data-table th{color:var(--primary);font-weight:700;text-align:left;padding:0.6rem 0.75rem;border-bottom:1px solid rgba(20,184,166,0.4);letter-spacing:0.06em;text-transform:uppercase;font-size:0.65rem}
+.data-table td{padding:0.55rem 0.75rem;border-bottom:1px solid rgba(255,255,255,0.05);color:rgba(255,255,255,0.75)}
+.data-table td:first-child{color:#fff;font-weight:700}
+.data-table td.hi{color:#00ffcc;font-weight:700}
+.data-table td.lo{color:rgba(255,255,255,0.45)}
+.data-table tr:last-child td{border-bottom:none}
+/* Lab divider */
+.lab-divider{font-family:var(--font-mono);font-size:0.8rem;color:var(--primary);letter-spacing:0.15em;text-transform:uppercase;padding:0.75rem 1rem;background:rgba(20,184,166,0.07);border:1px solid rgba(20,184,166,0.3);border-radius:4px;margin:2.5rem 0 1.5rem}
+/* Case card */
+.case-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1rem;margin:1rem 0}
+.case-card{background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:4px;padding:1rem 1.25rem}
+.case-num{font-family:var(--font-mono);font-size:0.68rem;color:var(--primary);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.4rem}
+.case-title{font-family:var(--font-mono);font-size:0.82rem;color:#fff;margin-bottom:0.4rem}
+.case-desc{font-size:0.85rem;color:rgba(255,255,255,0.6)}
 .footer-nav{display:flex;justify-content:space-between;border-top:1px solid var(--border);padding-top:2rem;margin-top:2rem}
 .footer-nav a{font-family:var(--font-mono);font-size:0.78rem;color:var(--muted);text-decoration:none;transition:color 0.2s}
 .footer-nav a:hover{color:var(--primary)}
-@media(max-width:600px){.nav-siblings{display:none}.stat-row{grid-template-columns:1fr}.footer-nav{flex-direction:column;gap:1rem}}
+@media(max-width:600px){.nav-siblings{display:none}.stat-row,.stat-row-4,.case-grid{grid-template-columns:repeat(2,1fr)}.footer-nav{flex-direction:column;gap:1rem}}
 </style>
 </head>
 <body>
@@ -58,83 +80,236 @@ b{color:#fff;font-weight:700}
 <h1>PROJECT:<br>SMART_GRID<br>NETWORK_MODELLING</h1>
 <div class="status-row">
   <span class="badge badge-done">✓ COMPLETED</span>
-  <span class="badge badge-type">POWER SYSTEMS</span>
-  <span class="badge badge-type">DIgSILENT</span>
-  <span class="badge badge-type">LOAD FLOW</span>
+  <span class="badge badge-type">DIgSILENT PowerFactory</span>
+  <span class="badge badge-type">DEMAND RESPONSE</span>
+  <span class="badge badge-type">MICROGRIDS</span>
+  <span class="badge badge-type">PV + BESS</span>
 </div>
 
+<!-- 01 OBJECTIVE -->
 <div class="section">
   <h2>01. Objective</h2>
-  <p>Model, simulate, and analyse a multi-bus power distribution network using <b>DIgSILENT PowerFactory</b> as part of the EEET2613 Smart Grids course. The project involved building a realistic network topology with generation, transmission, load, and renewable energy elements, then running steady-state load flow and contingency analyses to evaluate system stability and efficiency.</p>
+  <p>Simulate, analyse, and compare smart grid operating strategies using <b>DIgSILENT PowerFactory</b> as part of the EEET2613 Smart Grids course. Two laboratory experiments were conducted on a 0.433 kV low-voltage distribution network model: a <b>demand response (DR) lab</b> studying the effect of load shifting on cost and voltage under Time-of-Use and AEMO pricing, and a <b>microgrid operation lab</b> studying island-mode and grid-connected operation of a community microgrid with solar PV, BESS, and diesel backup.</p>
 </div>
 
+<!-- 02 TOOLS & NETWORK -->
 <div class="section">
-  <h2>02. Tools &amp; Methods</h2>
+  <h2>02. Tools &amp; Network</h2>
   <div class="tag-group">
     <div class="tag-group-label">Simulation Software</div>
     <div class="tech-tags">
       <span class="tag">DIgSILENT PowerFactory</span>
-      <span class="tag">Newton-Raphson Load Flow</span>
-      <span class="tag">N-1 Contingency Analysis</span>
+      <span class="tag">Quasi-Dynamic Load Flow</span>
+      <span class="tag">AC Balanced Load Flow</span>
     </div>
   </div>
   <div class="tag-group">
-    <div class="tag-group-label">Network Elements Modelled</div>
+    <div class="tag-group-label">Network Elements</div>
     <div class="tech-tags">
-      <span class="tag">Synchronous Generators</span>
-      <span class="tag">Transformers (HV/MV)</span>
-      <span class="tag">Transmission Lines (overhead)</span>
-      <span class="tag">Distributed Loads</span>
-      <span class="tag">PV Solar Generation</span>
-      <span class="tag">Reactive Power Compensation</span>
+      <span class="tag">36 Residential Loads (0.433 kV)</span>
+      <span class="tag">12 Solar PV Generators</span>
+      <span class="tag">Battery Energy Storage System (BESS)</span>
+      <span class="tag">100 kW Diesel Generator</span>
+      <span class="tag">External Grid Connection</span>
+      <span class="tag">0.055 MVAr Capacitor Bank</span>
+    </div>
+  </div>
+  <div class="tag-group">
+    <div class="tag-group-label">Data Sources</div>
+    <div class="tech-tags">
+      <span class="tag">PV_Profiles.xlsx (sunny + cloudy day irradiance)</span>
+      <span class="tag">AEMO half-hourly spot prices</span>
+      <span class="tag">Victorian ToU tariff structure</span>
     </div>
   </div>
 </div>
 
+<!-- ══════════════════ LAB 1: DEMAND RESPONSE ══════════════════ -->
 <div class="section">
-  <h2>03. What Was Analysed</h2>
-  <p><b>Steady-State Load Flow:</b> Newton-Raphson load flow was used to solve bus voltages, line currents, and power flows across the network under normal operating conditions. Bus voltage profiles were checked against ±5% nominal limits.</p>
-  <p><b>N-1 Contingency:</b> Each critical line and transformer was removed in turn to simulate a single-element outage. The simulation identified which contingencies caused overloads or voltage violations, and reactive compensation points were added to restore compliance.</p>
-  <p><b>Renewable Integration:</b> A PV solar farm was added to a suitable bus. The load flow was re-run at different solar output levels (0%, 50%, 100%) to observe voltage rise and reverse power flow effects on the feeder.</p>
-</div>
+  <div class="lab-divider">Lab 1 — Demand Response in a Residential Distribution Network</div>
 
-<div class="section">
-  <h2>04. Key Results</h2>
+  <h3>Setup</h3>
+  <p>The network model consisted of <b>36 residential loads</b> connected across a 0.433 kV LV distribution feeder supplied from an external grid. A <b>13% load shift</b> was applied (10% base + 3 from student ID last digit), redistributing that fraction of peak demand to off-peak periods. Simulations were run for <b>four seasons</b> (summer, autumn, winter, spring) under two pricing regimes: Victorian Time-of-Use (ToU) tariffs and volatile AEMO half-hourly spot prices.</p>
+
   <div class="stat-row">
     <div class="stat-card">
-      <div class="stat-num">12</div>
-      <div class="stat-label">Bus Network</div>
+      <div class="stat-num">36</div>
+      <div class="stat-label">Residential Loads</div>
     </div>
     <div class="stat-card">
-      <div class="stat-num">N-1</div>
-      <div class="stat-label">Contingency Tested</div>
+      <div class="stat-num">13%</div>
+      <div class="stat-label">Load Shift Applied</div>
     </div>
     <div class="stat-card">
-      <div class="stat-num">100%</div>
-      <div class="stat-label">Voltage Compliance</div>
+      <div class="stat-num">4</div>
+      <div class="stat-label">Seasons Simulated</div>
     </div>
   </div>
+
+  <h3>Task 1 — External Grid Consumption &amp; Cost Without DR</h3>
+  <p>Baseline grid energy import and cost were computed for each season under both ToU and AEMO pricing. Winter showed the highest demand; summer AEMO costs turned negative due to excess renewable generation suppressing spot prices.</p>
+  <table class="data-table">
+    <thead>
+      <tr><th>Season</th><th>Energy (kWh/day)</th><th>ToU Cost ($/day)</th><th>AEMO Cost ($/day)</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Summer</td><td>2,284.72</td><td class="lo">$434.08</td><td class="lo">−$33.55</td></tr>
+      <tr><td>Autumn</td><td>2,513.78</td><td>$497.46</td><td>$222.03</td></tr>
+      <tr><td>Winter</td><td class="hi">2,706.14</td><td class="hi">$634.16</td><td class="hi">$450.44</td></tr>
+      <tr><td>Spring</td><td>2,452.97</td><td>$450.75</td><td>$168.23</td></tr>
+    </tbody>
+  </table>
+  <p>Winter was the peak cost season for both pricing regimes. Summer AEMO costs were <b>negative (−$33.55/day)</b> — households effectively exported value back to the grid during oversupplied midday periods driven by high renewable penetration.</p>
+
+  <h3>Task 2 — After 13% Demand Response</h3>
+  <p>After applying the 13% load shift, the external grid saw reduced peak import and lower overall costs. Individual loads saved $0.30–$0.50/day under ToU pricing.</p>
+  <table class="data-table">
+    <thead>
+      <tr><th>Season</th><th>Grid Saving (ToU $/day)</th><th>AEMO Saving ($/day)</th><th>Individual Load Saving</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Summer</td><td>$1.72</td><td>$1.45</td><td>$0.30–$0.35/day</td></tr>
+      <tr><td>Autumn</td><td>$12.83</td><td>$7.21</td><td>$0.35–$0.42/day</td></tr>
+      <tr><td>Winter</td><td class="hi">$20.38</td><td class="hi">$18.12</td><td class="hi">$0.45–$0.50/day</td></tr>
+      <tr><td>Spring</td><td>$9.14</td><td>$5.87</td><td>$0.35–$0.40/day</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Task 3 — ToU vs AEMO Pricing: Which Incentivises DR More?</h3>
+  <p>ToU pricing delivered <b>consistently larger DR savings</b> across all seasons. Under AEMO pricing, summer costs were already negative at baseline — meaning demand response had almost no financial benefit (and could even worsen costs by shifting load into higher-price afternoon slots).</p>
+  <div class="highlight-box">
+    <div class="hl-num">ToU wins</div>
+    <div class="hl-label">Time-of-Use tariffs provide stronger and more predictable demand response incentives than volatile AEMO spot pricing</div>
+  </div>
+  <p>The key reason: AEMO spot prices are highly volatile and unpredictable at the retail scale. Consumers cannot reliably time load shifts to match spot price movements. ToU rates have fixed peak/off-peak windows — a household can confidently shift the dishwasher to 11pm and always capture the full benefit. The conclusion was that <b>ToU tariffs are the more effective DR signal for residential customers</b>, while AEMO-linked pricing may suit large commercial/industrial consumers with dedicated energy management systems.</p>
+</div>
+
+<!-- ══════════════════ LAB 3: MICROGRID ══════════════════ -->
+<div class="section">
+  <div class="lab-divider">Lab 3 — Community Microgrid: PV + BESS + Diesel + Grid</div>
+
+  <h3>Network Overview</h3>
+  <p>The same 36-load LV network was equipped with a <b>community-scale microgrid</b>: 12 solar PV generators, one Battery Energy Storage System (BESS), one 100 kW diesel generator, and an external grid connection point. Quasi-dynamic load flow simulations were run over a full 24-hour period using real sunny-day and cloudy-day PV profiles. Four study cases were defined:</p>
+
+  <div class="case-grid">
+    <div class="case-card">
+      <div class="case-num">Study Case 01</div>
+      <div class="case-title">Solar PV + BESS (Islanded)</div>
+      <div class="case-desc">PV charges BESS by day; BESS supplies load overnight. No external grid. Tested under sunny and cloudy conditions.</div>
+    </div>
+    <div class="case-card">
+      <div class="case-num">Study Case 02</div>
+      <div class="case-title">Diesel + BESS (Islanded)</div>
+      <div class="case-desc">Diesel generator supplements BESS under cloudy conditions when PV is insufficient. No grid connection.</div>
+    </div>
+    <div class="case-card">
+      <div class="case-num">Study Case 03</div>
+      <div class="case-title">PV + BESS + Grid (Connected)</div>
+      <div class="case-desc">External grid replaces diesel as backup. Grid imports overnight when BESS is depleted. Cloudy-day conditions.</div>
+    </div>
+    <div class="case-card">
+      <div class="case-num">Study Case 04</div>
+      <div class="case-title">Grid + BESS + Capacitor Bank</div>
+      <div class="case-desc">Capacitor bank (0.055 MVAr) added at Bus 43 to resolve voltage violations introduced by Case 03 grid imports.</div>
+    </div>
+  </div>
+
+  <h3>Task 1 — PV + BESS on a Sunny Day (Case 01)</h3>
+  <p>On a sunny day, solar PV supplied all loads and recharged the BESS between 08:00–16:00. The BESS discharged overnight (18:00–08:00). The <b>net 24-hour BESS balance was −6 kWh</b> — essentially zero — confirming that PV fully sustained the islanded microgrid without any backup source. Bus 43 voltage remained within ±6% throughout, rising to <b>1.02 p.u.</b> at 10:00–13:00 due to reverse power flow from PV generation.</p>
+  <table class="data-table">
+    <thead>
+      <tr><th>Metric</th><th>Value</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>BESS Discharge</td><td>1,039 kWh</td></tr>
+      <tr><td>BESS Charge</td><td>1,045 kWh</td></tr>
+      <tr><td>Net 24hr BESS Balance</td><td class="hi">−6 kWh (self-sustaining)</td></tr>
+      <tr><td>Operating Cost @ $0.20/kWh</td><td>$207.81</td></tr>
+      <tr><td>Bus 43 Voltage Range</td><td>0.97–1.02 p.u. (no violations)</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Task 2 — PV + BESS on a Cloudy Day (Case 01)</h3>
+  <p>Under cloudy conditions, PV generation was reduced to 08:00–14:00 only. The BESS could not sustain the network — the net balance turned <b>positive at +886 kWh</b>, indicating energy shortfall. Operating cost rose to <b>$272.57</b> (~30% increase). Notably, Bus 43 voltage followed nearly the same profile as the sunny day, since the BESS acts as a voltage-generating source in islanded mode regardless of PV availability.</p>
+
+  <h3>Task 3 — Diesel + BESS under Cloudy Conditions (Case 02)</h3>
+  <p>A 100 kW diesel generator was added to cover the PV shortfall under cloudy conditions. The diesel ran overnight (00:00–02:30) and during the evening peak (16:00–22:00), supplying 950 kWh total. BESS handled transition periods, discharging 616 kWh at $0.20/kWh. Total operating cost jumped to <b>$1,073.25</b> — a 420% increase over sunny-day BESS-only operation — because diesel costs $1.00/kWh (5× the BESS rate). Bus 43 voltage dipped to a <b>minimum of 0.94 p.u.</b> during the diesel-to-solar transition at 15:30, touching the lower limit but causing no violation.</p>
+  <table class="data-table">
+    <thead>
+      <tr><th>Metric</th><th>Value</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Diesel Supply</td><td>950 kWh</td></tr>
+      <tr><td>BESS Discharge</td><td>616 kWh @ $123.24</td></tr>
+      <tr><td>Total Operating Cost</td><td class="hi">$1,073.25</td></tr>
+      <tr><td>vs Sunny BESS-only</td><td>+420% ($207.81 → $1,073.25)</td></tr>
+      <tr><td>Min Bus 43 Voltage</td><td>0.94 p.u. (at lower limit)</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Task 4 — Grid-Connected PV + BESS (Case 03)</h3>
+  <p>Diesel was replaced with an external grid connection. The grid supplied ~98 kW overnight when BESS was depleted and exported small amounts (~2.8 kW) during peak PV periods. Total operating cost dropped to <b>$450.63 — a 58% reduction</b> vs diesel — because grid electricity at $0.35/kWh is far cheaper than diesel at $1.00/kWh.</p>
+  <p>However, grid connection introduced <b>voltage violations at Bus 43</b>. High reactive power demand from large grid imports along the LV feeder caused voltage to drop to <b>0.92 p.u. overnight</b> and to a worst-case <b>0.91 p.u. at 16:00–16:30</b> (peak evening load + maximum grid import). Voltage stayed below the 0.94 p.u. lower limit for approximately <b>10 hours of the 24-hour period</b>.</p>
+  <table class="data-table">
+    <thead>
+      <tr><th>Metric</th><th>Case 02 (Diesel)</th><th>Case 03 (Grid)</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>BESS Operating Cost</td><td>$123.24</td><td>$123.24</td></tr>
+      <tr><td>Backup Energy Cost</td><td>$950.01 (diesel)</td><td>$327.38 (grid)</td></tr>
+      <tr><td>Total Operating Cost</td><td class="hi">$1,073.25</td><td class="hi">$450.63</td></tr>
+      <tr><td>Cost Saving vs Diesel</td><td>—</td><td class="hi">$622.62 (58%)</td></tr>
+      <tr><td>Min Bus 43 Voltage</td><td>0.94 p.u.</td><td class="lo">0.91 p.u. ❌ VIOLATION</td></tr>
+      <tr><td>Hours Below 0.94 p.u.</td><td>0 hrs</td><td class="lo">~10 hrs</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Task 5 — Capacitor Bank for Voltage Correction (Case 04)</h3>
+  <p>A <b>0.055 MVAr capacitor bank</b> was added at Bus 43 to supply reactive power locally and counteract the voltage drop from grid imports. The capacitor raised voltage by <b>0.03 p.u.</b> across the entire 24-hour period, bringing the minimum from 0.91 p.u. to <b>0.94 p.u. — exactly on the lower limit with no violations</b>. Operating cost increased by only $0.49 (negligible), confirming that reactive power compensation is <b>highly cost-effective</b> for voltage management in LV networks with large grid imports.</p>
+  <table class="data-table">
+    <thead>
+      <tr><th>Metric</th><th>Case 03 (No Cap)</th><th>Case 04 (+ Capacitor)</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Total Operating Cost</td><td>$450.63</td><td>$451.12 (+$0.49)</td></tr>
+      <tr><td>Min Bus 43 Voltage</td><td class="lo">0.91 p.u. ❌</td><td class="hi">0.94 p.u. ✅</td></tr>
+      <tr><td>Voltage Violations</td><td class="lo">~20 intervals (10 hrs)</td><td class="hi">None</td></tr>
+      <tr><td>Voltage Improvement</td><td>—</td><td>+0.03 p.u. entire day</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- KEY RESULTS SUMMARY -->
+<div class="section">
+  <h2>03. Key Results Summary</h2>
   <div class="result-box">
-    <p>✅ All bus voltages maintained within ±5% of nominal under base case and post-contingency.</p>
-    <p>✅ Critical contingency (main transformer outage) identified — load shedding protocol documented.</p>
-    <p>✅ PV integration at 100% output caused 2.1% voltage rise at the injection bus — mitigated with shunt capacitor bank.</p>
-    <p>✅ System losses reduced by 8% with reactive compensation applied at two identified weak buses.</p>
+    <p>✅ <b>Lab 1:</b> 13% demand response under ToU pricing saves up to <b>$20.38/day</b> for the external grid in winter; individual households save $0.30–$0.50/day. ToU consistently outperforms AEMO pricing as a DR incentive.</p>
+    <p>✅ <b>Lab 1:</b> Summer AEMO baseline cost was <b>negative (−$33.55/day)</b> — renewable oversupply can eliminate retail grid costs entirely in solar-rich periods.</p>
+    <p>✅ <b>Lab 3 (Case 01):</b> Solar PV + BESS was <b>fully self-sustaining on a sunny day</b> (net balance −6 kWh). Cloudy day created 886 kWh shortfall — backup source required.</p>
+    <p>✅ <b>Lab 3 (Case 02→03):</b> Replacing diesel with grid connection cut operating cost by <b>$622.62/day (58%)</b> — $1.00/kWh diesel vs $0.35/kWh grid is the dominant economic factor.</p>
+    <p>✅ <b>Lab 3 (Case 03→04):</b> A 0.055 MVAr capacitor bank at Bus 43 eliminated all voltage violations at virtually no cost (+$0.49/day), raising minimum voltage from 0.91 to 0.94 p.u.</p>
+    <p>✅ Grid connection is the most cost-effective backup option but requires reactive power support at the weakest network bus. Demand response (shifting loads from evening peak) would directly reduce Bus 43 voltage stress.</p>
   </div>
 </div>
 
+<!-- LESSONS LEARNED -->
 <div class="section">
-  <h2>05. Lessons Learned</h2>
+  <h2>04. Lessons Learned</h2>
   <div class="lesson-box">
-    <div class="lesson-label">Voltage Rise Is the Key Challenge for High PV Penetration</div>
-    <p>As solar generation increased, reverse power flow caused voltage rise beyond acceptable limits on the feeder. This is a real constraint on how much distributed solar a network can absorb without active voltage management.</p>
+    <div class="lesson-label">ToU Tariffs Are a Better DR Signal Than Spot Prices</div>
+    <p>AEMO half-hourly prices are too volatile for residential customers to track — savings were smaller and inconsistent. Fixed ToU windows (peak/shoulder/off-peak) allow households to reliably shift load and always capture the full benefit. For large commercial consumers with automated energy management, spot-linked pricing can work, but residential DR needs simple, predictable pricing.</p>
   </div>
   <div class="lesson-box">
-    <div class="lesson-label">N-1 Is the Minimum Reliability Standard</div>
-    <p>Utilities design to N-1 — any single element can fail without affecting customers. Running the full contingency matrix revealed unexpected weak points that weren't obvious from the base case load flow alone.</p>
+    <div class="lesson-label">Diesel Costs 5× More Than Grid — Avoid It Wherever Possible</div>
+    <p>The Case 02 to Case 03 comparison was stark: $1.00/kWh diesel vs $0.35/kWh grid electricity drove a 58% cost reduction just by connecting to the grid. Islanded diesel backup is only justified where grid connection is physically or commercially unavailable.</p>
   </div>
   <div class="lesson-box">
-    <div class="lesson-label">Reactive Power Location Matters</div>
-    <p>Adding reactive compensation at the wrong bus (high impedance path from the problem bus) had almost no effect. Placing it directly at the low-voltage bus gave immediate compliance — location is as important as magnitude.</p>
+    <div class="lesson-label">Grid Connection Trades Cost for Voltage Risk</div>
+    <p>Connecting to the grid introduced voltage violations at Bus 43 that didn't exist in islanded mode. Long LV feeders with high impedance drop voltage badly under large grid imports. Reactive power compensation (a capacitor bank) is cheap and effective, but its location matters — placing it at the weak bus rather than the feeder head made the difference.</p>
+  </div>
+  <div class="lesson-box">
+    <div class="lesson-label">PV Self-Sufficiency Has a Clear Irradiance Threshold</div>
+    <p>The same PV + BESS system was fully self-sustaining on a sunny day (net −6 kWh) but left an 886 kWh daily shortfall under cloudy conditions. This highlights the need for grid connection or storage oversizing in climates with significant cloud cover — no islanded PV microgrid can be reliably self-sufficient year-round without backup generation.</p>
   </div>
 </div>
 

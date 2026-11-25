@@ -31,8 +31,10 @@ b{color:#fff;font-weight:700}
 .tech-tags{display:flex;gap:0.5rem;flex-wrap:wrap}
 .tag{font-family:var(--font-mono);font-size:0.75rem;background:rgba(255,255,255,0.04);border:1px solid var(--border);padding:0.35rem 0.85rem;color:var(--primary);border-radius:3px}
 .stat-row{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin:1.5rem 0}
+.stat-row-4{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin:1.5rem 0}
 .stat-card{background:rgba(59,130,246,0.07);border:1px solid rgba(59,130,246,0.3);padding:1.25rem;border-radius:4px;text-align:center}
 .stat-num{font-family:var(--font-mono);font-size:1.6rem;font-weight:700;color:var(--primary);line-height:1}
+.stat-num-sm{font-family:var(--font-mono);font-size:1.1rem;font-weight:700;color:var(--primary);line-height:1}
 .stat-label{font-family:var(--font-mono);font-size:0.65rem;color:var(--muted);letter-spacing:0.1em;text-transform:uppercase;margin-top:0.5rem}
 .code-block{background:rgba(0,0,0,0.4);border:1px solid var(--border);border-left:3px solid var(--primary);padding:1.25rem 1.5rem;font-family:var(--font-mono);font-size:0.78rem;line-height:1.9;white-space:pre;overflow-x:auto;margin:1rem 0;border-radius:4px}
 .code-block .comment{color:rgba(255,255,255,0.3)}
@@ -45,10 +47,25 @@ b{color:#fff;font-weight:700}
 .highlight-box .hl-label{font-family:var(--font-mono);font-size:0.72rem;color:var(--muted);letter-spacing:0.1em;text-transform:uppercase;margin-top:0.25rem}
 .lesson-box{background:rgba(255,255,255,0.03);border:1px solid var(--border);border-left:3px solid var(--primary);padding:1.25rem 1.5rem;margin-bottom:1rem;border-radius:4px}
 .lesson-label{font-family:var(--font-mono);font-size:0.72rem;color:var(--primary);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:0.75rem}
+/* Figure gallery */
+.fig-section-label{font-family:var(--font-mono);font-size:0.72rem;color:var(--muted);letter-spacing:0.12em;text-transform:uppercase;margin:2rem 0 1rem}
+.fig-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1.25rem;margin:1rem 0 2rem}
+.fig-grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin:1rem 0 2rem}
+.fig-card{background:rgba(0,0,0,0.3);border:1px solid var(--border);border-radius:4px;overflow:hidden;transition:border-color 0.2s}
+.fig-card:hover{border-color:var(--primary)}
+.fig-card img{width:100%;display:block;aspect-ratio:4/3;object-fit:contain;background:#000;padding:0.5rem}
+.fig-caption{font-family:var(--font-mono);font-size:0.68rem;color:var(--muted);padding:0.6rem 0.75rem;border-top:1px solid var(--border);letter-spacing:0.04em}
+/* Correlation table */
+.corr-table{width:100%;border-collapse:collapse;font-family:var(--font-mono);font-size:0.78rem;margin:1rem 0}
+.corr-table th{color:var(--primary);font-weight:700;text-align:left;padding:0.6rem 0.75rem;border-bottom:1px solid rgba(59,130,246,0.4);letter-spacing:0.06em;text-transform:uppercase;font-size:0.68rem}
+.corr-table td{padding:0.6rem 0.75rem;border-bottom:1px solid rgba(255,255,255,0.05);color:rgba(255,255,255,0.75)}
+.corr-table td:first-child{color:#fff}
+.corr-table td.r-val{color:#00ffcc;font-weight:700}
+.corr-table tr:last-child td{border-bottom:none}
 .footer-nav{display:flex;justify-content:space-between;border-top:1px solid var(--border);padding-top:2rem;margin-top:2rem}
 .footer-nav a{font-family:var(--font-mono);font-size:0.78rem;color:var(--muted);text-decoration:none;transition:color 0.2s}
 .footer-nav a:hover{color:var(--primary)}
-@media(max-width:600px){.nav-siblings{display:none}.stat-row{grid-template-columns:1fr}.footer-nav{flex-direction:column;gap:1rem}}
+@media(max-width:600px){.nav-siblings{display:none}.stat-row,.stat-row-4{grid-template-columns:repeat(2,1fr)}.fig-grid,.fig-grid-3{grid-template-columns:1fr}.footer-nav{flex-direction:column;gap:1rem}}
 </style>
 </head>
 <body>
@@ -70,11 +87,14 @@ b{color:#fff;font-weight:700}
   <span class="badge badge-type">DATA ANALYSIS</span>
 </div>
 
+<!-- 01 OBJECTIVE -->
 <div class="section">
   <h2>01. Objective</h2>
-  <p>Analyse the Victorian National Electricity Market (NEM) using real AEMO half-hourly dispatch data from 2013. Using MATLAB, the project cleaned and processed <b>17,520 settlement intervals</b> of price and demand data to identify demand patterns, price volatility, and cost-saving opportunities through strategic load shifting.</p>
+  <p>Analyse the Victorian National Electricity Market (NEM) using real AEMO half-hourly dispatch data from 2013. Using MATLAB, the project cleaned and processed <b>17,520 settlement intervals</b> of price and demand data to identify demand patterns, price volatility, seasonal behaviour, and cost-saving opportunities through strategic load shifting.</p>
+  <p>The dataset was assigned by student ID (last digit 3 → 2013 Victorian data) and downloaded directly from the AEMO public portal in CSV format. The VIC1 region was the analysis target.</p>
 </div>
 
+<!-- 02 TOOLS & DATASET -->
 <div class="section">
   <h2>02. Tools &amp; Dataset</h2>
   <div class="tag-group">
@@ -95,8 +115,9 @@ b{color:#fff;font-weight:700}
   </div>
 </div>
 
+<!-- 03 DATASET SCALE & DESCRIPTIVE STATISTICS -->
 <div class="section">
-  <h2>03. Dataset Scale</h2>
+  <h2>03. Dataset &amp; Descriptive Statistics</h2>
   <div class="stat-row">
     <div class="stat-card">
       <div class="stat-num">17,520</div>
@@ -111,62 +132,220 @@ b{color:#fff;font-weight:700}
       <div class="stat-label">Resolution</div>
     </div>
   </div>
+  <p>After import and cleaning, the full-year dataset contained zero gaps. Summary statistics across all 17,520 intervals:</p>
+  <div class="stat-row-4">
+    <div class="stat-card">
+      <div class="stat-num-sm">5,511.8 MW</div>
+      <div class="stat-label">Annual Mean Demand</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num-sm">895.95 MW</div>
+      <div class="stat-label">Demand Std Dev</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num-sm">$52.86</div>
+      <div class="stat-label">Mean Price /MWh</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num-sm">$48.85</div>
+      <div class="stat-label">Median Price /MWh</div>
+    </div>
+  </div>
+  <div class="stat-row">
+    <div class="stat-card">
+      <div class="stat-num-sm">16.3%</div>
+      <div class="stat-label">Demand CV</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num-sm">116.8%</div>
+      <div class="stat-label">Price CV</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num-sm">$4,282</div>
+      <div class="stat-label">Max Price Spike /MWh</div>
+    </div>
+  </div>
+  <p>The demand distribution is <b>moderately right-skewed (skewness = 0.539)</b> — most intervals cluster near the mean with a tail toward peak events. The price distribution is <b>severely right-skewed (skewness = 44.72)</b> — median sits well below mean due to rare extreme spikes. Two intervals recorded <b>negative prices</b>, indicating overnight surplus from wind generation.</p>
 </div>
 
+<!-- 04 ANALYSIS PERFORMED -->
 <div class="section">
   <h2>04. Analysis Performed</h2>
-  <p><b>Demand Pattern Analysis:</b> Averaged demand profiles were computed for weekdays vs. weekends and across seasonal quarters. This revealed the classic double-peak demand shape (morning and evening peaks) and the lower flat winter overnight baseline.</p>
-  <p><b>Price Volatility Analysis:</b> Spot prices in the NEM are uncapped and can spike to $15,000/MWh during scarcity events. The analysis identified the frequency, duration, and time-of-day distribution of price spikes above $300/MWh — the threshold commonly used to define a high-price event.</p>
-  <div class="code-block"><span class="comment">% MATLAB: Identify high-price intervals</span>
-<span class="label">spike_idx </span>= find(price_data > <span class="value">300</span>);     <span class="comment">% $/MWh threshold</span>
-<span class="label">spike_hrs </span>= half_hour_times(spike_idx); <span class="comment">% Time of each spike</span>
-<span class="label">spike_pct </span>= length(spike_idx) / <span class="value">17520</span> * 100;
-<span class="comment">% Plot distribution by hour of day</span>
-<span class="label">histcounts</span>(hour(spike_hrs), <span class="value">0:23</span>)</div>
-  <p><b>Load-Shift Simulation:</b> A demand response simulation was built in MATLAB to model the financial impact of shifting <b>25% of peak demand</b> from the top-price intervals to the cheapest available off-peak slots. The simulation iterated over all 17,520 intervals, recalculating market costs with and without the shift.</p>
+  <p><b>Seasonal Demand Patterns (Section 2):</b> Monthly, weekly, and intraday demand boxplots were computed. Victorian demand displays a classic <b>bimodal seasonal pattern</b> — summer peaks from air conditioning (Jan–Feb: ~5,665 MW avg) and winter peaks from heating (Jun–Jul: ~5,852 MW avg). Spring is the low point. The monthly mean range spans 5,152 MW (December) to 5,852 MW (June) — a <b>13.6% seasonal swing</b>.</p>
+  <p><b>Weekday vs Weekend:</b> Weekday average demand was <b>5,720 MW</b> vs weekend <b>4,989 MW</b> — a <b>14.7% gap</b> driven by commercial and industrial load dropping on weekends. Intraday profiling identified the daily trough at <b>03:00–04:00 (mean 4,302 MW)</b> and peak at <b>17:30 (mean 6,270 MW)</b> with an IQR of 1,274 MW.</p>
+  <p><b>Price Pattern Analysis (Section 2):</b> Spot prices were resolved at 30-min resolution. Afternoon peak pricing window was <b>15:00–19:30</b>, reaching a mean of <b>$71.9/MWh at 16:00</b>. Off-peak lowest mean was <b>$42.6/MWh at 03:30</b>. Price CV of 116.8% far exceeds demand CV of 16.3%, reflecting the NEM's non-linear scarcity pricing mechanism.</p>
+  <p><b>Correlation Analysis (Section 3):</b> Pearson and Spearman correlations between demand and price were computed across multiple time windows to investigate how aggregation level affects the apparent relationship.</p>
+  <p><b>Load-Shift Simulation (Section 4):</b> A demand response simulation was built in MATLAB to model shifting 5–25% of peak demand to cheapest off-peak slots, iterating across all 17,520 intervals to calculate annual cost savings.</p>
 </div>
 
+<!-- 04B MATLAB PLOTS -->
 <div class="section">
-  <h2>05. Key Finding</h2>
+  <h2>04b. MATLAB Output — Key Figures</h2>
+
+  <div class="fig-section-label">Section 2 — Demand &amp; Price Patterns</div>
+  <div class="fig-grid">
+    <div class="fig-card">
+      <img src="assets/nem/s2/Section2_a_Monthly_Demand.png" alt="Monthly demand boxplot — bimodal seasonal pattern" loading="lazy">
+      <div class="fig-caption">FIG 2a — Monthly demand distribution. Summer (Jan–Feb) and winter (Jun–Jul) peaks clearly visible.</div>
+    </div>
+    <div class="fig-card">
+      <img src="assets/nem/s2/Section2_b_Weekly_Demand.png" alt="Weekly demand boxplot — weekday vs weekend" loading="lazy">
+      <div class="fig-caption">FIG 2b — Weekly demand by day. Weekdays consistently 14.7% higher than weekends.</div>
+    </div>
+    <div class="fig-card">
+      <img src="assets/nem/s2/Section2_c_Daily_Demand.png" alt="Intraday demand profile — trough 03:00, peak 17:30" loading="lazy">
+      <div class="fig-caption">FIG 2c — Intraday demand profile. Trough 4,302 MW at 03:00; peak 6,270 MW at 17:30.</div>
+    </div>
+    <div class="fig-card">
+      <img src="assets/nem/s2/Section2_d2_Monthly_Price_Bands.png" alt="Monthly price distribution with percentile bands" loading="lazy">
+      <div class="fig-caption">FIG 2d — Monthly price with percentile bands. Extreme spikes visible in summer and winter.</div>
+    </div>
+    <div class="fig-card">
+      <img src="assets/nem/s2/Section2_f_Daily_Price.png" alt="Intraday price profile — afternoon peak 15:00–19:30" loading="lazy">
+      <div class="fig-caption">FIG 2f — Intraday mean price profile. Afternoon peak $71.9/MWh at 16:00; off-peak floor $42.6/MWh.</div>
+    </div>
+    <div class="fig-card">
+      <img src="assets/nem/s2/Section2_g_Demand_Price.png" alt="Monthly demand and price overlaid — r=0.858" loading="lazy">
+      <div class="fig-caption">FIG 2g — Monthly mean demand vs price. Monthly aggregation reveals strong correlation (r = 0.858).</div>
+    </div>
+  </div>
+
+  <div class="fig-section-label">Section 3 — Correlation Analysis</div>
+  <div class="fig-grid">
+    <div class="fig-card">
+      <img src="assets/nem/s3/Section3_a_d_Correlations.png" alt="Correlation coefficients across time windows — full year to single day" loading="lazy">
+      <div class="fig-caption">FIG 3a-d — Pearson r across aggregation windows. Correlation rises sharply as window narrows.</div>
+    </div>
+    <div class="fig-card">
+      <img src="assets/nem/s3/Section3_e_Scatter_FullYear.png" alt="Full-year demand-price scatter — r=0.2003" loading="lazy">
+      <div class="fig-caption">FIG 3e — Full-year scatter (17,520 pts). r = 0.2003 — masked by price spike outliers.</div>
+    </div>
+    <div class="fig-card">
+      <img src="assets/nem/s3/Section3_i_Statistics.png" alt="Descriptive statistics summary table" loading="lazy">
+      <div class="fig-caption">FIG 3i — Full descriptive statistics summary from MATLAB Statistical Toolbox.</div>
+    </div>
+  </div>
+
+  <div class="fig-section-label">Section 4 — Load Shift Simulation Results</div>
+  <div class="fig-grid">
+    <div class="fig-card">
+      <img src="assets/nem/s4/Section4_Savings_Summary.png" alt="Savings summary across all shift levels" loading="lazy">
+      <div class="fig-caption">FIG 4 — Annual savings at each shift level (5% → 25%). Linear response of $10.08M per 5%.</div>
+    </div>
+    <div class="fig-card">
+      <img src="assets/nem/s4/Section4_r_AllLevels_Summary.png" alt="Demand comparison across all shift scenarios" loading="lazy">
+      <div class="fig-caption">FIG 4r — Demand profile comparison across all scenarios. Off-peak floor rises with shift level.</div>
+    </div>
+    <div class="fig-card">
+      <img src="assets/nem/s4/Section4_s_5pct_Shift.png" alt="5% shift scenario demand comparison" loading="lazy">
+      <div class="fig-caption">FIG 4s — 5% shift scenario. 305.7 MW peak reduction; $10.08M saving (0.38%).</div>
+    </div>
+    <div class="fig-card">
+      <img src="assets/nem/s4/Section4_w_25pct_Shift.png" alt="25% shift scenario — maximum savings case" loading="lazy">
+      <div class="fig-caption">FIG 4w — 25% shift scenario. Off-peak rises from 4,588 MW to 5,862 MW; $50.4M saving.</div>
+    </div>
+  </div>
+</div>
+
+<!-- 05 CORRELATION ANALYSIS -->
+<div class="section">
+  <h2>05. Correlation Analysis</h2>
+  <p>One of the report's central findings was the strong <b>dependence of demand-price correlation on time aggregation level</b>. At the raw 30-min interval resolution, price spikes are rare and extreme — masking the underlying relationship. As the analysis window narrows (and extreme-spike effects dominate), the correlation strengthens markedly:</p>
+  <table class="corr-table">
+    <thead>
+      <tr>
+        <th>Time Window</th>
+        <th>Data Points</th>
+        <th>Pearson r</th>
+        <th>Interpretation</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Full year (all intervals)</td>
+        <td>17,520</td>
+        <td class="r-val">0.2003</td>
+        <td>Weak — spikes obscure the trend</td>
+      </tr>
+      <tr>
+        <td>January only</td>
+        <td>1,488</td>
+        <td class="r-val">0.2113</td>
+        <td>Marginally stronger in peak summer</td>
+      </tr>
+      <tr>
+        <td>First week (Jan 1–7)</td>
+        <td>336</td>
+        <td class="r-val">0.3123</td>
+        <td>Moderate — fewer outlier events</td>
+      </tr>
+      <tr>
+        <td>First day (Jan 1)</td>
+        <td>48</td>
+        <td class="r-val">0.6660</td>
+        <td>Strong — price tracks demand within a day</td>
+      </tr>
+      <tr>
+        <td>Monthly means</td>
+        <td>12</td>
+        <td class="r-val">0.858</td>
+        <td>Very strong — averaging suppresses noise</td>
+      </tr>
+    </tbody>
+  </table>
+  <p>The jump from r = 0.200 (full year, 30-min resolution) to r = 0.858 (monthly means) illustrates <b>Simpson's Paradox at market scale</b> — the aggregate relationship looks weak because a small number of extreme-price intervals pull the scatter in unpredictable directions, while the smooth monthly profile reveals a clear demand-driven price structure.</p>
+</div>
+
+<!-- 06 KEY FINDING -->
+<div class="section">
+  <h2>06. Key Finding — Load Shift Simulation</h2>
   <div class="highlight-box">
     <div class="hl-num">$50.4M</div>
     <div class="hl-label">Annual savings from 25% peak demand load shift (Victorian NEM, 2013)</div>
   </div>
   <div class="code-block"><span class="comment">% Load-shift simulation results (baseline annual cost: $2,649.22M)</span>
 <span class="label">Shift  </span> <span class="label">Peak ↓</span>  <span class="value">Annual Cost</span>  <span class="value">Savings</span>
-<span class="comment">─────────────────────────────────────────────────</span>
+<span class="comment">─────────────────────────────────────────────────────</span>
 <span class="label">  5%  </span> <span class="value">305.7 MW</span>   $2,639.14M   $10.08M (0.38%)
 <span class="label"> 10%  </span> <span class="value">611.4 MW</span>   $2,629.06M   $20.16M (0.76%)
 <span class="label"> 15%  </span> <span class="value">917.1 MW</span>   $2,618.98M   $30.24M (1.14%)
-<span class="label"> 20%  </span> <span class="value">1222.8 MW</span>  $2,608.90M   $40.32M (1.52%)
-<span class="label"> 25%  </span> <span class="value">1528.4 MW</span>  $2,598.82M   $50.40M (1.90%)</span></div>
-  <p>Shifting 25% of Victorian peak demand to off-peak periods would have saved <b>$50.4 million</b> in energy costs across 2013 — with each additional 5% of load shifted delivering a proportional <b>$10.08M</b> in annual savings. The NEM's scarcity pricing mechanism means a small number of high-stress intervals drive the majority of annual cost, making demand response highly cost-effective even with modest flexibility.</p>
+<span class="label"> 20%  </span> <span class="value">1,222.8 MW</span> $2,608.90M   $40.32M (1.52%)
+<span class="label"> 25%  </span> <span class="value">1,528.4 MW</span> $2,598.82M   $50.40M (1.90%)</span></div>
+  <p>Each additional 5% of load shifted delivers a consistent <b>$10.08M in annual savings</b>. At 25%, off-peak demand rises from a base of 4,588 MW to 5,862 MW. The report recommends a <b>practical range of 15–20%</b> — the 25% scenario risks feeder congestion as the off-peak trough approaches daytime peak levels, limiting real-world deployment to smaller shifts without network reinforcement.</p>
 </div>
 
+<!-- 07 RESULTS SUMMARY -->
 <div class="section">
-  <h2>06. Results Summary</h2>
+  <h2>07. Results Summary</h2>
   <div class="result-box">
-    <p>✅ 17,520 intervals processed — no missing data after cleaning (zero gaps in the AEMO dataset).</p>
-    <p>✅ Weekend demand 14.7% lower than weekday average (4,989 MW vs 5,720 MW) — consistent with commercial/industrial load dominance.</p>
-    <p>✅ Afternoon peak 15:00–19:30 identified as highest-price window — mean price $71.9/MWh at 16:00, with extreme NEM scarcity spikes reaching $4,282/MWh.</p>
-    <p>✅ 25% load shift simulation: <b>$50.4M annual cost reduction</b> (1.90%) across the Victorian region.</p>
-    <p>✅ Seasonal analysis confirmed summer (Jan–Feb) and winter (Jun–Jul) as highest-risk periods for price spikes — matching the demand bimodal pattern.</p>
+    <p>✅ <b>17,520 intervals processed</b> — zero gaps after cleaning. AEMO dataset was complete for the full 2013 calendar year.</p>
+    <p>✅ <b>Annual mean demand: 5,511.77 MW</b> (σ = 895.95 MW, CV = 16.3%). Moderate demand variability driven by seasonal and diurnal cycles.</p>
+    <p>✅ <b>Annual mean price: $52.86/MWh</b> (median $48.85/MWh, CV = 116.8%, skewness = 44.72). Price distribution is extremely right-skewed — a small number of scarcity events dominate annual cost.</p>
+    <p>✅ <b>Weekend demand 14.7% lower</b> than weekday average (4,989 MW vs 5,720 MW) — consistent with commercial/industrial load dominance.</p>
+    <p>✅ <b>Afternoon peak 15:00–19:30</b> identified as highest-price window — mean $71.9/MWh at 16:00; extreme NEM scarcity spike reached <b>$4,282/MWh</b>.</p>
+    <p>✅ <b>Demand-price correlation varies from r = 0.200 (full year) to r = 0.858 (monthly means)</b> — aggregation level critically determines apparent correlation strength.</p>
+    <p>✅ <b>25% load shift: $50.4M annual saving (1.90%)</b>. Practical recommendation is 15–20% to avoid feeder congestion. Each 5% shift reduces peak by 305.7 MW and saves $10.08M.</p>
   </div>
 </div>
 
+<!-- 08 LESSONS LEARNED -->
 <div class="section">
-  <h2>07. Lessons Learned</h2>
+  <h2>08. Lessons Learned</h2>
   <div class="lesson-box">
     <div class="lesson-label">Energy Markets Are Highly Non-Linear</div>
-    <p>A small fraction of intervals drives a large fraction of cost. Linear averages badly misrepresent spot market economics — the distribution of price events matters far more than the mean price.</p>
+    <p>A small fraction of intervals drives a large fraction of cost. The NEM price distribution has skewness of 44.72 — meaning the average price is meaningless for cost planning. The distribution of price events matters far more than the mean.</p>
   </div>
   <div class="lesson-box">
-    <div class="lesson-label">Data Cleaning Is Half the Work</div>
-    <p>Even the AEMO dataset — from an official government source — required checking for timestamp gaps, unit consistency, and outlier validation before any analysis was reliable. Garbage-in-garbage-out is real.</p>
+    <div class="lesson-label">Aggregation Level Changes Everything</div>
+    <p>The same data produces r = 0.200 at 30-min resolution and r = 0.858 at monthly resolution. Any correlation analysis must specify the aggregation window explicitly — conclusions drawn at one level do not transfer to another.</p>
   </div>
   <div class="lesson-box">
     <div class="lesson-label">Demand Response Scales With Price Volatility</div>
-    <p>The $50.4M saving assumes flexibility is available exactly when prices spike. In practice, industrial loads can shift but residential loads are less flexible. The real-world achievable saving is lower — but the economic signal is clear.</p>
+    <p>The $50.4M saving assumes flexibility is available exactly when prices spike. In practice, the recommended 15–20% shift window avoids off-peak congestion while still delivering $30–40M in annual savings. The economic signal is strong even with conservative assumptions.</p>
+  </div>
+  <div class="lesson-box">
+    <div class="lesson-label">Data Cleaning Is Half the Work</div>
+    <p>Even the AEMO dataset — from an official government source — required checking for timestamp gaps, unit consistency, and outlier validation before any analysis was reliable. Garbage-in-garbage-out is real, and data provenance matters.</p>
   </div>
 </div>
 
