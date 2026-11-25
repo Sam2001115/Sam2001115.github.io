@@ -268,6 +268,7 @@ section{padding:5rem 0}
   position:relative;overflow:hidden;border-radius:14px;
   min-height:270px;display:flex;flex-direction:column;justify-content:flex-end;
   transition:transform .28s cubic-bezier(.22,1,.36,1),box-shadow .28s;
+  cursor:pointer;text-decoration:none;color:inherit;display:block;
 }
 .proj:hover{transform:translateY(-6px);box-shadow:0 20px 56px rgba(0,0,0,.55)}
 .proj::before{
@@ -302,13 +303,6 @@ section{padding:5rem 0}
 .proj-type-badge.pb-personal{background:rgba(234,88,12,.4);color:#fdba74;border-color:rgba(234,88,12,.45)}
 .proj-type-badge.pb-hive{background:rgba(168,85,247,.4);color:#d8b4fe;border-color:rgba(168,85,247,.45)}
 .proj-dev-badge{font-size:.55rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;background:rgba(251,191,36,.15);color:#fbbf24;border:1px solid rgba(251,191,36,.4);padding:.2rem .6rem;border-radius:4px;margin-left:.4rem}
-.proj-link{
-  font-size:.7rem;font-weight:700;color:#fff;text-decoration:none;
-  background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.28);
-  padding:.35rem .85rem;border-radius:5px;
-  transition:background .2s;white-space:nowrap;
-}
-.proj-link:hover{background:rgba(255,255,255,.26)}
 
 /* ══ FOOTER ══ */
 footer{background:#0f1221;padding:3rem 0 1.5rem}
@@ -615,115 +609,115 @@ footer{background:#0f1221;padding:3rem 0 1.5rem}
   <div class="sec-line"></div>
   <div class="proj-grid reveal">
 
-    <div class="proj proj-c1" style="--ph:url('3d%20design%20assembly%20.png')">
+    <a href="rover.html" class="proj proj-c1" style="--ph:url('3d%20design%20assembly%20.png')">
       <div class="proj-overlay">
         <div class="proj-num">PROJECT 01</div>
         <div class="proj-title">Cleaning Rover</div>
         <div class="proj-desc">Autonomous floor cleaning robot on ESP32-WROOM-32. 4× HC-SR04 ultrasonic sensors, dual DRV8833 motor drivers, 3S2P Li-ion with BMS. WiFi dashboard with radar, manual controls, live battery monitoring.</div>
         <div class="proj-tags"><span class="ptag">ESP32</span><span class="ptag">C++</span><span class="ptag">SolidWorks</span><span class="ptag">3D Print</span><span class="ptag">IoT</span></div>
-        <div class="proj-footer"><span class="proj-type-badge pb-personal">Personal</span><span class="proj-dev-badge">⚙ In Development</span><a href="rover.html" class="proj-link">View Build →</a></div>
+        <div class="proj-footer"><span class="proj-type-badge pb-personal">Personal</span><span class="proj-dev-badge">⚙ In Development</span></div>
       </div>
-    </div>
+    </a>
 
-    <div class="proj proj-c2">
+    <a href="ousb.html" class="proj proj-c2">
       <div class="proj-overlay">
         <div class="proj-num">PROJECT 02</div>
         <div class="proj-title">OUSB Simulator</div>
         <div class="proj-desc">High-fidelity C++ simulator emulating AVR register architecture. Bitwise port manipulation, error-precedence validation, file I/O command parser — 100% spec accuracy.</div>
         <div class="proj-tags"><span class="ptag">C++</span><span class="ptag">AVR</span><span class="ptag">Bitwise</span><span class="ptag">File I/O</span></div>
-        <div class="proj-footer"><span class="proj-type-badge">University</span><a href="ousb.html" class="proj-link">View Build →</a></div>
+        <div class="proj-footer"><span class="proj-type-badge">University</span></div>
       </div>
-    </div>
+    </a>
 
-    <div class="proj proj-c3" style="--ph:url('device%20view.jpeg')">
+    <a href="monitoring.html" class="proj proj-c3" style="--ph:url('device%20view.jpeg')">
       <div class="proj-overlay">
         <div class="proj-num">PROJECT 03</div>
         <div class="proj-title">Room Monitor &amp; Security</div>
         <div class="proj-desc">Always-on IoT security monitor on ESP32. Telegram alerts in under 2 seconds, multi-ping filter, NTP clock on OLED, HTTP Basic Auth dashboard, Healthchecks.io heartbeat. 99.9% uptime over 3+ months.</div>
         <div class="proj-tags"><span class="ptag">ESP32</span><span class="ptag">Telegram API</span><span class="ptag">NTP</span><span class="ptag">OLED</span><span class="ptag">IoT</span></div>
-        <div class="proj-footer"><span class="proj-type-badge pb-personal">Personal</span><a href="monitoring.html" class="proj-link">View Build →</a></div>
+        <div class="proj-footer"><span class="proj-type-badge pb-personal">Personal</span></div>
       </div>
-    </div>
+    </a>
 
-    <div class="proj proj-c4" style="--ph:url('solar_3d_iso.png')">
+    <a href="solar.html" class="proj proj-c4" style="--ph:url('solar_3d_iso.png')">
       <div class="proj-overlay">
         <div class="proj-num">PROJECT 04</div>
         <div class="proj-title">Smart Solar Monitor</div>
         <div class="proj-desc">Solar energy monitoring on ESP32-C3. Real-time V, I, power, temp, humidity. Dual relay automation, 3-screen ST7789 dashboard, KiCad PCB, SolidWorks enclosure, WiFi web dashboard.</div>
         <div class="proj-tags"><span class="ptag">ESP32-C3</span><span class="ptag">ACS712</span><span class="ptag">KiCad</span><span class="ptag">Solar</span><span class="ptag">BMS</span></div>
-        <div class="proj-footer"><span class="proj-type-badge pb-personal">Personal</span><span class="proj-dev-badge">⚙ In Development</span><a href="solar.html" class="proj-link">View Build →</a></div>
+        <div class="proj-footer"><span class="proj-type-badge pb-personal">Personal</span><span class="proj-dev-badge">⚙ In Development</span></div>
       </div>
-    </div>
+    </a>
 
-    <div class="proj proj-c6">
+    <a href="cnc.html" class="proj proj-c6">
       <div class="proj-overlay">
         <div class="proj-num">PROJECT 05</div>
         <div class="proj-title">CNC Plotter Machine</div>
         <div class="proj-desc">Two-axis CNC pen plotter from salvaged printer parts. ESP32 with integrated ST7789, custom G-code parser, touchscreen UI. A4988 stepper drivers with adjustable microstepping.</div>
         <div class="proj-tags"><span class="ptag">ESP32</span><span class="ptag">CNC</span><span class="ptag">A4988</span><span class="ptag">G-code</span><span class="ptag">ST7789</span></div>
-        <div class="proj-footer"><span class="proj-type-badge">University</span><a href="cnc.html" class="proj-link">View Build →</a></div>
+        <div class="proj-footer"><span class="proj-type-badge">University</span></div>
       </div>
-    </div>
+    </a>
 
-    <div class="proj proj-c2">
+    <a href="vending.html" class="proj proj-c2">
       <div class="proj-overlay">
         <div class="proj-num">PROJECT 06</div>
         <div class="proj-title">Vending Machine Controller</div>
         <div class="proj-desc">AVR C firmware implementing a full vending machine state machine for EEET2256. Keypad input, LED indicators, product selection, coin handling, change dispensing. Strict hardware register control.</div>
         <div class="proj-tags"><span class="ptag">AVR C</span><span class="ptag">State Machine</span><span class="ptag">Keypad</span><span class="ptag">LED</span></div>
-        <div class="proj-footer"><span class="proj-type-badge">University</span><a href="vending.html" class="proj-link">View Build →</a></div>
+        <div class="proj-footer"><span class="proj-type-badge">University</span></div>
       </div>
-    </div>
+    </a>
 
-    <div class="proj proj-c5">
+    <a href="antenna.html" class="proj proj-c5">
       <div class="proj-overlay">
         <div class="proj-num">PROJECT 07</div>
         <div class="proj-title">Antenna Tracking System</div>
         <div class="proj-desc">Two-axis antenna tracker for RMIT HIVE Rocketry. Real-time rocket tracking via GPS + LoRa RF link, automatic az/el pointing, manual override. Designed for field deployment at rocket launches.</div>
         <div class="proj-tags"><span class="ptag">ESP32</span><span class="ptag">LoRa</span><span class="ptag">GPS</span><span class="ptag">Servo</span><span class="ptag">RF</span></div>
-        <div class="proj-footer"><span class="proj-type-badge pb-hive">RMIT HIVE</span><a href="antenna.html" class="proj-link">View Build →</a></div>
+        <div class="proj-footer"><span class="proj-type-badge pb-hive">RMIT HIVE</span></div>
       </div>
-    </div>
+    </a>
 
-    <div class="proj proj-c7">
+    <a href="smartgrid.html" class="proj proj-c7">
       <div class="proj-overlay">
         <div class="proj-num">PROJECT 08</div>
         <div class="proj-title">Smart Grid Network Modelling</div>
         <div class="proj-desc">DIgSILENT PowerFactory — load flow, fault studies, N-1 contingency analysis, and VPP dispatch. Lab 4: coordinated price-signal VPP control cut peak network load from ~232 kW to ~178 kW and reduced external grid import across the afternoon peak window.</div>
         <div class="proj-tags"><span class="ptag">DIgSILENT</span><span class="ptag">VPP</span><span class="ptag">Load Flow</span><span class="ptag">DER</span><span class="ptag">BESS</span></div>
-        <div class="proj-footer"><span class="proj-type-badge">University</span><a href="smartgrid.html" class="proj-link">View Build →</a></div>
+        <div class="proj-footer"><span class="proj-type-badge">University</span></div>
       </div>
-    </div>
+    </a>
 
-    <div class="proj proj-c2">
+    <a href="nem.html" class="proj proj-c2">
       <div class="proj-overlay">
         <div class="proj-num">PROJECT 09</div>
         <div class="proj-title">Victorian NEM Market Analysis</div>
         <div class="proj-desc">MATLAB pipeline on 17,520 real AEMO records. Seasonal/intraday demand and price visualisations, distribution fitting, Pearson correlation. Load-shifting simulation: 25% shift saves $50.4M against $2,649M annual baseline.</div>
         <div class="proj-tags"><span class="ptag">MATLAB</span><span class="ptag">NEM</span><span class="ptag">Data Analysis</span><span class="ptag">Demand Response</span></div>
-        <div class="proj-footer"><span class="proj-type-badge">University</span><a href="nem.html" class="proj-link">View Build →</a></div>
+        <div class="proj-footer"><span class="proj-type-badge">University</span></div>
       </div>
-    </div>
+    </a>
 
-    <div class="proj proj-c1" style="--ph:url('assets/lunar/cells-render.png')">
+    <a href="lunar.html" class="proj proj-c1" style="--ph:url('assets/lunar/cells-render.png')">
       <div class="proj-overlay">
         <div class="proj-num">PROJECT 10</div>
         <div class="proj-title">Lunar Rover — Engineering Design 1</div>
         <div class="proj-desc">Group CAD design project for OENG1250. Full SolidWorks assembly — chassis, shade mechanism, solar panel mounting, and drive components. Detailed engineering drawings and sub-assembly models to spec.</div>
         <div class="proj-tags"><span class="ptag">SolidWorks</span><span class="ptag">CAD</span><span class="ptag">Mechanical Design</span><span class="ptag">Group</span></div>
-        <div class="proj-footer"><span class="proj-type-badge">University</span><a href="lunar.html" class="proj-link">View Build →</a></div>
+        <div class="proj-footer"><span class="proj-type-badge">University</span></div>
       </div>
-    </div>
+    </a>
 
-    <div class="proj proj-c4">
+    <a href="buck.html" class="proj proj-c4">
       <div class="proj-overlay">
         <div class="proj-num">PROJECT 11</div>
         <div class="proj-title">Buck Converter PCB</div>
         <div class="proj-desc">LM3524 PWM buck converter in Altium Designer at ~82.5 kHz. GND polygon pour, widened high-current traces, thermal placement of Q1. DRC: 0 warnings, 0 violations. Self-analysis identified switching-loop geometry as root cause of ripple — specific fix identified.</div>
         <div class="proj-tags"><span class="ptag">Altium Designer</span><span class="ptag">PCB</span><span class="ptag">LM3524</span><span class="ptag">Power Electronics</span></div>
-        <div class="proj-footer"><span class="proj-type-badge">University</span><a href="buck.html" class="proj-link">View Build →</a></div>
+        <div class="proj-footer"><span class="proj-type-badge">University</span></div>
       </div>
-    </div>
+    </a>
 
   </div>
 </div>
