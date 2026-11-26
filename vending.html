@@ -171,15 +171,20 @@ b{color:#fff;font-weight:700}
 <h1>Vending Machine Controller</h1>
 <div class="status-row">
   <span class="badge badge-done">✓ COMPLETED</span>
-  <span class="badge badge-type">AVR / C</span>
+  <span class="badge badge-type">ATmega32A / C</span>
   <span class="badge badge-type">STATE MACHINE</span>
   <span class="badge badge-type">EMBEDDED SYSTEMS</span>
+  <span class="badge badge-type">TEAM PROJECT</span>
 </div>
 
 <div class="section">
   <h2>01. Objective</h2>
-  <p>Implement a fully functional vending machine controller in bare-metal C on an AVR microcontroller as the EEET2256 major project. The system manages a complete purchase cycle — item selection via keypad, coin accumulation, item dispensing, and change calculation — using a finite state machine (FSM) architecture with LED and 7-segment display feedback.</p>
-  <p>No RTOS, no libraries beyond the AVR standard — all peripheral control (GPIO, timers, interrupts) written from register level.</p>
+  <p>EEET2256 major project — implement a fully functional vending machine controller on an <b>ATmega32A</b> microcontroller (OUSB development board) in two independent implementations: one in <b>C</b>, one in <b>Assembly</b>. This was a three-person group project; my contribution was the <b>C implementation</b> and report editing.</p>
+  <p>The system manages a complete purchase cycle — item selection via keypad, coin accumulation, item dispensing, and change calculation — using a finite state machine (FSM) architecture with LED output for status and change display. No RTOS, no libraries beyond the AVR standard — all peripheral control written at register level.</p>
+  <div class="result-box" style="margin-top:1.25rem;font-size:.85rem">
+    <p style="margin-bottom:.4rem"><b>Group · PRA01-14</b> &nbsp;|&nbsp; Friday 16:30</p>
+    <p style="margin-bottom:0;color:rgba(255,255,255,.65)">Charlie Picton (report) &nbsp;·&nbsp; Isuru Gunaratne (Assembly) &nbsp;·&nbsp; Sameer Appasa (C code)</p>
+  </div>
 </div>
 
 <div class="section">
@@ -187,7 +192,7 @@ b{color:#fff;font-weight:700}
   <div class="tag-group">
     <div class="tag-group-label">Hardware</div>
     <div class="tech-tags">
-      <span class="tag">ATmega328P (AVR)</span>
+      <span class="tag">ATmega32A (AVR)</span>
       <span class="tag">4×4 Matrix Keypad</span>
       <span class="tag">7-Segment Display (multiplexed)</span>
       <span class="tag">LED Array (status indicators)</span>
