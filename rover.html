@@ -650,17 +650,27 @@
         <h2 style="color:#fbbf24;border-left-color:#fbbf24">⚙ Next Development Phase</h2>
         <p>The rover is fully operational in its current form. The next phase focuses on replacing the breadboard-and-module prototype with a custom PCB to make the build more compact, robust, and production-quality.</p>
         <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem;margin-top:1.2rem">
-            <div style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);border-radius:8px;padding:1rem">
-                <div style="font-size:.7rem;font-weight:700;color:#fbbf24;letter-spacing:.08em;margin-bottom:.5rem">01 / PCB DESIGN</div>
-                <p style="font-size:.87rem;margin:0">Designing a custom PCB using the PCB etching process — integrating ESP32, motor driver ICs, power management, and sensor headers onto a single board.</p>
+            <div style="background:rgba(74,222,128,.06);border:1px solid rgba(74,222,128,.3);border-radius:8px;padding:1rem">
+                <div style="font-size:.7rem;font-weight:700;color:#4ade80;letter-spacing:.08em;margin-bottom:.5rem">✓ 01 / PCB DESIGN — COMPLETE</div>
+                <p style="font-size:.87rem;margin:0">Custom PCB designed in KiCad — integrating ESP32, motor driver ICs, power management, and sensor headers onto a single board. Schematic and layout completed; ready for fabrication via toner transfer.</p>
             </div>
             <div style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);border-radius:8px;padding:1rem">
-                <div style="font-size:.7rem;font-weight:700;color:#fbbf24;letter-spacing:.08em;margin-bottom:.5rem">02 / PCB ETCHING</div>
-                <p style="font-size:.87rem;margin:0">Fabricating the board using the chemical PCB etching method — transferring the layout to copper clad board, etching with ferric chloride, and drilling component holes.</p>
+                <div style="font-size:.7rem;font-weight:700;color:#fbbf24;letter-spacing:.08em;margin-bottom:.5rem">02 / PCB FABRICATION</div>
+                <p style="font-size:.87rem;margin:0">Fabricating the board using the toner transfer method — printing the layout onto glossy paper, ironing onto copper clad board, etching with ferric chloride, and drilling component holes.</p>
             </div>
             <div style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);border-radius:8px;padding:1rem">
                 <div style="font-size:.7rem;font-weight:700;color:#fbbf24;letter-spacing:.08em;margin-bottom:.5rem">03 / INTEGRATION</div>
                 <p style="font-size:.87rem;margin:0">Mounting the etched PCB into the SolidWorks chassis design and validating full rover functionality — drive, sensor scanning, and WiFi dashboard — on the new hardware.</p>
+            </div>
+        </div>
+        <div class="fig-grid" style="margin-top:1.5rem">
+            <div class="fig-item">
+                <img src="assets/rover/rover-pcb-schematic.png" alt="KiCad schematic for the cleaning rover PCB — ESP32, motor drivers, power management and sensor headers">
+                <div class="fig-caption"><strong>KiCad schematic</strong> — ESP32 dev module, dual motor driver ICs, battery input, ultrasonic sensor headers and power management</div>
+            </div>
+            <div class="fig-item">
+                <img src="assets/rover/rover-pcb-layout.png" alt="KiCad PCB layout for the cleaning rover — 2-layer board with copper pour, component placement and routed traces">
+                <div class="fig-caption"><strong>PCB layout</strong> — 2-layer board with ground copper pour, component placement finalised and all traces routed; ready for toner transfer fabrication</div>
             </div>
         </div>
     </div>
