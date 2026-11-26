@@ -226,6 +226,16 @@ b{color:#fff;font-weight:700}
   <p><b>Component Placement Strategy:</b> The LM3524 was placed centrally to keep both the feedback and gate-drive control traces short. L1 was positioned top-right close to output capacitors C3/C4 to keep the LC output filter tight. Q1 (the MOSFET) was placed on the board edge to allow heatsink attachment if needed — a thermal decision that created a layout trade-off.</p>
   <p><b>Switching Loop Trade-off:</b> Placing Q1 on the edge for thermal management resulted in the switching loop (Q1→D3→L1→C3/C4) spanning most of the board height, increasing parasitic inductance in the high-frequency switching path. At 82.5 kHz this contributed to output ripple slightly exceeding the 66 mV spec. In a revision, Q1 would be shifted upward toward D3 and L1 to tighten the loop while keeping the edge position for heat dissipation.</p>
   <p><b>Ground Plane:</b> A GND polygon pour on the top layer provides a low-impedance ground return across the board. Power traces on the high-current path (Q1, L1, output) were widened compared to signal traces around the LM3524 feedback network to reduce noise coupling into the sensitive feedback loop.</p>
+  <div class="fig-grid" style="margin-top:1.5rem">
+    <div class="fig-item">
+      <img src="assets/buck/buck-schematic.png" alt="Altium Designer schematic for the buck converter — LM3524, PMOS switch, rectifier bridge, LC filter and feedback network">
+      <div class="fig-caption"><strong>Altium schematic</strong> — full-wave rectifier (D1–D4), PMOS switch (Q1), LM3524 PWM IC, 100 µH inductor (L1), output filter capacitors and voltage feedback divider</div>
+    </div>
+    <div class="fig-item">
+      <img src="assets/buck/buck-pcb-layout.png" alt="Altium Designer PCB layout — 2-layer board with copper pour, LM3524 centred, inductor top-right and MOSFET on board edge">
+      <div class="fig-caption"><strong>PCB layout</strong> — LM3524 placed centrally, L1 and output capacitors grouped top-right, Q1 on board edge for thermal access; ground copper pour on top layer</div>
+    </div>
+  </div>
 </div>
 
 <div class="section">
