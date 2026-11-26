@@ -87,10 +87,10 @@ body{font-family:'Inter',sans-serif;background:#fff;color:#111;overflow-x:hidden
   display:flex;align-items:center;justify-content:center;
   text-align:center;overflow:hidden;
 }
-/* Circuit board background - SVG inline */
+/* Circuit board background */
 .hero-bg{
   position:absolute;inset:0;
-  background:#0a0e1a;
+  background:#0a0e1a url('assets/hero-pcb.jpg') center/cover no-repeat;
 }
 /* Animated circuit lines */
 .hero-bg::before{
@@ -114,7 +114,7 @@ body{font-family:'Inter',sans-serif;background:#fff;color:#111;overflow-x:hidden
 /* Gradient overlay for text legibility */
 .hero-overlay{
   position:absolute;inset:0;
-  background:linear-gradient(to bottom,rgba(10,14,26,.5) 0%,rgba(10,14,26,.65) 100%);
+  background:linear-gradient(to bottom,rgba(10,14,26,.72) 0%,rgba(10,14,26,.82) 100%);
 }
 .hero-content{position:relative;z-index:2;padding:0 1.5rem;max-width:900px}
 .hero-badge{
