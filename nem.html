@@ -74,7 +74,13 @@ b{color:#fff;font-weight:700}
 .case-desc{font-size:.85rem;color:rgba(255,255,255,.6);line-height:1.65}
 /* ── figure / image gallery ── */
 .fig-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1.25rem;margin:1.5rem 0}
-.fig-item img{width:100%;border-radius:8px;border:1px solid var(--border);display:block}
+img{max-width:100%;height:auto;display:block}
+.fig-item img,.fig-card img{width:100%;border-radius:8px;border:1px solid var(--border)}
+.fig-card{min-width:0}
+.fig-section-label{font-size:.7rem;font-weight:700;color:var(--primary-lt);letter-spacing:.12em;text-transform:uppercase;margin:2rem 0 .75rem}
+.corr-table{width:100%;border-collapse:collapse;font-size:.84rem;margin:1rem 0;overflow-x:auto}
+.corr-table th{color:var(--primary-lt);font-weight:700;text-align:left;padding:.65rem .75rem;border-bottom:1px solid rgba(37,99,235,.35);font-size:.65rem;letter-spacing:.04em;text-transform:uppercase}
+.corr-table td{padding:.6rem .75rem;border-bottom:1px solid rgba(255,255,255,.05);color:rgba(255,255,255,.75)}
 .fig-caption{font-size:.72rem;color:var(--muted);margin-top:.5rem;line-height:1.5}
 /* ── footer nav ── */
 .footer-nav{display:flex;justify-content:space-between;border-top:1px solid var(--border);padding-top:2rem;margin-top:2rem}
