@@ -40,7 +40,10 @@ body{font-family:'Inter',sans-serif;background:#fff;color:#111;overflow-x:hidden
 .navbar{
   background:#1a1f36;position:sticky;top:0;z-index:100;
   box-shadow:0 2px 16px rgba(0,0,0,.35);
+  transform:translateY(0);
+  transition:transform .35s cubic-bezier(.4,0,.2,1);
 }
+.navbar.nav-hidden{transform:translateY(-100%)}
 .navbar-inner{
   max-width:1200px;margin:0 auto;padding:0 2rem;
   display:flex;align-items:center;gap:2rem;height:60px;
@@ -783,6 +786,29 @@ window.addEventListener('scroll', () => {
     a.className = href === cur ? 'active' : '';
   });
 }, {passive:true});
+
+// Hide navbar once past hero; show on mouse near top
+(function(){
+  const nav = document.querySelector('.navbar');
+  const hero = document.querySelector('.hero');
+  let pastHero = false;
+  let mouseNearTop = false;
+
+  function update(){
+    if(pastHero && !mouseNearTop) nav.classList.add('nav-hidden');
+    else nav.classList.remove('nav-hidden');
+  }
+
+  window.addEventListener('scroll', () => {
+    pastHero = window.scrollY > (hero ? hero.offsetHeight * 0.6 : 400);
+    update();
+  }, {passive:true});
+
+  document.addEventListener('mousemove', e => {
+    mouseNearTop = e.clientY < 72;
+    update();
+  });
+})();
 </script>
 </body>
 </html>
