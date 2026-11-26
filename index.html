@@ -161,10 +161,7 @@ h1.hero-title span{color:#60a5fa}
 @keyframes bounce{from{transform:translateY(0)}to{transform:translateY(5px)}}
 
 /* ══ STATS BAR ══ */
-.stats-bar{
-  background:linear-gradient(rgba(7,9,26,.82),rgba(7,9,26,.82)),url('assets/lab-bg.jpg') center/cover no-repeat fixed;
-  padding:1.5rem 0;
-}
+.stats-bar{background:transparent;padding:1.5rem 0}
 .stats-inner{
   max-width:1200px;margin:0 auto;padding:0 2rem;
   display:flex;justify-content:space-around;flex-wrap:wrap;gap:1rem;
@@ -190,8 +187,11 @@ section{padding:5rem 0}
 }
 .sec-desc{font-size:.95rem;color:rgba(255,255,255,.55);max-width:520px;line-height:1.8;margin-bottom:3rem}
 
+/* ══ GLOBAL LAB BG ══ */
+#lab-bg-wrap{background:linear-gradient(rgba(7,9,26,.82),rgba(7,9,26,.82)),url('assets/lab-bg.jpg') center/cover no-repeat fixed}
+
 /* ══ ABOUT ══ */
-#about{background:linear-gradient(rgba(7,9,26,.82),rgba(7,9,26,.82)),url('assets/lab-bg.jpg') center/cover no-repeat fixed}
+#about{background:transparent}
 .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center}
 .about-bio p{font-size:.95rem;color:rgba(255,255,255,.72);line-height:1.9;margin-bottom:1rem}
 .about-info{display:flex;flex-direction:column;gap:.5rem;margin-top:1.5rem}
@@ -214,7 +214,7 @@ section{padding:5rem 0}
 .ach-desc{font-size:.82rem;color:rgba(255,255,255,.58);line-height:1.65}
 
 /* ══ SKILLS ══ */
-#skills{background:linear-gradient(rgba(7,9,26,.82),rgba(7,9,26,.82)),url('assets/lab-bg.jpg') center/cover no-repeat fixed}
+#skills{background:transparent}
 .skills-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
 .skill-card{
   background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:12px;
@@ -230,7 +230,7 @@ section{padding:5rem 0}
 }
 
 /* ══ EDUCATION ══ */
-#education{background:linear-gradient(rgba(7,9,26,.82),rgba(7,9,26,.82)),url('assets/lab-bg.jpg') center/cover no-repeat fixed}
+#education{background:transparent}
 .edu-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem}
 .edu-year-card{
   background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:12px;overflow:hidden;
@@ -263,7 +263,7 @@ section{padding:5rem 0}
 .badge.prog{color:#b45309;background:#fef3c7;border:1px solid #fde68a}
 
 /* ══ PROJECTS ══ */
-#projects{background:linear-gradient(rgba(7,9,26,.87),rgba(7,9,26,.87)),url('assets/lab-bg.jpg') center/cover no-repeat fixed}
+#projects{background:transparent}
 .proj-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1.1rem}
 .proj{
   position:relative;overflow:hidden;border-radius:14px;
@@ -441,6 +441,9 @@ footer{background:#0f1221;padding:3rem 0 1.5rem}
     <span class="scroll-arrow">↓</span>
   </div>
 </div>
+
+<!-- LAB BG WRAPPER -->
+<div id="lab-bg-wrap">
 
 <!-- STATS -->
 <div class="stats-bar">
@@ -723,6 +726,8 @@ footer{background:#0f1221;padding:3rem 0 1.5rem}
   </div>
 </div>
 </section>
+
+</div><!-- /lab-bg-wrap -->
 
 <!-- FOOTER -->
 <footer id="footer">
