@@ -46,9 +46,69 @@
         .footer-nav a{color:var(--muted);text-decoration:none;letter-spacing:0.06em;transition:color 0.2s}
         .footer-nav a:hover{color:var(--primary)}
         @media(max-width:600px){.nav-bar{flex-direction:column;align-items:flex-start}}
-    </style>
+    
+/* ══ SHARED SITE HEADER (matches index.html) ══ */
+.site-topbar{background:#111;padding:.55rem 0}
+.site-topbar-inner{max-width:1200px;margin:0 auto;padding:0 2rem;display:flex;align-items:center;justify-content:space-between}
+.site-topbar-left{display:flex;gap:2rem;align-items:center}
+.site-topbar-item{display:flex;align-items:center;gap:.45rem;font-size:.72rem;color:rgba(255,255,255,.65);letter-spacing:.02em;font-family:'Inter',sans-serif}
+.site-topbar-item a{color:rgba(255,255,255,.65);text-decoration:none;transition:color .2s}
+.site-topbar-item a:hover{color:#fff}
+.site-topbar-icon{color:#2563eb;font-size:.85rem}
+.site-topbar-right{display:flex;gap:.6rem}
+.site-social{width:26px;height:26px;border-radius:50%;background:rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;color:#fff;font-size:.65rem;text-decoration:none;font-weight:700;transition:background .2s;font-family:'Inter',sans-serif}
+.site-social:hover{background:#2563eb}
+.site-navbar{background:#1a1f36;position:sticky;top:0;z-index:100;box-shadow:0 2px 16px rgba(0,0,0,.35)}
+.site-navbar-inner{max-width:1200px;margin:0 auto;padding:0 2rem;display:flex;align-items:center;gap:2rem;height:60px}
+.site-nav-logo{display:flex;align-items:center;gap:.7rem;margin-right:1rem;text-decoration:none;flex-shrink:0}
+.site-nav-logo-monogram{width:32px;height:32px;border-radius:6px;background:#2563eb;display:flex;align-items:center;justify-content:center;font-size:.8rem;font-weight:900;color:#fff;flex-shrink:0;letter-spacing:-.02em;font-family:'Inter',sans-serif}
+.site-nav-logo-text{font-size:.85rem;font-weight:700;color:#fff;letter-spacing:.01em;white-space:nowrap;font-family:'Inter',sans-serif}
+.site-nav-logo-sub{font-size:.6rem;color:rgba(255,255,255,.45);font-weight:400;letter-spacing:.03em;white-space:nowrap;font-family:'Inter',sans-serif}
+.site-nav-links{display:flex;gap:0;flex:1}
+.site-nav-links a{font-size:.78rem;font-weight:500;color:rgba(255,255,255,.65);text-decoration:none;padding:.4rem 1rem;letter-spacing:.03em;transition:color .2s,background .2s;border-radius:4px;font-family:'Inter',sans-serif}
+.site-nav-links a:hover{color:#fff;background:rgba(255,255,255,.08)}
+.site-nav-cta{margin-left:auto;display:flex;align-items:center;gap:.45rem;font-size:.75rem;font-weight:600;color:#fff;background:#2563eb;padding:.45rem 1.1rem;border-radius:5px;text-decoration:none;letter-spacing:.03em;white-space:nowrap;transition:background .2s;font-family:'Inter',sans-serif}
+.site-nav-cta:hover{background:#1d4ed8}
+@media(max-width:600px){.site-topbar-left{flex-direction:column;gap:.35rem;align-items:flex-start}.site-nav-links{display:none}}
+
+</style>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 </head>
 <body>
+<!-- ═══ SITE HEADER ═══ -->
+<div class="site-topbar">
+  <div class="site-topbar-inner">
+    <div class="site-topbar-left">
+      <div class="site-topbar-item"><span class="site-topbar-icon">◎</span> Melbourne, Victoria, Australia</div>
+      <div class="site-topbar-item"><span class="site-topbar-icon">✉</span> <a href="mailto:sameer.appasa20@gmail.com">sameer.appasa20@gmail.com</a></div>
+      <div class="site-topbar-item"><span class="site-topbar-icon">◷</span> Engineering Australia · ID 10791344</div>
+    </div>
+    <div class="site-topbar-right">
+      <a href="https://www.linkedin.com/in/sameer-appasa-ba033931a/" target="_blank" class="site-social">in</a>
+      <a href="https://github.com/Sam2001115" target="_blank" class="site-social">gh</a>
+    </div>
+  </div>
+</div>
+<nav class="site-navbar">
+  <div class="site-navbar-inner">
+    <a href="index.html" class="site-nav-logo">
+      <div class="site-nav-logo-monogram">SA</div>
+      <div>
+        <div class="site-nav-logo-text">Sameer Appasa</div>
+        <div class="site-nav-logo-sub">BEng Electrical (Hons) · RMIT</div>
+      </div>
+    </a>
+    <div class="site-nav-links">
+      <a href="index.html#about">About</a>
+      <a href="index.html#skills">Skills</a>
+      <a href="index.html#education">Education</a>
+      <a href="index.html#projects">Projects</a>
+      <a href="index.html#footer">Contact</a>
+    </div>
+    <a href="mailto:sameer.appasa20@gmail.com" class="site-nav-cta">Get in Touch</a>
+  </div>
+</nav>
+
 <div class="container">
     <nav class="nav-bar">
         <a href="index.html" class="nav-back">← RETURN_TO_DASHBOARD</a>
