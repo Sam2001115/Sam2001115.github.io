@@ -208,6 +208,13 @@ b{color:#fff;font-weight:700}
 <div class="section">
   <div class="lab-divider">Lab 1 — Demand Response in a Residential Distribution Network</div>
 
+  <div class="fig-grid" style="grid-template-columns:1fr;margin-bottom:1.5rem">
+    <div class="fig-item">
+      <img src="assets/smartgrid/Power_Factory_Lab1.png" alt="DIgSILENT PowerFactory — Lab 1 demand response network model" loading="lazy">
+      <div class="fig-caption">DIgSILENT PowerFactory — 36-load 0.433 kV LV distribution network used for demand response simulation (Lab 1)</div>
+    </div>
+  </div>
+
   <h3>Setup</h3>
   <p>The network model consisted of <b>36 residential loads</b> connected across a 0.433 kV LV distribution feeder supplied from an external grid. A <b>13% load shift</b> was applied (10% base + 3 from student ID last digit), redistributing that fraction of peak demand to off-peak periods. Simulations were run for <b>four seasons</b> (summer, autumn, winter, spring) under two pricing regimes: Victorian Time-of-Use (ToU) tariffs and volatile AEMO half-hourly spot prices.</p>
 
@@ -267,6 +274,13 @@ b{color:#fff;font-weight:700}
 <!-- ══════════════════ LAB 3: MICROGRID ══════════════════ -->
 <div class="section">
   <div class="lab-divider">Lab 3 — Community Microgrid: PV + BESS + Diesel + Grid</div>
+
+  <div class="fig-grid" style="grid-template-columns:1fr;margin-bottom:1.5rem">
+    <div class="fig-item">
+      <img src="assets/smartgrid/Power_Factory_Lab3.png" alt="DIgSILENT PowerFactory — Lab 3 microgrid network with PV, BESS and diesel" loading="lazy">
+      <div class="fig-caption">DIgSILENT PowerFactory — community microgrid model with 12× PV systems, BESS, diesel generator, and capacitor bank (Lab 3)</div>
+    </div>
+  </div>
 
   <h3>Network Overview</h3>
   <p>The same 36-load LV network was equipped with a <b>community-scale microgrid</b>: 12 solar PV generators, one Battery Energy Storage System (BESS), one 100 kW diesel generator, and an external grid connection point. Quasi-dynamic load flow simulations were run over a full 24-hour period using real sunny-day and cloudy-day PV profiles. Four study cases were defined:</p>
@@ -390,6 +404,37 @@ b{color:#fff;font-weight:700}
   <div class="lesson-box">
     <div class="lesson-label">PV Self-Sufficiency Has a Clear Irradiance Threshold</div>
     <p>The same PV + BESS system was fully self-sustaining on a sunny day (net −6 kWh) but left an 886 kWh daily shortfall under cloudy conditions. This highlights the need for grid connection or storage oversizing in climates with significant cloud cover — no islanded PV microgrid can be reliably self-sufficient year-round without backup generation.</p>
+  </div>
+</div>
+
+<!-- ══ SIMULATION SCREENSHOTS ══ -->
+<div class="section">
+  <h2>Simulation Screenshots</h2>
+
+  <h3>Lab 2 — EV Integration Network</h3>
+  <div class="fig-grid" style="grid-template-columns:1fr;margin-bottom:2rem">
+    <div class="fig-item">
+      <img src="assets/smartgrid/Power_Factory_Lab2.png" alt="DIgSILENT PowerFactory — Lab 2 EV charging network model" loading="lazy">
+      <div class="fig-caption">Lab 2 network with EV chargers added at residential load points across the 0.433 kV feeder</div>
+    </div>
+  </div>
+
+  <h3>Lab 3 — Simulation Results</h3>
+  <div class="fig-grid">
+    <div class="fig-item">
+      <img src="assets/smartgrid/Power_Factory_Lab3_BESS_ACTIVE_POWER.png" alt="BESS active power over 24 hours" loading="lazy">
+      <div class="fig-caption">Battery Energy Storage System active power over 24 h — charging during solar peak, discharging into evening load</div>
+    </div>
+    <div class="fig-item">
+      <img src="assets/smartgrid/Power_Factory_Lab3_BUS_43_Voltage.png" alt="Bus 43 voltage magnitude over 24 hours" loading="lazy">
+      <div class="fig-caption">Bus 43 voltage magnitude (p.u.) over 24 h — before and after capacitor bank installation at the worst-case bus</div>
+    </div>
+  </div>
+  <div class="fig-grid" style="grid-template-columns:1fr;margin-top:1.25rem">
+    <div class="fig-item">
+      <img src="assets/smartgrid/Power_Factory_Lab3eXTERNAL_GRID.png" alt="External grid active power import over 24 hours" loading="lazy">
+      <div class="fig-caption">External grid active power import over 24 h — island mode (black) vs grid-connected mode (blue), showing peak shaving by the microgrid</div>
+    </div>
   </div>
 </div>
 
