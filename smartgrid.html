@@ -419,21 +419,79 @@ b{color:#fff;font-weight:700}
     </div>
   </div>
 
-  <h3>Lab 3 — Simulation Results</h3>
+  <h3>Study Case 01 — PV + BESS Islanded (Sunny &amp; Cloudy)</h3>
   <div class="fig-grid">
     <div class="fig-item">
-      <img src="assets/smartgrid/Power_Factory_Lab3_BESS_ACTIVE_POWER.png" alt="BESS active power over 24 hours" loading="lazy">
-      <div class="fig-caption">Battery Energy Storage System active power over 24 h — charging during solar peak, discharging into evening load</div>
+      <img src="assets/smartgrid/Lab3_Case01_BESS_Sunny.png" alt="BESS Active Power Profile – Sunny Day (Study Case 01)" loading="lazy">
+      <div class="fig-caption">BESS Active Power – Sunny Day (Case 01): BESS charges from PV between 08:00–16:00, discharging overnight. Net 24 h balance of −6 kWh confirms full self-sufficiency.</div>
     </div>
     <div class="fig-item">
-      <img src="assets/smartgrid/Power_Factory_Lab3_BUS_43_Voltage.png" alt="Bus 43 voltage magnitude over 24 hours" loading="lazy">
-      <div class="fig-caption">Bus 43 voltage magnitude (p.u.) over 24 h — before and after capacitor bank installation at the worst-case bus</div>
+      <img src="assets/smartgrid/Lab3_Case01_Voltage_Sunny.png" alt="Bus 43 Voltage Profile – Sunny Day (Study Case 01)" loading="lazy">
+      <div class="fig-caption">Bus 43 Voltage – Sunny Day (Case 01): Voltage stays well within ±6% limits, peaking at 1.02 p.u. at solar noon due to reverse power flow from PV.</div>
+    </div>
+  </div>
+  <div class="fig-grid" style="margin-top:1.25rem">
+    <div class="fig-item">
+      <img src="assets/smartgrid/Lab3_Case01_BESS_Cloudy.png" alt="BESS Active Power Profile – Cloudy Day (Study Case 01)" loading="lazy">
+      <div class="fig-caption">BESS Active Power – Cloudy Day (Case 01): Reduced PV window (08:00–14:00) means the BESS cannot fully recharge, leaving an 886 kWh daily shortfall — a backup source is needed.</div>
+    </div>
+    <div class="fig-item">
+      <img src="assets/smartgrid/Lab3_Case01_Voltage_CloudyVsSunny.png" alt="Bus 43 Voltage – Cloudy vs Sunny Day (Study Case 01)" loading="lazy">
+      <div class="fig-caption">Bus 43 Voltage – Cloudy vs Sunny (Case 01): Voltage profiles are nearly identical across weather conditions; the BESS acts as a voltage source in islanded mode regardless of PV availability.</div>
+    </div>
+  </div>
+
+  <h3 style="margin-top:2rem">Study Case 02 — Diesel + BESS (Cloudy)</h3>
+  <div class="fig-grid">
+    <div class="fig-item">
+      <img src="assets/smartgrid/Lab3_Case02_BESS_Diesel_Cloudy.png" alt="BESS and Diesel Generator Active Power – Cloudy Day (Study Case 02)" loading="lazy">
+      <div class="fig-caption">BESS + Diesel – Cloudy Day (Case 02): Diesel (orange) covers overnight load (00:00–02:30) and evening peak (16:00–22:00), supplying 950 kWh total at $1.00/kWh — pushing total cost to $1,073.25 (420% above sunny baseline).</div>
+    </div>
+    <div class="fig-item">
+      <img src="assets/smartgrid/Lab3_Case02_Voltage_vs_Case01.png" alt="Bus 43 Voltage – Case 02 vs Case 01 Cloudy" loading="lazy">
+      <div class="fig-caption">Bus 43 Voltage – Case 02 vs Case 01 Cloudy: Adding the diesel generator introduces greater voltage variability; minimum reaches 0.94 p.u. at 15:30 during the diesel-to-solar transition — just touching the lower limit.</div>
+    </div>
+  </div>
+
+  <h3 style="margin-top:2rem">Study Case 03 — Grid-Connected PV + BESS (Cloudy)</h3>
+  <div class="fig-grid">
+    <div class="fig-item">
+      <img src="assets/smartgrid/Lab3_Case03_BESS_Grid_Cloudy.png" alt="BESS and External Grid Active Power – Cloudy Day (Study Case 03)" loading="lazy">
+      <div class="fig-caption">BESS + Grid – Cloudy Day (Case 03): External grid (orange) imports overnight when BESS is depleted, reducing total operating cost by 58% vs diesel ($450.63 vs $1,073.25). Negative BESS values indicate charging from grid surplus.</div>
+    </div>
+    <div class="fig-item">
+      <img src="assets/smartgrid/Lab3_Case03_Voltage_vs_Case02.png" alt="Bus 43 Voltage – Case 03 vs Case 02 Cloudy" loading="lazy">
+      <div class="fig-caption">Bus 43 Voltage – Case 03 vs Case 02 Cloudy: Grid connection drops Bus 43 voltage to 0.92 p.u. overnight and 0.91 p.u. worst-case (16:00–16:30) — below the 0.94 p.u. lower limit for ~10 hours.</div>
+    </div>
+  </div>
+
+  <h3 style="margin-top:2rem">Study Case 04 — Grid + BESS + Capacitor Bank (Cloudy)</h3>
+  <div class="fig-grid">
+    <div class="fig-item">
+      <img src="assets/smartgrid/Lab3_Case04_BESS_Grid_Cloudy.png" alt="BESS and External Grid Active Power – Cloudy Day (Study Case 04)" loading="lazy">
+      <div class="fig-caption">BESS + Grid – Cloudy Day (Case 04): Power dispatch profile is essentially unchanged from Case 03 — the capacitor bank adds no generation, only reactive power compensation. Operating cost increases by just $0.49.</div>
+    </div>
+    <div class="fig-item">
+      <img src="assets/smartgrid/Lab3_Case04_Voltage_vs_Case03.png" alt="Bus 43 Voltage – Case 04 vs Case 03 Cloudy" loading="lazy">
+      <div class="fig-caption">Bus 43 Voltage – Case 04 vs Case 03 Cloudy: The 0.055 MVAr capacitor bank at Bus 43 raises voltage by +0.03 p.u. uniformly, eliminating all violations and bringing the minimum to exactly 0.94 p.u.</div>
+    </div>
+  </div>
+
+  <h3 style="margin-top:2rem">Raw PowerFactory Simulation Exports</h3>
+  <div class="fig-grid">
+    <div class="fig-item">
+      <img src="assets/smartgrid/Power_Factory_Lab3_BESS_ACTIVE_POWER.png" alt="PowerFactory export — BESS active power" loading="lazy">
+      <div class="fig-caption">PowerFactory export: BESS active power — raw DIgSILENT output showing 24 h charge/discharge profile</div>
+    </div>
+    <div class="fig-item">
+      <img src="assets/smartgrid/Power_Factory_Lab3_BUS_43_Voltage.png" alt="PowerFactory export — Bus 43 voltage" loading="lazy">
+      <div class="fig-caption">PowerFactory export: Bus 43 voltage magnitude — raw DIgSILENT output comparing pre- and post-capacitor voltage profiles</div>
     </div>
   </div>
   <div class="fig-grid" style="grid-template-columns:1fr;margin-top:1.25rem">
     <div class="fig-item">
-      <img src="assets/smartgrid/Power_Factory_Lab3eXTERNAL_GRID.png" alt="External grid active power import over 24 hours" loading="lazy">
-      <div class="fig-caption">External grid active power import over 24 h — island mode (black) vs grid-connected mode (blue), showing peak shaving by the microgrid</div>
+      <img src="assets/smartgrid/Power_Factory_Lab3eXTERNAL_GRID.png" alt="PowerFactory export — external grid active power" loading="lazy">
+      <div class="fig-caption">PowerFactory export: External grid active power — raw DIgSILENT output showing grid import/export across the 24 h simulation window</div>
     </div>
   </div>
 </div>
