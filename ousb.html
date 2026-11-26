@@ -244,6 +244,32 @@ public:
             <div class="r-label">✓ Validation</div>
             <p>Tested against the complete set of documented edge cases: invalid port names, out-of-range pins, malformed argument counts, mixed-case input, and boundary values. All cases produce output identical to the hardware reference.</p>
         </div>
+        <div class="fig-grid">
+            <div class="fig-item">
+                <img src="assets/ousb/ousb-terminal-portb.png" alt="Terminal output showing OUSB simulator reading PORTB, PORTC and PINC registers">
+                <div class="fig-caption">Simulator reading PORTB/PORTC/PINC register values via command-line interface</div>
+            </div>
+            <div class="fig-item">
+                <img src="assets/ousb/ousb-portb-loop.png" alt="Debug console showing PORTB loop iterating values 232 to 255">
+                <div class="fig-caption">VS Debug Console — PORTB register loop test, values 232–255</div>
+            </div>
+            <div class="fig-item">
+                <img src="assets/ousb/ousb-adc-monitor.png" alt="Terminal showing OUSB ADC reading monitor with ADC value 250 and LED state 62">
+                <div class="fig-caption">ADC reading monitor — real-time analogue register polling</div>
+            </div>
+            <div class="fig-item">
+                <img src="assets/ousb/ousb-schematic.jpg" alt="Full OUSB board schematic showing ATmega32A microcontroller, USB socket, DIP switches and LED ports">
+                <div class="fig-caption">OUSB board schematic — ATmega32A I/O ports, USB interface and peripheral connections</div>
+            </div>
+            <div class="fig-item">
+                <img src="assets/ousb/ousb-board-leds.png" alt="OUSB hardware board with LEDs lit up bright red and orange">
+                <div class="fig-caption">Physical OUSB board — LEDs driven by PORTB register writes</div>
+            </div>
+            <div class="fig-item">
+                <img src="assets/ousb/ousb-board-overview.png" alt="OUSB board overview showing DIP switches, header pins and ATmega32A components">
+                <div class="fig-caption">OUSB board overview — DIP switches, port headers and ATmega32A microcontroller</div>
+            </div>
+        </div>
     </div>
 
     <!-- 06 LESSONS LEARNED -->
