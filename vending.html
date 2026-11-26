@@ -80,6 +80,17 @@ b{color:#fff;font-weight:700}
 .footer-nav{display:flex;justify-content:space-between;border-top:1px solid var(--border);padding-top:2rem;margin-top:2rem}
 .footer-nav a{font-size:.82rem;font-weight:500;color:var(--muted);text-decoration:none;transition:color .2s}
 .footer-nav a:hover{color:var(--primary-lt)}
+/* ── state table ── */
+.state-table{width:100%;border-collapse:collapse;font-size:.84rem;margin:1.5rem 0}
+.state-table th{color:var(--primary-lt);font-weight:700;text-align:left;padding:.65rem .75rem;border-bottom:1px solid rgba(37,99,235,.35);letter-spacing:.04em;text-transform:uppercase;font-size:.65rem}
+.state-table td{padding:.6rem .75rem;border-bottom:1px solid rgba(255,255,255,.05);color:rgba(255,255,255,.75)}
+.state-table td:first-child{color:#fff;font-weight:600;font-family:monospace}
+.state-table tr:last-child td{border-bottom:none}
+/* ── code block ── */
+.code-block{background:#0d1117;border:1px solid rgba(37,99,235,.25);border-radius:8px;padding:1.25rem 1.5rem;font-family:'Fira Code','Courier New',monospace;font-size:.82rem;line-height:1.75;overflow-x:auto;margin:1.5rem 0;color:#c9d1d9}
+.code-block .comment{color:#6a737d}
+.code-block .label{color:#79c0ff}
+.code-block .value{color:#ffa657}
 /* ── responsive ── */
 @media(max-width:768px){.stat-row-4{grid-template-columns:repeat(2,1fr)}.fig-grid{grid-template-columns:1fr}}
 @media(max-width:600px){.nav-siblings{display:none}.stat-row,.case-grid{grid-template-columns:repeat(2,1fr)}.footer-nav{flex-direction:column;gap:1rem}}
@@ -224,14 +235,38 @@ b{color:#fff;font-weight:700}
     <span class="comment">// ...</span>
   }
 }</div>
+
+  <p>The diagrams below were produced during the design phase and guided the implementation directly:</p>
+  <div class="fig-grid">
+    <div class="fig-item">
+      <img src="assets/vending/state-machine-idle.png" alt="Idle and selection state machine diagram">
+      <div class="fig-caption">Idle → selection states: keypad input routes to one of four products or stock-check mode</div>
+    </div>
+    <div class="fig-item">
+      <img src="assets/vending/state-machine-payment.png" alt="Payment state machine diagram">
+      <div class="fig-caption">Payment state: coin accumulation, overpayment/refund logic, and purchase confirmation flow</div>
+    </div>
+  </div>
+  <div class="fig-item" style="margin-top:.5rem">
+    <img src="assets/vending/state-machine-full.png" alt="Complete vending machine state machine overview" style="width:100%;border-radius:8px;border:1px solid var(--border)">
+    <div class="fig-caption" style="font-size:.72rem;color:var(--muted);margin-top:.5rem">Complete FSM overview — from initialisation through idle, product selection, payment, and dispensing</div>
+  </div>
 </div>
 
 <div class="section">
   <h2>04. Key Implementation Details</h2>
   <p><b>Keypad Scanning:</b> The 4×4 matrix is scanned column-by-column using Timer1 ISR at 1 ms intervals. Row lines are read after each column is driven low, with 10 ms debounce logic in software to suppress contact bounce.</p>
-  <p><b>Display Multiplexing:</b> The 7-segment display is multiplexed across four digits using the same Timer1 ISR — each digit is active for one scan period in turn, achieving flicker-free display at ~250Hz effective refresh.</p>
-  <p><b>Coin Detection:</b> Each coin insertion triggers an INT0 external interrupt. The ISR adds the coin denomination to the balance register and updates the display immediately.</p>
-  <p><b>Change Calculation:</b> Uses a greedy algorithm — dispenses the largest denomination coin first, iterating down until change balance reaches zero. Coin counts stored in EEPROM to survive power cycles.</p>
+  <div class="fig-grid" style="grid-template-columns:1fr 1fr;margin:1rem 0 1.5rem">
+    <div class="fig-item">
+      <img src="assets/vending/keypad-scan-flow.png" alt="Keypad column-scan flowchart">
+      <div class="fig-caption">Column-scan algorithm: each of four columns is driven low in sequence; rows are read to identify which key is pressed</div>
+    </div>
+    <div>
+      <p style="margin-bottom:.75rem"><b>Display Multiplexing:</b> The 7-segment display is multiplexed across four digits using the same Timer1 ISR — each digit is active for one scan period in turn, achieving flicker-free display at ~250Hz effective refresh.</p>
+      <p style="margin-bottom:.75rem"><b>Coin Detection:</b> Each coin insertion triggers an INT0 external interrupt. The ISR adds the coin denomination to the balance register and updates the display immediately.</p>
+      <p><b>Change Calculation:</b> Uses a greedy algorithm — dispenses the largest denomination coin first, iterating down until change balance reaches zero. Coin counts stored in EEPROM to survive power cycles.</p>
+    </div>
+  </div>
 </div>
 
 <div class="section">
@@ -242,6 +277,23 @@ b{color:#fff;font-weight:700}
     <p>✅ Keypad debounce reliable across all 16 keys with no false triggers.</p>
     <p>✅ 7-segment multiplexing stable at 250Hz with no visible flicker.</p>
     <p>✅ Received high distinction — marked on correctness, state design clarity, and code quality.</p>
+  </div>
+
+  <h3>AVR Studio Simulator Verification</h3>
+  <p>The controller was verified in AVR Studio's cycle-accurate simulator before flashing to hardware. Watch window and I/O port views confirmed correct state variable values, coin totals, and port register states at each FSM transition.</p>
+  <div class="fig-grid">
+    <div class="fig-item">
+      <img src="assets/vending/avr-watch-window-1.png" alt="AVR Studio watch window showing state and total variables">
+      <div class="fig-caption">Watch window: <code style="font-size:.75rem;color:#93c5fd">state=0x01</code>, <code style="font-size:.75rem;color:#93c5fd">total=0x0064</code> (100¢ inserted) — PORTB I/O confirms correct LED output</div>
+    </div>
+    <div class="fig-item">
+      <img src="assets/vending/avr-watch-window-2.png" alt="AVR Studio watch window showing high and low byte coin values">
+      <div class="fig-caption">Change calculation verified: <code style="font-size:.75rem;color:#93c5fd">high=0x01</code>, <code style="font-size:.75rem;color:#93c5fd">low=0x2C</code> — greedy algorithm correctly splitting change into denominations</div>
+    </div>
+  </div>
+  <div class="fig-item" style="margin-top:.5rem">
+    <img src="assets/vending/avr-memory-debug.png" alt="AVR Studio data IRAM memory view" style="width:100%;border-radius:8px;border:1px solid var(--border)">
+    <div class="fig-caption" style="font-size:.72rem;color:var(--muted);margin-top:.5rem">Data IRAM memory view at address 0xFFE5 — stock counts and price table written correctly to SRAM at initialisation</div>
   </div>
 </div>
 
