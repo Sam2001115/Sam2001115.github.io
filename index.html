@@ -300,6 +300,8 @@ section{padding:5rem 0}
 .proj-tags{display:flex;flex-wrap:wrap;gap:.3rem;margin-bottom:.9rem}
 .ptag{font-size:.6rem;font-weight:600;color:rgba(255,255,255,.88);background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);border-radius:4px;padding:.18rem .52rem}
 .proj-footer{display:flex;justify-content:space-between;align-items:center}
+.proj-soon{opacity:.5;cursor:not-allowed;pointer-events:none;position:relative}
+.proj-soon-badge{position:absolute;top:.75rem;right:.75rem;z-index:10;font-size:.6rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;background:rgba(255,255,255,.12);color:rgba(255,255,255,.7);border:1px solid rgba(255,255,255,.2);padding:.25rem .6rem;border-radius:4px;backdrop-filter:blur(4px)}
 .proj-type-badge{font-size:.58rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;background:rgba(37,99,235,.45);color:#93c5fd;border:1px solid rgba(37,99,235,.5);padding:.2rem .6rem;border-radius:4px}
 .proj-type-badge.pb-personal{background:rgba(234,88,12,.4);color:#fdba74;border-color:rgba(234,88,12,.45)}
 .proj-type-badge.pb-hive{background:rgba(168,85,247,.4);color:#d8b4fe;border-color:rgba(168,85,247,.45)}
@@ -653,7 +655,8 @@ footer{background:#0f1221;padding:3rem 0 1.5rem}
       </div>
     </a>
 
-    <a href="cnc.html" class="proj proj-c6">
+    <div class="proj proj-c6 proj-soon">
+      <div class="proj-soon-badge">Coming Soon</div>
       <div class="proj-overlay">
         <div class="proj-num">PROJECT 05</div>
         <div class="proj-title">CNC Plotter Machine</div>
@@ -661,7 +664,7 @@ footer{background:#0f1221;padding:3rem 0 1.5rem}
         <div class="proj-tags"><span class="ptag">ESP32</span><span class="ptag">CNC</span><span class="ptag">A4988</span><span class="ptag">G-code</span><span class="ptag">ST7789</span></div>
         <div class="proj-footer"><span class="proj-type-badge">University</span></div>
       </div>
-    </a>
+    </div>
 
     <a href="vending.html" class="proj proj-c2">
       <div class="proj-overlay">
@@ -673,7 +676,8 @@ footer{background:#0f1221;padding:3rem 0 1.5rem}
       </div>
     </a>
 
-    <a href="antenna.html" class="proj proj-c5">
+    <div class="proj proj-c5 proj-soon">
+      <div class="proj-soon-badge">Coming Soon</div>
       <div class="proj-overlay">
         <div class="proj-num">PROJECT 07</div>
         <div class="proj-title">Antenna Tracking System</div>
@@ -681,7 +685,7 @@ footer{background:#0f1221;padding:3rem 0 1.5rem}
         <div class="proj-tags"><span class="ptag">ESP32</span><span class="ptag">LoRa</span><span class="ptag">GPS</span><span class="ptag">Servo</span><span class="ptag">RF</span></div>
         <div class="proj-footer"><span class="proj-type-badge pb-hive">RMIT HIVE</span></div>
       </div>
-    </a>
+    </div>
 
     <a href="smartgrid.html" class="proj proj-c7" style="--ph:url('assets/smartgrid/Power_Factory_Lab3.png')">
       <div class="proj-overlay">
