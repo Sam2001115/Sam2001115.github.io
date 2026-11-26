@@ -90,7 +90,7 @@ body{font-family:'Inter',sans-serif;background:#fff;color:#111;overflow-x:hidden
 /* Circuit board background */
 .hero-bg{
   position:absolute;inset:0;
-  background:#0a0e1a;
+  background:linear-gradient(rgba(7,9,26,.72),rgba(7,9,26,.72)),url('assets/hero-pcb2.jpg') center/cover no-repeat;
 }
 /* Animated circuit lines */
 .hero-bg::before{
@@ -287,8 +287,15 @@ section{padding:5rem 0}
 .proj-c5::before{background:radial-gradient(ellipse at 55% 65%,#a855f7 0%,#6b21a8 45%,#0d0018 100%),radial-gradient(ellipse at 25% 25%,#c084fc 0%,transparent 50%)}
 .proj-c6::before{background:radial-gradient(ellipse at 40% 60%,#f43f5e 0%,#9f1239 45%,#1a0010 100%),radial-gradient(ellipse at 75% 25%,#fb7185 0%,transparent 50%)}
 .proj-c7::before{background:radial-gradient(ellipse at 50% 50%,#14b8a6 0%,#0f766e 45%,#001310 100%),radial-gradient(ellipse at 25% 75%,#2dd4bf 0%,transparent 50%)}
-/* Real photo override — set --ph on the card div */
-.proj[style*="--ph"]::before{background:var(--ph) center/cover no-repeat}
+/* Photo layer on top of colour gradient — set --ph on the card div */
+.proj[style*="--ph"]::after{
+  content:'';position:absolute;inset:0;
+  background:var(--ph) center/cover no-repeat;
+  opacity:.28;
+  transform:scale(1.1);
+  transition:opacity .35s,transform .35s;
+}
+.proj[style*="--ph"]:hover::after{opacity:.18;transform:scale(1.13)}
 .proj-overlay{
   position:relative;z-index:1;padding:1.4rem 1.4rem 1.3rem;
   background:linear-gradient(to top,rgba(0,0,0,.88) 0%,rgba(0,0,0,.55) 55%,rgba(0,0,0,.08) 100%);
