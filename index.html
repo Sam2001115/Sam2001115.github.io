@@ -90,7 +90,7 @@ body{font-family:'Inter',sans-serif;background:#fff;color:#111;overflow-x:hidden
 /* Circuit board background */
 .hero-bg{
   position:absolute;inset:0;
-  background:#0a0e1a url('assets/hero-pcb.jpg') center/cover no-repeat;
+  background:#0a0e1a;
 }
 /* Animated circuit lines */
 .hero-bg::before{
@@ -190,7 +190,9 @@ section{padding:5rem 0}
 .sec-desc{font-size:.95rem;color:rgba(255,255,255,.55);max-width:520px;line-height:1.8;margin-bottom:3rem}
 
 /* ══ ABOUT ══ */
-#about{background:#07091a}
+#about{background:#07091a url('assets/hero-pcb.jpg') center/cover no-repeat;position:relative}
+#about::before{content:'';position:absolute;inset:0;background:rgba(7,9,26,.88);pointer-events:none}
+#about>.container{position:relative;z-index:1}
 .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center}
 .about-bio p{font-size:.95rem;color:rgba(255,255,255,.72);line-height:1.9;margin-bottom:1rem}
 .about-info{display:flex;flex-direction:column;gap:.5rem;margin-top:1.5rem}
