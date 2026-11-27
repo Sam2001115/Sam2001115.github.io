@@ -280,7 +280,30 @@ b{color:#fff;font-weight:700}
 </div>
 
 <div class="section">
-  <h2>07. Lessons Learned</h2>
+  <h2>07. Fabricated Board</h2>
+  <p>The PCB was fabricated using the toner-transfer / ferric-chloride wet-etch method on single-sided FR4 copper clad, then hand-soldered. Four rubber standoffs raise the board for underside clearance.</p>
+  <div class="fig-grid">
+    <div class="fig-item">
+      <img src="buck-pcb-top.jpg" alt="Fabricated buck converter PCB — top view">
+      <div class="fig-caption"><strong>Top — component side</strong><br>LM3524 PWM IC (DIP-16), electrolytic bulk caps, 5 W 0.22 Ω current-sense resistor, blue trim-pot (output voltage adjust), gate-drive transformer, and screw-terminal connectors visible.</div>
+    </div>
+    <div class="fig-item">
+      <img src="buck-pcb-bottom.jpg" alt="Fabricated buck converter PCB — solder side">
+      <div class="fig-caption"><strong>Bottom — solder side</strong><br>Hand-soldered joints on single-sided FR4. Trace routing and pad density reflect the toner-transfer layout from Altium.</div>
+    </div>
+    <div class="fig-item">
+      <img src="buck-pcb-side-out.jpg" alt="Fabricated buck converter PCB — output side">
+      <div class="fig-caption"><strong>Output side</strong><br>Output screw-terminal block (Vout), large filter inductor (toroidal core), and bulk output capacitors. Test-point headers (TP2, TP3) for oscilloscope probing.</div>
+    </div>
+    <div class="fig-item">
+      <img src="buck-pcb-side-in.jpg" alt="Fabricated buck converter PCB — input side">
+      <div class="fig-caption"><strong>Input side</strong><br>Input screw-terminal, PMOS switch (Q1) mounted at board edge for thermal access, gate-drive winding, and the LM3524 IC with feedback resistor network.</div>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <h2>08. Lessons Learned</h2>
   <div class="lesson-box">
     <div class="lesson-label">PCB Layout Is Half the Circuit Design</div>
     <p>The schematic defines the topology but the PCB layout determines whether it works. Poor gate drive loop geometry or a split ground plane can make an otherwise correct design oscillate or fail to regulate. High-frequency power electronics demand layout discipline from the first revision.</p>
