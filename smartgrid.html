@@ -373,6 +373,50 @@ b{color:#fff;font-weight:700}
   </table>
 </div>
 
+<!-- LAB 4 -->
+<div class="lab-divider">Lab 4 — Residential LV Network: VPP / DER Coordinated Dispatch</div>
+
+<div class="section">
+  <p>Lab 4 extended the study to a residential low-voltage (LV) feeder equipped with rooftop PV, a battery energy storage system (BESS), and EV chargers at multiple households. The objective was to compare <b>uncoordinated</b> device operation against <b>price-signal-coordinated VPP dispatch</b> and quantify the peak-shaving benefit.</p>
+
+  <h3>Network Configuration</h3>
+  <ul style="margin:.5rem 0 1rem 1.4rem;line-height:1.8">
+    <li>Residential LV feeder with multiple household load points</li>
+    <li>Rooftop PV systems at each dwelling</li>
+    <li>Shared BESS providing grid-side storage</li>
+    <li>EV chargers operating in both uncoordinated and scheduled modes</li>
+  </ul>
+
+  <h3>Scenario Comparison</h3>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Metric</th>
+          <th>Uncoordinated</th>
+          <th>VPP Coordinated (Price Signal)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>Afternoon Peak Load</td><td class="lo">~232 kW</td><td class="hi">~178 kW</td></tr>
+        <tr><td>Peak Reduction</td><td>—</td><td class="hi">~54 kW (23%)</td></tr>
+        <tr><td>Grid Import During Peak</td><td class="lo">High</td><td class="hi">Reduced</td></tr>
+        <tr><td>EV Charging Timing</td><td class="lo">Uncontrolled (peak hours)</td><td class="hi">Shifted to off-peak / solar window</td></tr>
+        <tr><td>BESS Dispatch</td><td class="lo">Local household logic</td><td class="hi">Coordinated VPP signal</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3 style="margin-top:1.5rem">How VPP Dispatch Works</h3>
+  <p>Under uncoordinated operation, EV chargers draw power during the late-afternoon demand peak (typically 16:00–20:00) when households arrive home. This stacks residential load on top of the existing network peak, pushing feeder import to ~232 kW.</p>
+  <p>The coordinated VPP dispatch uses a price signal to shift EV charging to periods of lower network demand and higher PV availability. The BESS is dispatched to discharge during the afternoon peak, further reducing the feeder import. The result is a ~54 kW (23%) reduction in peak load — cutting external grid import during the most congested network window.</p>
+
+  <div class="result-box" style="margin-top:1.5rem">
+    <p>✅ <b>Lab 4:</b> VPP coordination reduced afternoon peak demand from <b>~232 kW → ~178 kW</b>, a <b>54 kW / 23% peak shaving</b> result. The key mechanism was shifting EV charging away from the peak window and coordinating BESS discharge via a price signal.</p>
+    <p>✅ <b>Lab 4:</b> Uncoordinated EV charging is the dominant contributor to residential feeder peaks — smart scheduling without any additional hardware investment can deliver significant network relief.</p>
+  </div>
+</div>
+
 <!-- KEY RESULTS SUMMARY -->
 <div class="section">
   <h2>03. Key Results Summary</h2>
@@ -382,6 +426,7 @@ b{color:#fff;font-weight:700}
     <p>✅ <b>Lab 3 (Case 01):</b> Solar PV + BESS was <b>fully self-sustaining on a sunny day</b> (net balance −6 kWh). Cloudy day created 886 kWh shortfall — backup source required.</p>
     <p>✅ <b>Lab 3 (Case 02→03):</b> Replacing diesel with grid connection cut operating cost by <b>$622.62/day (58%)</b> — $1.00/kWh diesel vs $0.35/kWh grid is the dominant economic factor.</p>
     <p>✅ <b>Lab 3 (Case 03→04):</b> A 0.055 MVAr capacitor bank at Bus 43 eliminated all voltage violations at virtually no cost (+$0.49/day), raising minimum voltage from 0.91 to 0.94 p.u.</p>
+    <p>✅ <b>Lab 4:</b> VPP price-signal coordination cut peak feeder demand by <b>~54 kW (23%)</b>, from ~232 kW to ~178 kW, entirely through demand scheduling — no new hardware required.</p>
     <p>✅ Grid connection is the most cost-effective backup option but requires reactive power support at the weakest network bus. Demand response (shifting loads from evening peak) would directly reduce Bus 43 voltage stress.</p>
   </div>
 </div>
@@ -404,6 +449,10 @@ b{color:#fff;font-weight:700}
   <div class="lesson-box">
     <div class="lesson-label">PV Self-Sufficiency Has a Clear Irradiance Threshold</div>
     <p>The same PV + BESS system was fully self-sustaining on a sunny day (net −6 kWh) but left an 886 kWh daily shortfall under cloudy conditions. This highlights the need for grid connection or storage oversizing in climates with significant cloud cover — no islanded PV microgrid can be reliably self-sufficient year-round without backup generation.</p>
+  </div>
+  <div class="lesson-box">
+    <div class="lesson-label">EV Charging Timing Is the Dominant Residential Peak Driver</div>
+    <p>Uncoordinated EV charging concentrates demand exactly when households already draw peak power — the evening return-home window. VPP coordination shifts that load to the solar generation window or overnight off-peak periods, achieving 23% peak reduction with no hardware changes. The lesson: software-defined dispatch (a price signal or VPP aggregator) is a low-cost alternative to network augmentation for managing DER-driven peaks.</p>
   </div>
 </div>
 

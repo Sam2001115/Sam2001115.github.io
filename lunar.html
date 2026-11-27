@@ -223,28 +223,28 @@ b{color:#fff;font-weight:700}
 <div class="section">
   <h2>04. Power System Design</h2>
 
-  <p>The power system consists of two integrated components: a <b>12V lithium-ion battery pack</b> (32× 18650 cells) and a <b>20W solar panel</b> mounted on the rover's top surface. The design went through two formal iteration stages — preliminary and detailed — with geometry and calculations refined at each stage.</p>
+  <p>The power system consists of two integrated components: a <b>14.8V lithium-ion battery pack</b> (32× 18650 cells) and a <b>20W solar panel</b> mounted on the rover's top surface. The design went through two formal iteration stages — preliminary and detailed — with geometry and calculations refined at each stage.</p>
 
   <div class="context-block">
-    <p><b>Battery Selection:</b> 18650-format lithium-ion cells were chosen for their established spaceflight heritage (used in Tesla packs, power tools, and research rover prototypes), high energy density, cylindrical form factor enabling dense packing, and compatibility with the 12V system voltage when arranged in series/parallel configuration.</p>
-    <p><b>Configuration:</b> 32 cells arranged in a 4S8P configuration (4 cells in series × 8 parallel strings) — producing 12V nominal with 2400 Wh total usable capacity at a safety factor of 1.2 applied to operation time calculations.</p>
+    <p><b>Battery Selection:</b> 18650-format lithium-ion cells were chosen for their established spaceflight heritage (used in Tesla packs, power tools, and research rover prototypes), high energy density, cylindrical form factor enabling dense packing, and compatibility with the 14.8V system voltage when arranged in a 4S configuration.</p>
+    <p><b>Configuration:</b> 32 cells arranged in a 4S8P configuration (4 cells in series × 8 parallel strings) — producing <b>14.8V nominal</b> (4 × 3.7V). Raw pack capacity is 2400 Wh; applying the 1.2× safety factor to the operation time calculation yields <b>2000 Wh effective usable capacity</b>, giving 20 hours of autonomous operation without recharging. The 354-hour mission requirement is met through continuous solar recharging during lunar daylight — the 20-hour figure represents battery-only endurance during eclipses or panel shadowing.</p>
   </div>
 
   <div class="spec-grid">
     <div class="spec-card"><div class="spec-label">Cell Format</div><div class="spec-val">18650 Li-Ion</div></div>
     <div class="spec-card"><div class="spec-label">Cell Dimensions</div><div class="spec-val">Ø18.2 × 65.1 mm</div></div>
     <div class="spec-card"><div class="spec-label">Number of Cells</div><div class="spec-val">32 (4S8P)</div></div>
-    <div class="spec-card"><div class="spec-label">System Voltage</div><div class="spec-val">12 V</div></div>
-    <div class="spec-card"><div class="spec-label">Total Pack Capacity</div><div class="spec-val">2400 Wh</div></div>
-    <div class="spec-card"><div class="spec-label">Safety Factor</div><div class="spec-val">1.2×</div></div>
-    <div class="spec-card"><div class="spec-label">Op. Time (no recharge)</div><div class="spec-val">20 hours</div></div>
+    <div class="spec-card"><div class="spec-label">Pack Voltage (nominal)</div><div class="spec-val">14.8 V</div></div>
+    <div class="spec-card"><div class="spec-label">Raw Pack Capacity</div><div class="spec-val">2400 Wh</div></div>
+    <div class="spec-card"><div class="spec-label">Safety Factor</div><div class="spec-val">1.2× → 2000 Wh effective</div></div>
+    <div class="spec-card"><div class="spec-label">Op. Time (battery only)</div><div class="spec-val">20 hours</div></div>
     <div class="spec-card"><div class="spec-label">Rover Speed</div><div class="spec-val">0.245 km/h</div></div>
   </div>
 
   <div class="spec-grid">
     <div class="spec-card"><div class="spec-label">Solar Panel Power</div><div class="spec-val">20 W</div></div>
     <div class="spec-card"><div class="spec-label">Panel Dimensions</div><div class="spec-val">300 × 200 × 20 mm</div></div>
-    <div class="spec-card"><div class="spec-label">Panel Voltage</div><div class="spec-val">12 V</div></div>
+    <div class="spec-card"><div class="spec-label">Panel Voltage</div><div class="spec-val">14.8 V</div></div>
     <div class="spec-card"><div class="spec-label">Panel Mass (CAD)</div><div class="spec-val">2157.68 g</div></div>
     <div class="spec-card"><div class="spec-label">Battery Array Mass (CAD)</div><div class="spec-val">1440 g</div></div>
     <div class="spec-card"><div class="spec-label">Mounting</div><div class="spec-val">4× Ø8 mm corner bolts</div></div>
@@ -339,7 +339,7 @@ b{color:#fff;font-weight:700}
     <p>✅ 32-cell 18650 battery pack modelled with accurate terminal geometry — Ø18.2mm × 65.1mm per cell, full 4-row array in SolidWorks.</p>
     <p>✅ Solar panel (SP-002) modelled to 300×200×20mm with corner bracket mounting detail for integration with rover body.</p>
     <p>✅ Full integrated power sub-assembly (AS-002) referenced into the team's rover assembly — panel, battery pack, and body all mating correctly.</p>
-    <p>✅ 20-hour autonomous operation verified by hand calculation — 2400 Wh capacity ÷ power draw, safety factor 1.2 applied.</p>
+    <p>✅ 20-hour battery-only operation verified by hand calculation — 2400 Wh raw capacity ÷ power draw, with 1.2× safety factor giving 2000 Wh effective. Full 354-hour mission met via continuous solar recharging.</p>
     <p>✅ 5 out of 5 group meetings attended; team contribution table confirmed full participation across all weeks.</p>
   </div>
 </div>
